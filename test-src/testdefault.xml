@@ -1,0 +1,2238 @@
+<?xml version="1.0" encoding="utf-8"?><!--*- coding: utf-8 -*-->
+<rapla:data xmlns:rapla="http://rapla.sourceforge.net/rapla"
+ xmlns:relax="http://relaxng.org/ns/structure/1.0"
+ xmlns:dynatt="http://rapla.sourceforge.net/dynamictype"
+ xmlns:doc="http://rapla.sourceforge.net/annotation"
+ version="1.0">
+   <rapla:categories>
+      <rapla:category key="user-groups">
+         <doc:name lang="de">Benutzergruppen</doc:name>
+         <doc:name lang="en">user-groups</doc:name>
+         <doc:name lang="fr">Groupes de utilisateurs</doc:name>
+         <rapla:category key="modify-preferences">
+            <doc:name lang="de">Einstellungen bearbeiten</doc:name>
+            <doc:name lang="en">modify preferences</doc:name>
+            <doc:name lang="fr">Modifier la prÃ©fÃ©rence</doc:name>
+         </rapla:category>
+         <rapla:category key="registerer">
+            <doc:name lang="de">Ressourcen eintragen</doc:name>
+            <doc:name lang="en">register resources</doc:name>
+            <doc:name lang="fr">Enregistrer des ressources</doc:name>
+         </rapla:category>
+         <rapla:category key="read-events-from-others">
+            <doc:name lang="de">Die Veranstaltungen anderer sehen</doc:name>
+         </rapla:category>
+         <rapla:category key="c14">
+            <doc:name lang="de">Kurse</doc:name>
+            <rapla:category key="c2">
+               <doc:name lang="de">Technik</doc:name>
+               <rapla:category key="c2">
+                  <doc:name lang="de">Elektrotechnik</doc:name>
+                  <rapla:category key="c9">
+                     <doc:name lang="de">TEL09</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c1">
+                     <doc:name lang="de">TEL09AT</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c2">
+                     <doc:name lang="de">TEL09NT</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c8">
+                     <doc:name lang="de">TEL10</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c3">
+                     <doc:name lang="de">TEL10B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c4">
+                     <doc:name lang="de">TEL10B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c10">
+                     <doc:name lang="de">TEL10AT</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c11">
+                     <doc:name lang="de">TEL10NT</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c7">
+                     <doc:name lang="de">TEL11</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c5">
+                     <doc:name lang="de">TEL11B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c6">
+                     <doc:name lang="de">TEL11B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c13">
+                     <doc:name lang="de">TEL11AT</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c14">
+                     <doc:name lang="de">TEL11NT</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c12">
+                     <doc:name lang="de">TEL12</doc:name>
+                     <rapla:category key="c1">
+                        <doc:name lang="de">TEL12B1</doc:name>
+                     </rapla:category>
+                     <rapla:category key="c2">
+                        <doc:name lang="de">TEL12B2</doc:name>
+                     </rapla:category>
+                     <rapla:category key="c3">
+                        <doc:name lang="de">TEL12AT</doc:name>
+                     </rapla:category>
+                     <rapla:category key="c4">
+                        <doc:name lang="de">TEL12NT</doc:name>
+                     </rapla:category>
+                  </rapla:category>
+               </rapla:category>
+               <rapla:category key="c1">
+                  <doc:name lang="de">Informatik</doc:name>
+                  <rapla:category key="c11">
+                     <doc:name lang="de">TAI09&amp;TIT09</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c1">
+                     <doc:name lang="de">TAI09B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c2">
+                     <doc:name lang="de">TAI09B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c3">
+                     <doc:name lang="de">TIT09</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c12">
+                     <doc:name lang="de">TAI10&amp;TIT10</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c4">
+                     <doc:name lang="de">TAI10B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c5">
+                     <doc:name lang="de">TAI10B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c6">
+                     <doc:name lang="de">TIT10</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c13">
+                     <doc:name lang="de">TINF11</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c7">
+                     <doc:name lang="de">TINF11B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c8">
+                     <doc:name lang="de">TINF11B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c9">
+                     <doc:name lang="de">TINF11B3</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c10">
+                     <doc:name lang="de">TINF11B4</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c14">
+                     <doc:name lang="de">TINF12</doc:name>
+                     <rapla:category key="c1">
+                        <doc:name lang="de">TINF12B1</doc:name>
+                     </rapla:category>
+                     <rapla:category key="c2">
+                        <doc:name lang="de">TINF12B2</doc:name>
+                     </rapla:category>
+                     <rapla:category key="c3">
+                        <doc:name lang="de">TINF12B3</doc:name>
+                     </rapla:category>
+                     <rapla:category key="c4">
+                        <doc:name lang="de">TINF12B4</doc:name>
+                     </rapla:category>
+                     <rapla:category key="c5">
+                        <doc:name lang="de">TINF12B5</doc:name>
+                     </rapla:category>
+                  </rapla:category>
+               </rapla:category>
+               <rapla:category key="c3">
+                  <doc:name lang="de">Maschinenbau</doc:name>
+                  <rapla:category key="c9">
+                     <doc:name lang="de">TMB09</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c1">
+                     <doc:name lang="de">TMB09KE1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c2">
+                     <doc:name lang="de">TMB09KE2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c3">
+                     <doc:name lang="de">TMB09PT</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c10">
+                     <doc:name lang="de">TMB10</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c4">
+                     <doc:name lang="de">TMB10B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c5">
+                     <doc:name lang="de">TMB10B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c12">
+                     <doc:name lang="de">TMB10KE1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c13">
+                     <doc:name lang="de">TMB10KE2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c14">
+                     <doc:name lang="de">TMB10PT</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c11">
+                     <doc:name lang="de">TMB11</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c6">
+                     <doc:name lang="de">TMB11B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c7">
+                     <doc:name lang="de">TMB11B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c8">
+                     <doc:name lang="de">TMB11B3</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c15">
+                     <doc:name lang="de">TMB12</doc:name>
+                     <rapla:category key="c4">
+                        <doc:name lang="de">TMB12PT</doc:name>
+                     </rapla:category>
+                     <rapla:category key="c5">
+                        <doc:name lang="de">TMB12KE1</doc:name>
+                     </rapla:category>
+                     <rapla:category key="c2">
+                        <doc:name lang="de">TMB12KE2</doc:name>
+                     </rapla:category>
+                     <rapla:category key="c3">
+                        <doc:name lang="de">TMB12KE3</doc:name>
+                     </rapla:category>
+                  </rapla:category>
+               </rapla:category>
+               <rapla:category key="c4">
+                  <doc:name lang="de">Mechatronik</doc:name>
+                  <rapla:category key="c1">
+                     <doc:name lang="de">TMT09B</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c2">
+                     <doc:name lang="de">TMT10B</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c3">
+                     <doc:name lang="de">TMT11B</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c4">
+                     <doc:name lang="de">TMT12B</doc:name>
+                  </rapla:category>
+               </rapla:category>
+               <rapla:category key="c5">
+                  <doc:name lang="de">Papiertechnik</doc:name>
+                  <rapla:category key="c1">
+                     <doc:name lang="de">TPT09</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c2">
+                     <doc:name lang="de">TPT10</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c3">
+                     <doc:name lang="de">TPT11</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c4">
+                     <doc:name lang="de">TPT12</doc:name>
+                  </rapla:category>
+               </rapla:category>
+               <rapla:category key="c6">
+                  <doc:name lang="de">Sicherheitswesen</doc:name>
+                  <rapla:category key="c10">
+                     <doc:name lang="de">TSHE09</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c1">
+                     <doc:name lang="de">TSHE09-AS</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c2">
+                     <doc:name lang="de">TSHE09-ST</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c3">
+                     <doc:name lang="de">TSHE09-UT</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c11">
+                     <doc:name lang="de">TSHE10</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c4">
+                     <doc:name lang="de">TSHE10-AS</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c5">
+                     <doc:name lang="de">TSHE10-ST</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c6">
+                     <doc:name lang="de">TSHE10-UT</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c12">
+                     <doc:name lang="de">TSHE11</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c7">
+                     <doc:name lang="de">TSHE11-AS</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c8">
+                     <doc:name lang="de">TSHE11-ST</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c9">
+                     <doc:name lang="de">TSHE11-UT</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c13">
+                     <doc:name lang="de">TSHE12</doc:name>
+                     <rapla:category key="c1">
+                        <doc:name lang="de">TSHE12-AS</doc:name>
+                     </rapla:category>
+                     <rapla:category key="c2">
+                        <doc:name lang="de">TSHE12-ST</doc:name>
+                     </rapla:category>
+                     <rapla:category key="c3">
+                        <doc:name lang="de">TSHE12-UT</doc:name>
+                     </rapla:category>
+                  </rapla:category>
+               </rapla:category>
+               <rapla:category key="c7">
+                  <doc:name lang="de">Wirtschaftsingenieurwesen</doc:name>
+                  <rapla:category key="c10">
+                     <doc:name lang="de">TWIW09</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c14">
+                     <doc:name lang="de">TWIW09B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c1">
+                     <doc:name lang="de">TWIW09B1MV</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c2">
+                     <doc:name lang="de">TWIW09B1PL</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c13">
+                     <doc:name lang="de">TWIW09B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c9">
+                     <doc:name lang="de">TWIW09B2MV</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c8">
+                     <doc:name lang="de">TWIW09B2PL</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c11">
+                     <doc:name lang="de">TWIW10</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c3">
+                     <doc:name lang="de">TWIW10MV</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c4">
+                     <doc:name lang="de">TWIW10PL</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c12">
+                     <doc:name lang="de">TWIW11</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c5">
+                     <doc:name lang="de">TWIW11B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c6">
+                     <doc:name lang="de">TWIW11B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c7">
+                     <doc:name lang="de">TWIW11B3</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c16">
+                     <doc:name lang="de">TWIW11ITV1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c17">
+                     <doc:name lang="de">TWIW11ITV2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c18">
+                     <doc:name lang="de">TWIW11PL</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c15">
+                     <doc:name lang="de">TWIW12</doc:name>
+                     <rapla:category key="c1">
+                        <doc:name lang="de">TWIW12B1</doc:name>
+                     </rapla:category>
+                     <rapla:category key="c2">
+                        <doc:name lang="de">TWIW12B2</doc:name>
+                     </rapla:category>
+                     <rapla:category key="c3">
+                        <doc:name lang="de">TWIW12B3</doc:name>
+                     </rapla:category>
+                  </rapla:category>
+               </rapla:category>
+            </rapla:category>
+            <rapla:category key="c1">
+               <doc:name lang="de">Wirtschaft</doc:name>
+               <rapla:category key="c2">
+                  <doc:name lang="de">BWL-Bank</doc:name>
+                  <rapla:category key="c1">
+                     <doc:name lang="de">WBK09B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c2">
+                     <doc:name lang="de">WBK09B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c4">
+                     <doc:name lang="de">WBK09B3</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c3">
+                     <doc:name lang="de">WBK10B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c5">
+                     <doc:name lang="de">WBK10B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c6">
+                     <doc:name lang="de">WBK10B3</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c7">
+                     <doc:name lang="de">WBK11B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c8">
+                     <doc:name lang="de">WBK11B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c9">
+                     <doc:name lang="de">WBK11B3</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c10">
+                     <doc:name lang="de">WBK12B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c11">
+                     <doc:name lang="de">WBK12B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c12">
+                     <doc:name lang="de">WBK12B3</doc:name>
+                  </rapla:category>
+               </rapla:category>
+               <rapla:category key="c3">
+                  <doc:name lang="de">BWL-Handel</doc:name>
+                  <rapla:category key="c1">
+                     <doc:name lang="de">WHD09B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c2">
+                     <doc:name lang="de">WHD09B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c3">
+                     <doc:name lang="de">WHD09B3</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c4">
+                     <doc:name lang="de">WHD10B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c5">
+                     <doc:name lang="de">WHD10B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c6">
+                     <doc:name lang="de">WHD10B3</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c7">
+                     <doc:name lang="de">WHD11B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c8">
+                     <doc:name lang="de">WHD11B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c9">
+                     <doc:name lang="de">WHD11B3</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c10">
+                     <doc:name lang="de">WHD12B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c11">
+                     <doc:name lang="de">WHD12B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c12">
+                     <doc:name lang="de">WHD12B3</doc:name>
+                  </rapla:category>
+               </rapla:category>
+               <rapla:category key="c4">
+                  <doc:name lang="de">BWL-International Business</doc:name>
+                  <rapla:category key="c1">
+                     <doc:name lang="de">WIB09B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c2">
+                     <doc:name lang="de">WIB10B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c3">
+                     <doc:name lang="de">WIB11B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c4">
+                     <doc:name lang="de">WIB12B1</doc:name>
+                  </rapla:category>
+               </rapla:category>
+               <rapla:category key="c5">
+                  <doc:name lang="de">BWL-Industrie</doc:name>
+                  <rapla:category key="c13">
+                     <doc:name lang="de">WIN09</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c1">
+                     <doc:name lang="de">WIN09B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c2">
+                     <doc:name lang="de">WIN09B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c3">
+                     <doc:name lang="de">WIN09B3</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c4">
+                     <doc:name lang="de">WIN09B4</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c14">
+                     <doc:name lang="de">WIN10</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c5">
+                     <doc:name lang="de">WIN10B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c6">
+                     <doc:name lang="de">WIN10B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c7">
+                     <doc:name lang="de">WIN10B3</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c8">
+                     <doc:name lang="de">WIN10B4</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c15">
+                     <doc:name lang="de">WIN11</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c9">
+                     <doc:name lang="de">WIN11B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c10">
+                     <doc:name lang="de">WIN11B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c11">
+                     <doc:name lang="de">WIN11B3</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c12">
+                     <doc:name lang="de">WIN11B4</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c16">
+                     <doc:name lang="de">WIN12</doc:name>
+                     <rapla:category key="c1">
+                        <doc:name lang="de">WIN12B1</doc:name>
+                     </rapla:category>
+                     <rapla:category key="c2">
+                        <doc:name lang="de">WIN12B2</doc:name>
+                     </rapla:category>
+                     <rapla:category key="c3">
+                        <doc:name lang="de">WIN12B3</doc:name>
+                     </rapla:category>
+                     <rapla:category key="c5">
+                        <doc:name lang="de">WIN12B4</doc:name>
+                     </rapla:category>
+                  </rapla:category>
+               </rapla:category>
+               <rapla:category key="c6">
+                  <doc:name lang="de">BWL-Steuern-und Prüfungswesen</doc:name>
+                  <rapla:category key="c1">
+                     <doc:name lang="de">WSP09B</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c2">
+                     <doc:name lang="de">WSP10B</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c3">
+                     <doc:name lang="de">WSP11B</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c4">
+                     <doc:name lang="de">WSP12B</doc:name>
+                  </rapla:category>
+               </rapla:category>
+               <rapla:category key="c7">
+                  <doc:name lang="de">Unternehmertum</doc:name>
+                  <rapla:category key="c1">
+                     <doc:name lang="de">WUN09B</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c2">
+                     <doc:name lang="de">WUN10B</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c3">
+                     <doc:name lang="de">WUN11B</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c4">
+                     <doc:name lang="de">WUN12B</doc:name>
+                  </rapla:category>
+               </rapla:category>
+               <rapla:category key="c8">
+                  <doc:name lang="de">BWL-Versicherung</doc:name>
+                  <rapla:category key="c1">
+                     <doc:name lang="de">WVS09B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c2">
+                     <doc:name lang="de">WVS09B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c3">
+                     <doc:name lang="de">WVS10B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c4">
+                     <doc:name lang="de">WVS10B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c5">
+                     <doc:name lang="de">WVS11B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c6">
+                     <doc:name lang="de">WVS11B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c7">
+                     <doc:name lang="de">WVS12B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c8">
+                     <doc:name lang="de">WVS12B2</doc:name>
+                  </rapla:category>
+               </rapla:category>
+               <rapla:category key="c1">
+                  <doc:name lang="de">Wirtschaftsinformatik</doc:name>
+                  <rapla:category key="c9">
+                     <doc:name lang="de">WWI09B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c10">
+                     <doc:name lang="de">WWI09B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c11">
+                     <doc:name lang="de">WWI09B3</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c12">
+                     <doc:name lang="de">WWI09B4</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c5">
+                     <doc:name lang="de">WWI10B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c6">
+                     <doc:name lang="de">WWI10B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c7">
+                     <doc:name lang="de">WWI10B3</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c8">
+                     <doc:name lang="de">WWI10B4</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c2">
+                     <doc:name lang="de">WWI11B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c3">
+                     <doc:name lang="de">WWI11B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c1">
+                     <doc:name lang="de">WWI11B3</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c4">
+                     <doc:name lang="de">WWI11B4</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c13">
+                     <doc:name lang="de">WWI12B1</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c14">
+                     <doc:name lang="de">WWI12B2</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c15">
+                     <doc:name lang="de">WWI12B3</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c16">
+                     <doc:name lang="de">WWI12B4</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c17">
+                     <doc:name lang="de">WWI12B5</doc:name>
+                  </rapla:category>
+               </rapla:category>
+            </rapla:category>
+            <rapla:category key="c3">
+               <doc:name lang="de">Gesundheitswesen</doc:name>
+               <rapla:category key="c1">
+                  <doc:name lang="de">Arztassistent</doc:name>
+                  <rapla:category key="c1">
+                     <doc:name lang="de">GPA10B</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c2">
+                     <doc:name lang="de">GPA11B</doc:name>
+                  </rapla:category>
+                  <rapla:category key="c3">
+                     <doc:name lang="de">GPA12B</doc:name>
+                  </rapla:category>
+               </rapla:category>
+            </rapla:category>
+         </rapla:category>
+         <rapla:category key="c1">
+            <doc:name lang="de">Planer Technik</doc:name>
+            <rapla:category key="c2">
+               <doc:name lang="de">SGL INF (AI-IT)</doc:name>
+            </rapla:category>
+            <rapla:category key="c3">
+               <doc:name lang="de">SGL EL</doc:name>
+            </rapla:category>
+            <rapla:category key="c4">
+               <doc:name lang="de">SGL MB</doc:name>
+            </rapla:category>
+            <rapla:category key="c5">
+               <doc:name lang="de">SGL MT</doc:name>
+            </rapla:category>
+            <rapla:category key="c6">
+               <doc:name lang="de">SGL PT</doc:name>
+            </rapla:category>
+            <rapla:category key="c7">
+               <doc:name lang="de">SGL SHE</doc:name>
+            </rapla:category>
+            <rapla:category key="c8">
+               <doc:name lang="de">SGL WIW</doc:name>
+            </rapla:category>
+         </rapla:category>
+         <rapla:category key="c5">
+            <doc:name lang="de">Planer Wirtschaft</doc:name>
+            <rapla:category key="c2">
+               <doc:name lang="de">SGL BWL-BK</doc:name>
+            </rapla:category>
+            <rapla:category key="c3">
+               <doc:name lang="de">SGL BWL-HD</doc:name>
+            </rapla:category>
+            <rapla:category key="c8">
+               <doc:name lang="de">SGL BWL-IB</doc:name>
+            </rapla:category>
+            <rapla:category key="c4">
+               <doc:name lang="de">SGL BWL-IN</doc:name>
+            </rapla:category>
+            <rapla:category key="c5">
+               <doc:name lang="de">SGL BWL-SP</doc:name>
+            </rapla:category>
+            <rapla:category key="c7">
+               <doc:name lang="de">SGL UN</doc:name>
+            </rapla:category>
+            <rapla:category key="c6">
+               <doc:name lang="de">SGL BWL-VS</doc:name>
+            </rapla:category>
+            <rapla:category key="c1">
+               <doc:name lang="de">SGL WI</doc:name>
+            </rapla:category>
+         </rapla:category>
+         <rapla:category key="c13">
+            <doc:name lang="de">Planer Gesundheitswesen</doc:name>
+            <rapla:category key="c1">
+               <doc:name lang="de">SGL PA</doc:name>
+            </rapla:category>
+         </rapla:category>
+         <rapla:category key="c15">
+            <doc:name lang="de">Planer Verwaltung</doc:name>
+            <rapla:category key="c1">
+               <doc:name lang="de">Auslandsamt</doc:name>
+            </rapla:category>
+            <rapla:category key="c3">
+               <doc:name lang="de">Rechenzentrum</doc:name>
+            </rapla:category>
+            <rapla:category key="c2">
+               <doc:name lang="de">Hausmeister</doc:name>
+            </rapla:category>
+            <rapla:category key="c4">
+               <doc:name lang="de">Öffentlichkeitsarbeit</doc:name>
+            </rapla:category>
+            <rapla:category key="c5">
+               <doc:name lang="de">Rektorat</doc:name>
+            </rapla:category>
+            <rapla:category key="c6">
+               <doc:name lang="de">Sprachen</doc:name>
+            </rapla:category>
+            <rapla:category key="c7">
+               <doc:name lang="de">Verwaltung</doc:name>
+            </rapla:category>
+         </rapla:category>
+         <rapla:category key="c16">
+            <doc:name lang="de">Planer Labore</doc:name>
+            <rapla:category key="c1">
+               <doc:name lang="de">EL-Labor</doc:name>
+            </rapla:category>
+            <rapla:category key="c2">
+               <doc:name lang="de">IT-Labor</doc:name>
+            </rapla:category>
+            <rapla:category key="c3">
+               <doc:name lang="de">MB-Labor</doc:name>
+            </rapla:category>
+            <rapla:category key="c4">
+               <doc:name lang="de">MT-Labor</doc:name>
+            </rapla:category>
+            <rapla:category key="c5">
+               <doc:name lang="de">SHE-Labor</doc:name>
+            </rapla:category>
+            <rapla:category key="c6">
+               <doc:name lang="de">WI-Labor</doc:name>
+            </rapla:category>
+            <rapla:category key="c7">
+               <doc:name lang="de">Papierzentrum</doc:name>
+            </rapla:category>
+            <rapla:category key="c8">
+               <doc:name lang="de">MLZ</doc:name>
+            </rapla:category>
+         </rapla:category>
+         <rapla:category key="c6">
+            <doc:name lang="de">Raumansicht Technik</doc:name>
+         </rapla:category>
+         <rapla:category key="c11">
+            <doc:name lang="de">Raumansicht Wirtschaft</doc:name>
+         </rapla:category>
+      </rapla:category>
+      <rapla:category key="c2">
+         <doc:name lang="de">Studiengänge</doc:name>
+         <rapla:category key="c5">
+            <doc:name lang="de">Allgemein</doc:name>
+         </rapla:category>
+         <rapla:category key="c3">
+            <doc:name lang="de">Gesundheitswesen</doc:name>
+            <rapla:category key="c1">
+               <doc:name lang="de">Arztassistent</doc:name>
+            </rapla:category>
+         </rapla:category>
+         <rapla:category key="T">
+            <doc:name lang="de">Technik</doc:name>
+            <rapla:category key="c1">
+               <doc:name lang="de">Elektrotechnik</doc:name>
+            </rapla:category>
+            <rapla:category key="TI">
+               <doc:name lang="de">Informatik</doc:name>
+            </rapla:category>
+            <rapla:category key="c3">
+               <doc:name lang="de">Maschinenbau</doc:name>
+            </rapla:category>
+            <rapla:category key="c4">
+               <doc:name lang="de">Mechatronik</doc:name>
+            </rapla:category>
+            <rapla:category key="c5">
+               <doc:name lang="de">Papiertechnik</doc:name>
+            </rapla:category>
+            <rapla:category key="c6">
+               <doc:name lang="de">Sicherheitswesen</doc:name>
+            </rapla:category>
+            <rapla:category key="c7">
+               <doc:name lang="de">Wirtschaftsingenieurwesen</doc:name>
+            </rapla:category>
+         </rapla:category>
+         <rapla:category key="W">
+            <doc:name lang="de">Wirtschaft</doc:name>
+            <rapla:category key="BK">
+               <doc:name lang="de">BWL-Bank</doc:name>
+            </rapla:category>
+            <rapla:category key="HD">
+               <doc:name lang="de">BWL-Handel</doc:name>
+            </rapla:category>
+            <rapla:category key="IB">
+               <doc:name lang="de">BWL-International Business</doc:name>
+            </rapla:category>
+            <rapla:category key="IN">
+               <doc:name lang="de">BWL-Industrie</doc:name>
+            </rapla:category>
+            <rapla:category key="SP">
+               <doc:name lang="de">BWL-Steuern- und Prüfungswesen</doc:name>
+            </rapla:category>
+            <rapla:category key="UN">
+               <doc:name lang="de">Unternehmertum</doc:name>
+            </rapla:category>
+            <rapla:category key="VS">
+               <doc:name lang="de">BWL-Versicherung</doc:name>
+            </rapla:category>
+            <rapla:category key="WI">
+               <doc:name lang="de">Wirtschaftsinformatik</doc:name>
+            </rapla:category>
+         </rapla:category>
+      </rapla:category>
+      <rapla:category key="c1">
+         <doc:name lang="de">Raumarten</doc:name>
+         <rapla:category key="c2">
+            <doc:name lang="de">Hörsaal</doc:name>
+         </rapla:category>
+         <rapla:category key="c1">
+            <doc:name lang="de">Labor</doc:name>
+         </rapla:category>
+         <rapla:category key="c3">
+            <doc:name lang="de">PC Raum</doc:name>
+         </rapla:category>
+         <rapla:category key="c4">
+            <doc:name lang="de">CAD</doc:name>
+         </rapla:category>
+         <rapla:category key="c5">
+            <doc:name lang="de">Extern</doc:name>
+         </rapla:category>
+         <rapla:category key="c6">
+            <doc:name lang="de">Besprechungsraum</doc:name>
+         </rapla:category>
+         <rapla:category key="c7">
+            <doc:name lang="de">Planspiellabor</doc:name>
+         </rapla:category>
+         <rapla:category key="c8">
+            <doc:name lang="de">Gruppenarbeitsraum</doc:name>
+         </rapla:category>
+      </rapla:category>
+      <rapla:category key="c3">
+         <doc:name lang="de">Studiengangskennzeichen</doc:name>
+         <rapla:category key="c1">
+            <doc:name lang="de">Gesundheitswesen</doc:name>
+            <rapla:category key="c1">
+               <doc:name lang="de">PA</doc:name>
+            </rapla:category>
+         </rapla:category>
+         <rapla:category key="c3">
+            <doc:name lang="de">Technik</doc:name>
+            <rapla:category key="c1">
+               <doc:name lang="de">EL</doc:name>
+            </rapla:category>
+            <rapla:category key="c2">
+               <doc:name lang="de">INF</doc:name>
+            </rapla:category>
+            <rapla:category key="c3">
+               <doc:name lang="de">MB</doc:name>
+            </rapla:category>
+            <rapla:category key="c4">
+               <doc:name lang="de">MT</doc:name>
+            </rapla:category>
+            <rapla:category key="c5">
+               <doc:name lang="de">PT</doc:name>
+            </rapla:category>
+            <rapla:category key="c6">
+               <doc:name lang="de">SHE</doc:name>
+            </rapla:category>
+            <rapla:category key="c7">
+               <doc:name lang="de">WIW</doc:name>
+            </rapla:category>
+         </rapla:category>
+         <rapla:category key="c2">
+            <doc:name lang="de">Wirtschaft</doc:name>
+            <rapla:category key="c3">
+               <doc:name lang="de">BK</doc:name>
+            </rapla:category>
+            <rapla:category key="c4">
+               <doc:name lang="de">HD</doc:name>
+            </rapla:category>
+            <rapla:category key="c5">
+               <doc:name lang="de">IB</doc:name>
+            </rapla:category>
+            <rapla:category key="c6">
+               <doc:name lang="de">IN</doc:name>
+            </rapla:category>
+            <rapla:category key="c7">
+               <doc:name lang="de">SP</doc:name>
+            </rapla:category>
+            <rapla:category key="c2">
+               <doc:name lang="de">VS</doc:name>
+            </rapla:category>
+            <rapla:category key="c1">
+               <doc:name lang="de">WI</doc:name>
+            </rapla:category>
+            <rapla:category key="c8">
+               <doc:name lang="de">UN</doc:name>
+            </rapla:category>
+         </rapla:category>
+      </rapla:category>
+      <rapla:category key="c4">
+         <doc:name lang="de">Sprachen</doc:name>
+         <rapla:category key="c1">
+            <doc:name lang="de">DE</doc:name>
+         </rapla:category>
+         <rapla:category key="c2">
+            <doc:name lang="de">EN</doc:name>
+         </rapla:category>
+         <rapla:category key="c3">
+            <doc:name lang="de">ES</doc:name>
+         </rapla:category>
+      </rapla:category>
+      <rapla:category key="c5">
+         <doc:name lang="de">Prüfungsart</doc:name>
+         <rapla:category key="c1">
+            <doc:name lang="de">Mündlich</doc:name>
+         </rapla:category>
+         <rapla:category key="c2">
+            <doc:name lang="de">Schriftlich</doc:name>
+         </rapla:category>
+      </rapla:category>
+      <rapla:category key="c6">
+         <doc:name lang="de">Fakultäten</doc:name>
+         <rapla:category key="c3">
+            <doc:name lang="de">Gesundheitswesen</doc:name>
+         </rapla:category>
+         <rapla:category key="c1">
+            <doc:name lang="de">Technik</doc:name>
+         </rapla:category>
+         <rapla:category key="c2">
+            <doc:name lang="de">Wirtschaft</doc:name>
+         </rapla:category>
+      </rapla:category>
+      <rapla:category key="c7">
+         <doc:name lang="de">Farben</doc:name>
+         <rapla:category key="c1">
+            <doc:name lang="de">rot</doc:name>
+            <doc:annotations>
+               <rapla:annotation key="color">#ff0000</rapla:annotation>
+            </doc:annotations>
+         </rapla:category>
+         <rapla:category key="c2">
+            <doc:name lang="de">hellgrau</doc:name>
+            <doc:annotations>
+               <rapla:annotation key="color">#EEEEEE</rapla:annotation>
+            </doc:annotations>
+         </rapla:category>
+         <rapla:category key="c3">
+            <doc:name lang="de">grau</doc:name>
+            <doc:annotations>
+               <rapla:annotation key="color">#CCCCCC</rapla:annotation>
+            </doc:annotations>
+         </rapla:category>
+      </rapla:category>
+      <rapla:category key="c8">
+         <doc:name lang="de">Marker</doc:name>
+         <rapla:category key="c1">
+            <doc:name lang="de">International Course</doc:name>
+         </rapla:category>
+      </rapla:category>
+      <rapla:category key="c9">
+         <doc:name lang="de">Gebäudeflügel</doc:name>
+         <rapla:category key="c1">
+            <doc:name lang="de">A</doc:name>
+         </rapla:category>
+         <rapla:category key="c2">
+            <doc:name lang="de">B</doc:name>
+         </rapla:category>
+         <rapla:category key="c3">
+            <doc:name lang="de">C</doc:name>
+         </rapla:category>
+         <rapla:category key="c4">
+            <doc:name lang="de">D</doc:name>
+         </rapla:category>
+         <rapla:category key="c5">
+            <doc:name lang="de">E</doc:name>
+         </rapla:category>
+         <rapla:category key="c6">
+            <doc:name lang="de">F</doc:name>
+         </rapla:category>
+         <rapla:category key="c7">
+            <doc:name lang="de">G</doc:name>
+         </rapla:category>
+         <rapla:category key="c8">
+            <doc:name lang="de">X-</doc:name>
+         </rapla:category>
+      </rapla:category>
+      <rapla:category key="c10">
+         <doc:name lang="de">Jahrgänge</doc:name>
+         <rapla:category key="c4">
+            <doc:name lang="de">2011</doc:name>
+         </rapla:category>
+         <rapla:category key="c1">
+            <doc:name lang="de">2012</doc:name>
+         </rapla:category>
+         <rapla:category key="c2">
+            <doc:name lang="de">2013</doc:name>
+         </rapla:category>
+         <rapla:category key="c3">
+            <doc:name lang="de">2014</doc:name>
+         </rapla:category>
+      </rapla:category>
+   </rapla:categories>
+
+   <relax:grammar>
+      <relax:define name="reservation2">
+         <relax:element name="dynatt:reservation2">
+            <doc:name lang="de">Lehrveranstaltung</doc:name>
+            <doc:annotations>
+               <rapla:annotation key="classification-type">reservation</rapla:annotation>
+               <rapla:annotation key="nameformat">{title}</rapla:annotation>
+            </doc:annotations>
+            <relax:element name="title">
+               <doc:name lang="de">Titel</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+            <relax:element name="a3">
+               <doc:name lang="de">Sprache</doc:name>
+               <relax:data type="rapla:category"/>
+               <rapla:constraint name="root-category">category[key='c4']</rapla:constraint>
+               <rapla:default>category[key='c4']/category[key='c1']</rapla:default>
+            </relax:element>
+            <relax:element name="a5">
+               <doc:name lang="de">Studiengang</doc:name>
+               <relax:data type="rapla:category"/>
+               <rapla:constraint name="root-category">category[key='c3']</rapla:constraint>
+            </relax:element>
+            <relax:element name="a2">
+               <doc:name lang="de">endgültig</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="edit-view">no-view</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="boolean"/>
+               <rapla:default>false</rapla:default>
+            </relax:element>
+            <relax:element name="permission_modify">
+               <doc:name lang="de">Änderungen erlauben</doc:name>
+               <relax:data type="rapla:category"/>
+               <rapla:constraint name="root-category">category[key='user-groups']/category[key='c14']</rapla:constraint>
+            </relax:element>
+            <relax:element name="a4">
+               <doc:name lang="de">Gepl. Vorlesungsstunden</doc:name>
+               <relax:data type="int"/>
+               <rapla:default>0</rapla:default>
+            </relax:element>
+            <relax:element name="a1">
+               <doc:name lang="de">Dozent</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+                  <rapla:annotation key="edit-view">no-view</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+            <relax:element name="color">
+               <doc:name lang="de">Farbe</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="edit-view">no-view</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="rapla:category"/>
+               <rapla:constraint name="root-category">category[key='c7']</rapla:constraint>
+               <rapla:default>category[key='c7']/category[key='c2']</rapla:default>
+            </relax:element>
+            <relax:element name="a6">
+               <doc:name lang="de">Planungsnotiz</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">40</rapla:annotation>
+                  <rapla:annotation key="expected-rows">2</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+         </relax:element>
+      </relax:define>
+
+      <relax:define name="reservation4">
+         <relax:element name="dynatt:reservation4">
+            <doc:name lang="de">Prüfung</doc:name>
+            <doc:annotations>
+               <rapla:annotation key="classification-type">reservation</rapla:annotation>
+               <rapla:annotation key="nameformat">{title} {a3}</rapla:annotation>
+            </doc:annotations>
+            <relax:element name="title">
+               <doc:name lang="de">Titel</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+            <relax:element name="a2">
+               <doc:name lang="de">Art</doc:name>
+               <relax:data type="rapla:category"/>
+               <rapla:constraint name="root-category">category[key='c5']</rapla:constraint>
+            </relax:element>
+            <relax:element name="a3">
+               <doc:name lang="de">Vorlesung</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+            <relax:element name="a1">
+               <doc:name lang="de">Aufsicht</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+                  <rapla:annotation key="edit-view">no-view</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+            <relax:element name="color">
+               <doc:name lang="de">Farbe</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+                  <rapla:annotation key="edit-view">no-view</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default>#FF0000</rapla:default>
+            </relax:element>
+            <relax:element name="a4">
+               <doc:name lang="de">Planungsnotiz</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">40</rapla:annotation>
+                  <rapla:annotation key="expected-rows">2</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+            <relax:element name="permission_modify">
+               <doc:name lang="de">Änderungen erlauben</doc:name>
+               <relax:data type="rapla:category"/>
+               <rapla:constraint name="root-category">category[key='user-groups']</rapla:constraint>
+            </relax:element>
+         </relax:element>
+      </relax:define>
+
+      <relax:define name="xxxxx">
+         <relax:element name="dynatt:xxxxx">
+            <doc:name lang="de">Sonstiger Termin</doc:name>
+            <doc:annotations>
+               <rapla:annotation key="colors">rapla:automated</rapla:annotation>
+               <rapla:annotation key="classification-type">reservation</rapla:annotation>
+               <rapla:annotation key="nameformat">{title}</rapla:annotation>
+            </doc:annotations>
+            <relax:element name="title">
+               <doc:name lang="de">Titel</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+            <relax:element name="a1">
+               <doc:name lang="de">Planungsnotiz</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">40</rapla:annotation>
+                  <rapla:annotation key="expected-rows">2</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+         </relax:element>
+      </relax:define>
+
+      <relax:define name="kurs">
+         <relax:element name="dynatt:kurs">
+            <doc:name lang="de">Kurs</doc:name>
+            <doc:annotations>
+               <rapla:annotation key="colors">rapla:automated</rapla:annotation>
+               <rapla:annotation key="classification-type">resource</rapla:annotation>
+               <rapla:annotation key="nameformat">{key(parent(studiengang))}{substring(key(studiengang),0,2)}{substring(jahrgang,2,4)}{name}</rapla:annotation>
+            </doc:annotations>
+            <relax:element name="name">
+               <doc:name lang="de">Kursname</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+            </relax:element>
+            <relax:element name="studiengang">
+               <doc:name lang="de">Studiengang</doc:name>
+               <relax:data type="rapla:category"/>
+               <rapla:constraint name="root-category">category[key='c2']</rapla:constraint>
+            </relax:element>
+            <relax:element name="jahrgang">
+               <doc:name lang="de">Jahrgang</doc:name>
+               <relax:data type="rapla:category"/>
+               <rapla:constraint name="root-category">category[key='c10']</rapla:constraint>
+               <rapla:default>category[key='c10']/category[key='c1']</rapla:default>
+            </relax:element>
+            <relax:element name="a3">
+               <doc:name lang="de">Anzahl Studierender</doc:name>
+               <relax:data type="int"/>
+               <rapla:default>0</rapla:default>
+            </relax:element>
+            <relax:element name="a1">
+               <doc:name lang="de">Fachrichtung</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+                  <rapla:annotation key="edit-view">no-view</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+            <relax:element name="raum">
+               <doc:name lang="de">Raum</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+            </relax:element>
+         </relax:element>
+      </relax:define>
+
+      <relax:define name="honorarkraft">
+         <relax:element name="dynatt:honorarkraft">
+            <doc:name lang="de">Honorarkräfte</doc:name>
+            <doc:annotations>
+               <rapla:annotation key="colors">rapla:automated</rapla:annotation>
+               <rapla:annotation key="classification-type">person</rapla:annotation>
+               <rapla:annotation key="nameformat">{surname}, {forename}</rapla:annotation>
+            </doc:annotations>
+            <relax:element name="surname">
+               <doc:name lang="de">Nachname</doc:name>
+               <relax:data type="string"/>
+            </relax:element>
+            <relax:element name="forename">
+               <doc:name lang="de">Vorname</doc:name>
+               <relax:data type="string"/>
+            </relax:element>
+            <relax:element name="title">
+               <doc:name lang="de">Titel</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+            <relax:element name="email">
+               <doc:name lang="de">E-Mail</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">100</rapla:annotation>
+                  <rapla:annotation key="edit-view">no-view</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+            <relax:element name="a4">
+               <doc:name lang="de">Studiengang</doc:name>
+               <relax:data type="rapla:category"/>
+               <rapla:constraint name="root-category">category[key='c2']</rapla:constraint>
+            </relax:element>
+            <relax:element name="a3">
+               <doc:name lang="de">Ansprechpartner</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+            <relax:element name="a1">
+               <doc:name lang="de">Fachrichtung</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+                  <rapla:annotation key="edit-view">no-view</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+         </relax:element>
+      </relax:define>
+
+      <relax:define name="raum">
+         <relax:element name="dynatt:raum">
+            <doc:name lang="de">Raum</doc:name>
+            <doc:annotations>
+               <rapla:annotation key="colors">rapla:automated</rapla:annotation>
+               <rapla:annotation key="classification-type">resource</rapla:annotation>
+               <rapla:annotation key="nameformat">{fluegel}{raumnr} {raumart} {studiengang}</rapla:annotation>
+            </doc:annotations>
+            <relax:element name="fluegel">
+               <doc:name lang="de">Flügel</doc:name>
+               <relax:data type="rapla:category"/>
+               <rapla:constraint name="root-category">category[key='c9']</rapla:constraint>
+            </relax:element>
+            <relax:element name="raumnr">
+               <doc:name lang="de">Raum-Nr</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+            </relax:element>
+            <relax:element name="raumart">
+               <doc:name lang="de">Raumart</doc:name>
+               <relax:data type="rapla:category"/>
+               <rapla:constraint name="root-category">category[key='c1']</rapla:constraint>
+            </relax:element>
+            <relax:element name="studiengang">
+               <doc:name lang="de">Studiengang</doc:name>
+               <relax:data type="rapla:category"/>
+               <rapla:constraint name="root-category">category[key='c2']</rapla:constraint>
+            </relax:element>
+            <relax:element name="a1">
+               <doc:name lang="de">Kapazität</doc:name>
+               <relax:data type="int"/>
+            </relax:element>
+            <relax:element name="a2">
+               <doc:name lang="de">Beamer</doc:name>
+               <relax:data type="boolean"/>
+               <rapla:default>false</rapla:default>
+            </relax:element>
+            <relax:element name="a8">
+               <doc:name lang="de">Multimediaausstattung</doc:name>
+               <relax:data type="boolean"/>
+               <rapla:default>false</rapla:default>
+            </relax:element>
+            <relax:element name="a4">
+               <doc:name lang="de">Fläche</doc:name>
+               <relax:data type="int"/>
+            </relax:element>
+            <relax:element name="a3">
+               <doc:name lang="de">Beschreibung</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+                  <rapla:annotation key="edit-view">no-view</rapla:annotation>
+                  <rapla:annotation key="expected-rows">2</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+            </relax:element>
+            <relax:element name="name">
+               <doc:name lang="de">Zusatzinfo</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+                  <rapla:annotation key="expected-rows">2</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+            </relax:element>
+            <relax:element name="aufzug">
+               <doc:name lang="de">Aufzug</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+            </relax:element>
+         </relax:element>
+      </relax:define>
+
+      <relax:define name="professor">
+         <relax:element name="dynatt:professor">
+            <doc:name lang="de">ProfessorInnen</doc:name>
+            <doc:annotations>
+               <rapla:annotation key="colors">rapla:automated</rapla:annotation>
+               <rapla:annotation key="classification-type">person</rapla:annotation>
+               <rapla:annotation key="nameformat">{surname}, {forename}</rapla:annotation>
+            </doc:annotations>
+            <relax:element name="surname">
+               <doc:name lang="de">Nachname</doc:name>
+               <relax:data type="string"/>
+            </relax:element>
+            <relax:element name="forename">
+               <doc:name lang="de">Vorname</doc:name>
+               <relax:data type="string"/>
+            </relax:element>
+            <relax:element name="title">
+               <doc:name lang="de">Titel</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+            <relax:element name="email">
+               <doc:name lang="de">E-Mail</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">120</rapla:annotation>
+                  <rapla:annotation key="edit-view">no-view</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+            <relax:element name="abteilung">
+               <doc:name lang="de">Abteilung</doc:name>
+               <relax:data type="rapla:category"/>
+               <rapla:constraint name="root-category">category[key='c2']</rapla:constraint>
+            </relax:element>
+            <relax:element name="telefon">
+               <doc:name lang="de">Telefon</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+            </relax:element>
+            <relax:element name="fluegel">
+               <doc:name lang="de">Flügel</doc:name>
+               <relax:data type="rapla:category"/>
+               <rapla:constraint name="root-category">category[key='c9']</rapla:constraint>
+            </relax:element>
+            <relax:element name="raum">
+               <doc:name lang="de">Raum</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+            </relax:element>
+         </relax:element>
+      </relax:define>
+
+      <relax:define name="mitarbeiter">
+         <relax:element name="dynatt:mitarbeiter">
+            <doc:name lang="de">MitarbeiterInnen</doc:name>
+            <doc:annotations>
+               <rapla:annotation key="colors">rapla:automated</rapla:annotation>
+               <rapla:annotation key="classification-type">person</rapla:annotation>
+               <rapla:annotation key="nameformat">{surname}, {forename}</rapla:annotation>
+            </doc:annotations>
+            <relax:element name="surname">
+               <doc:name lang="de">Nachname</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+            <relax:element name="forename">
+               <doc:name lang="de">Vorname</doc:name>
+               <relax:data type="string"/>
+            </relax:element>
+            <relax:element name="title">
+               <doc:name lang="de">Titel</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+            <relax:element name="email">
+               <doc:name lang="de">E-Mail</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">120</rapla:annotation>
+                  <rapla:annotation key="edit-view">no-view</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+            <relax:element name="raum">
+               <doc:name lang="de">Raum</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+            </relax:element>
+         </relax:element>
+      </relax:define>
+
+      <relax:define name="resource3">
+         <relax:element name="dynatt:resource3">
+            <doc:name lang="de">Raumaustattung</doc:name>
+            <doc:annotations>
+               <rapla:annotation key="classification-type">resource</rapla:annotation>
+               <rapla:annotation key="nameformat">{name}</rapla:annotation>
+            </doc:annotations>
+            <relax:element name="name">
+               <doc:name lang="de">Name</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+               <rapla:default></rapla:default>
+            </relax:element>
+            <relax:element name="last-modified">
+               <doc:name lang="de">Zuletzt bearbeitet</doc:name>
+               <doc:name lang="en">Last-Modified</doc:name>
+               <doc:name lang="fr">en dernier changé</doc:name>
+               <relax:data type="string"/>
+            </relax:element>
+         </relax:element>
+      </relax:define>
+
+      <relax:define name="sonstiges">
+         <relax:element name="dynatt:sonstiges">
+            <doc:name lang="de">Sonstiges</doc:name>
+            <doc:annotations>
+               <rapla:annotation key="colors">rapla:automated</rapla:annotation>
+               <rapla:annotation key="classification-type">resource</rapla:annotation>
+               <rapla:annotation key="nameformat">{name}</rapla:annotation>
+            </doc:annotations>
+            <relax:element name="name">
+               <doc:name lang="de">Name</doc:name>
+               <relax:data type="string"/>
+            </relax:element>
+            <relax:element name="raumart">
+               <doc:name lang="de">Raumart</doc:name>
+               <relax:data type="rapla:category"/>
+               <rapla:constraint name="root-category">category[key='c1']</rapla:constraint>
+            </relax:element>
+            <relax:element name="raum">
+               <doc:name lang="de">Raum</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+            </relax:element>
+            <relax:element name="info">
+               <doc:name lang="de">info</doc:name>
+               <doc:annotations>
+                  <rapla:annotation key="expected-columns">30</rapla:annotation>
+               </doc:annotations>
+               <relax:data type="string"/>
+            </relax:element>
+         </relax:element>
+      </relax:define>
+
+      <relax:start>
+         <relax:choice>
+            <relax:ref name="reservation2"/>
+            <relax:ref name="reservation4"/>
+            <relax:ref name="xxxxx"/>
+            <relax:ref name="kurs"/>
+            <relax:ref name="honorarkraft"/>
+            <relax:ref name="raum"/>
+            <relax:ref name="professor"/>
+            <relax:ref name="mitarbeiter"/>
+            <relax:ref name="resource3"/>
+            <relax:ref name="sonstiges"/>
+         </relax:choice>
+      </relax:start>
+   </relax:grammar>
+
+   <rapla:preferences>
+      <rapla:entry key="org.rapla.plugin.terminal.uebersichtTitle" value="Kurse mit aktuellen Veranstaltungen (Test)"/>
+      <rapla:entry key="org.rapla.plugin.mail.DefaultSender" value="rapla"/>
+      <rapla:entry key="org.rapla.calendarview">
+         <rapla:config>
+            <calendar-options>
+               <color>resources</color>
+               <worktime>8-18</worktime>
+               <exceptions-visible>true</exceptions-visible>
+               <rows-per-hour>4</rows-per-hour>
+               <exclude-days/>
+               <days-in-weekview>7</days-in-weekview>
+               <first-day-of-week>2</first-day-of-week>
+               <minimum-block-width>0</minimum-block-width>
+            </calendar-options>
+         </rapla:config>
+      </rapla:entry>
+      <rapla:entry key="org.rapla.plugin">
+         <rapla:config>
+            <pluginlist>
+               <plugin enabled="false" class="org.rapla.plugin.periodwizard.PeriodWizardPlugin"/>
+               <plugin enabled="true" class="org.rapla.plugin.autoexport.AutoExportPlugin" show_calendar_list_in_html_menu="false"/>
+               <plugin enabled="true" class="org.rapla.plugin.notification.NotificationPlugin"/>
+               <plugin enabled="false" class="org.rapla.plugin.periodview.PeriodViewPlugin"/>
+               <plugin enabled="true" class="org.rapla.plugin.tableview.TableViewPlugin"/>
+               <plugin enabled="true" class="org.rapla.plugin.weekview.WeekViewPlugin"/>
+               <plugin enabled="true" class="org.rapla.plugin.monthview.MonthViewPlugin"/>
+               <plugin enabled="true" class="org.rapla.plugin.mail.MailPlugin" usemailapi="true">
+                  <smtp-port>25</smtp-port>
+                  <smtp-host>localhost</smtp-host>
+               </plugin>
+               <plugin connectionURL="ldap://localhost:389" connectionPassword="secret" enabled="false" userSearch="(uid={0})" userPassword="userPassword" class="org.rapla.plugin.jndi.JNDIPlugin" contextFactory="com.sun.jndi.ldap.LdapCtxFactory" connectionName="cn=Manager,dc=mycompany,dc=com" userBase="ou=people,dc=mycompany,dc=com" userCn="cn" userMail="mail"/>
+               <plugin enabled="false" class="org.rapla.plugin.periodcopy.PeriodCopyPlugin"/>
+               <plugin enabled="false" class="org.rapla.plugin.appointmentmarker.AppointmentMarkerPlugin">
+                  <marker-label>mark</marker-label>
+               </plugin>
+               <plugin enabled="true" class="org.rapla.plugin.archiver.ArchiverPlugin">
+                  <remove-older-than>400</remove-older-than>
+               </plugin>
+               <plugin enabled="true" class="org.rapla.export2ical.Export2iCalPlugin">
+                  <timezone>Europe/Berlin</timezone>
+                  <days_before>30</days_before>
+                  <days_after>204</days_after>
+                  <based_on_autoexport>true</based_on_autoexport>
+                  <global_interval>false</global_interval>
+                  <last_modified_intervall>5</last_modified_intervall>
+                  <first_plugin_startdate>2010-10-05</first_plugin_startdate>
+               </plugin>
+               <plugin enabled="true" class="org.rapla.plugin.compactweekview.CompactWeekViewPlugin"/>
+               <plugin enabled="true" class="org.rapla.plugin.export2ical.Export2iCalPlugin">
+                  <timezone>Europe/Berlin</timezone>
+                  <days_before>30</days_before>
+                  <days_after>180</days_after>
+                  <global_interval>true</global_interval>
+                  <last_modified_intervall>5</last_modified_intervall>
+                  <first_plugin_startdate>2011-07-04</first_plugin_startdate>
+               </plugin>
+               <plugin enabled="true" class="org.rapla.plugin.importusers.ImportUsersPlugin"/>
+               <plugin enabled="false" class="org.rapla.plugin.occupationview.OccupationPlugin"/>
+               <plugin enabled="true" class="org.rapla.plugin.appointmentcounter.AppointmentCounterPlugin"/>
+               <plugin enabled="true" enable_user_color="false" class="org.rapla.plugin.mobile.MobilePlugin"/>
+               <plugin enabled="true" class="org.rapla.plugin.dhbwterminal.TerminalPlugin">
+                  <ueberschrift>Kurse mit aktuellen Veranstaltungen (test)</ueberschrift>
+               </plugin>
+               <plugin enabled="true" class="org.rapla.plugin.setowner.SetOwnerPlugin"/>
+            </pluginlist>
+         </rapla:config>
+      </rapla:entry>
+      <rapla:entry key="org.rapla.title" value="DHBW Ressourcenplaner powered by RAPLA (Produktiv)"/>
+      <rapla:entry key="org.rapla.refreshInterval" value="20000"/>
+      <rapla:entry key="org.rapla.plugin.export2ical">
+         <rapla:config>
+            <pluginlist>
+               <plugin enabled="true" class="org.rapla.plugin.periodwizard.PeriodWizardPlugin"/>
+               <plugin enabled="true" class="org.rapla.plugin.autoexport.AutoExportPlugin" show_calendar_list_in_html_menu="false"/>
+               <plugin enabled="true" class="org.rapla.plugin.notification.NotificationPlugin"/>
+               <plugin enabled="true" class="org.rapla.plugin.periodview.PeriodViewPlugin"/>
+               <plugin enabled="true" class="org.rapla.plugin.tableview.TableViewPlugin"/>
+               <plugin enabled="true" class="org.rapla.plugin.weekview.WeekViewPlugin"/>
+               <plugin enabled="true" class="org.rapla.plugin.monthview.MonthViewPlugin"/>
+               <plugin enabled="true" class="org.rapla.plugin.mail.MailPlugin" usemailapi="false">
+                  <smtp-port>25</smtp-port>
+                  <smtp-host>localhost</smtp-host>
+               </plugin>
+               <plugin connectionURL="ldap://localhost:389" connectionPassword="secret" enabled="false" userSearch="(uid={0})" userPassword="userPassword" class="org.rapla.plugin.jndi.JNDIPlugin" contextFactory="com.sun.jndi.ldap.LdapCtxFactory" connectionName="cn=Manager,dc=mycompany,dc=com" userBase="ou=people,dc=mycompany,dc=com" userCn="cn" userMail="mail"/>
+               <plugin enabled="true" class="org.rapla.plugin.periodcopy.PeriodCopyPlugin"/>
+               <plugin enabled="false" class="org.rapla.plugin.appointmentmarker.AppointmentMarkerPlugin"/>
+               <plugin enabled="true" class="org.rapla.plugin.archiver.ArchiverPlugin">
+                  <remove-older-than>400</remove-older-than>
+               </plugin>
+               <plugin enabled="true" class="org.rapla.export2ical.Export2iCalPlugin">
+                  <timezone>Europe/Berlin</timezone>
+                  <days_before>30</days_before>
+                  <days_after>204</days_after>
+                  <based_on_autoexport>true</based_on_autoexport>
+                  <global_interval>false</global_interval>
+                  <last_modified_intervall>5</last_modified_intervall>
+                  <first_plugin_startdate>2010-10-05</first_plugin_startdate>
+               </plugin>
+               <plugin enabled="true" class="org.rapla.plugin.compactweekview.CompactWeekViewPlugin"/>
+            </pluginlist>
+         </rapla:config>
+      </rapla:entry>
+   </rapla:preferences>
+
+   <rapla:users>
+      <!-- Users of the system -->
+      <rapla:user id="user_1" username="admin" password="" name="" email="" isAdmin="true">
+         <rapla:preferences>
+            <rapla:entry key="org.rapla.DefaultSelection">
+               <rapla:calendar title="" view="week" date="2012-12-13" startdate="2012-11-19" enddate="2012-12-17">
+                  <selected>
+                     <rapla:map>
+                        <rapla:mapentry key="0">
+                           <rapla:resource idref="resource_1"/>
+                        </rapla:mapentry>
+                     </rapla:map>
+                  </selected>
+                  <options>
+                     <rapla:map>
+                        <rapla:mapentry key="org.rapla.plugin.abstractcalendar.save_selected_date" value="false"/>
+                        <rapla:mapentry key="org.rapla.plugin.urlencryption.selected" value="false"/>
+                        <rapla:mapentry key="org.rapla.plugin.autoexport.selected" value="true"/>
+                        <rapla:mapentry key="org.rapla.plugin.export2ical.selected" value="false"/>
+                        <rapla:mapentry key="org.rapla.plugin.abstractcalendar.show_navigation" value="true"/>
+                     </rapla:map>
+                  </options>
+               </rapla:calendar>
+            </rapla:entry>
+            <rapla:entry key="org.rapla.plugin.autoexport">
+               <rapla:map>
+                  <rapla:mapentry key="test">
+                     <rapla:calendar title="" view="week" date="2012-11-20" startdate="2012-11-19" enddate="2012-11-26">
+                        <selected>
+                           <rapla:map>
+                              <rapla:mapentry key="0">
+                                 <rapla:resource idref="resource_2"/>
+                              </rapla:mapentry>
+                           </rapla:map>
+                        </selected>
+                        <options>
+                           <rapla:map>
+                              <rapla:mapentry key="org.rapla.plugin.abstractcalendar.save_selected_date" value="false"/>
+                              <rapla:mapentry key="org.rapla.plugin.urlencryption.selected" value="false"/>
+                              <rapla:mapentry key="org.rapla.plugin.autoexport.selected" value="true"/>
+                              <rapla:mapentry key="org.rapla.plugin.export2ical.selected" value="false"/>
+                              <rapla:mapentry key="org.rapla.plugin.abstractcalendar.show_navigation" value="true"/>
+                           </rapla:map>
+                        </options>
+                     </rapla:calendar>
+                  </rapla:mapentry>
+               </rapla:map>
+            </rapla:entry>
+            <rapla:entry key="org.rapla.plugin.notification.allocationlisteners">
+               <rapla:map>
+                  <rapla:mapentry key="1">
+                     <rapla:resource idref="resource_1"/>
+                  </rapla:mapentry>
+                  <rapla:mapentry key="0">
+                     <rapla:resource idref="resource_8"/>
+                  </rapla:mapentry>
+               </rapla:map>
+            </rapla:entry>
+         </rapla:preferences>
+      </rapla:user>
+      <rapla:user id="user_2" username="test" password="md5:098f6bcd4621d373cade4e832627b4f6" name="" email="" isAdmin="false">
+         <rapla:group key="category[key='modify-preferences']"/>
+         <rapla:group key="category[key='read-events-from-others']"/>
+         <rapla:preferences>
+            <rapla:entry key="org.rapla.DefaultSelection">
+               <rapla:calendar title="" view="week" date="2012-11-06" startdate="2012-11-05" enddate="2012-11-26">
+                  <selected>
+                     <rapla:map>
+                        <rapla:mapentry key="0">
+                           <rapla:resource idref="resource_1"/>
+                        </rapla:mapentry>
+                     </rapla:map>
+                  </selected>
+                  <options>
+                     <rapla:map>
+                        <rapla:mapentry key="org.rapla.plugin.abstractcalendar.save_selected_date" value="true"/>
+                        <rapla:mapentry key="org.rapla.plugin.autoexport.selected" value="false"/>
+                        <rapla:mapentry key="org.rapla.plugin.export2ical.selected" value="false"/>
+                        <rapla:mapentry key="org.rapla.plugin.abstractcalendar.show_navigation" value="true"/>
+                     </rapla:map>
+                  </options>
+               </rapla:calendar>
+            </rapla:entry>
+            <rapla:entry key="org.rapla.plugin.autoexport">
+               <rapla:map>
+                  <rapla:mapentry key="Test_2">
+                     <rapla:calendar title="" view="table" date="2012-12-25" startdate="2012-10-22" enddate="2013-04-22">
+                        <selected>
+                           <rapla:map>
+                              <rapla:mapentry key="0">
+                                 <rapla:dynamictype keyref="raum"/>
+                              </rapla:mapentry>
+                           </rapla:map>
+                        </selected>
+                        <options>
+                           <rapla:map>
+                              <rapla:mapentry key="org.rapla.plugin.abstractcalendar.save_selected_date" value="true"/>
+                              <rapla:mapentry key="org.rapla.plugin.autoexport.selected" value="false"/>
+                              <rapla:mapentry key="org.rapla.plugin.export2ical.selected" value="false"/>
+                              <rapla:mapentry key="org.rapla.plugin.abstractcalendar.show_navigation" value="true"/>
+                           </rapla:map>
+                        </options>
+                     </rapla:calendar>
+                  </rapla:mapentry>
+               </rapla:map>
+            </rapla:entry>
+         </rapla:preferences>
+      </rapla:user>
+      <rapla:user id="user_3" username="stele" name="" email="" isAdmin="false">
+         <rapla:group key="category[key='modify-preferences']"/>
+         <rapla:group key="category[key='read-events-from-others']"/>
+         <rapla:preferences>
+            <rapla:entry key="org.rapla.plugin.autoexport">
+               <rapla:map>
+                  <rapla:mapentry key="person">
+                     <rapla:calendar title="{allocatables}: {selectedDate}" view="day" date="2012-12-10" startdate="2012-12-03" enddate="2012-12-17">
+                        <selected>
+                           <rapla:map>
+                              <rapla:mapentry key="1">
+                                 <rapla:dynamictype keyref="professor"/>
+                              </rapla:mapentry>
+                              <rapla:mapentry key="0">
+                                 <rapla:dynamictype keyref="mitarbeiter"/>
+                              </rapla:mapentry>
+                           </rapla:map>
+                        </selected>
+                        <options>
+                           <rapla:map>
+                              <rapla:mapentry key="org.rapla.plugin.abstractcalendar.save_selected_date" value="false"/>
+                              <rapla:mapentry key="org.rapla.plugin.urlencryption.selected" value="false"/>
+                              <rapla:mapentry key="org.rapla.plugin.autoexport.selected" value="true"/>
+                              <rapla:mapentry key="org.rapla.plugin.export2ical.selected" value="false"/>
+                              <rapla:mapentry key="org.rapla.plugin.abstractcalendar.show_navigation" value="false"/>
+                           </rapla:map>
+                        </options>
+                     </rapla:calendar>
+                  </rapla:mapentry>
+                  <rapla:mapentry key="raum">
+                     <rapla:calendar title="Raum {allocatables}: {selectedDate}" view="day" date="2012-12-10" startdate="2012-12-03" enddate="2012-12-17">
+                        <selected>
+                           <rapla:map>
+                              <rapla:mapentry key="0">
+                                 <rapla:dynamictype keyref="raum"/>
+                              </rapla:mapentry>
+                           </rapla:map>
+                        </selected>
+                        <options>
+                           <rapla:map>
+                              <rapla:mapentry key="org.rapla.plugin.abstractcalendar.save_selected_date" value="false"/>
+                              <rapla:mapentry key="org.rapla.plugin.urlencryption.selected" value="false"/>
+                              <rapla:mapentry key="org.rapla.plugin.autoexport.selected" value="true"/>
+                              <rapla:mapentry key="org.rapla.plugin.export2ical.selected" value="false"/>
+                              <rapla:mapentry key="org.rapla.plugin.abstractcalendar.show_navigation" value="false"/>
+                           </rapla:map>
+                        </options>
+                     </rapla:calendar>
+                  </rapla:mapentry>
+                  <rapla:mapentry key="kurs">
+                     <rapla:calendar title="Kurs {allocatables}: {selectedDate}" view="day" date="2012-12-10" startdate="2012-12-03" enddate="2012-12-17">
+                        <selected>
+                           <rapla:map>
+                              <rapla:mapentry key="0">
+                                 <rapla:dynamictype keyref="kurs"/>
+                              </rapla:mapentry>
+                           </rapla:map>
+                        </selected>
+                        <options>
+                           <rapla:map>
+                              <rapla:mapentry key="org.rapla.plugin.abstractcalendar.save_selected_date" value="false"/>
+                              <rapla:mapentry key="org.rapla.plugin.urlencryption.selected" value="false"/>
+                              <rapla:mapentry key="org.rapla.plugin.autoexport.selected" value="true"/>
+                              <rapla:mapentry key="org.rapla.plugin.export2ical.selected" value="false"/>
+                              <rapla:mapentry key="org.rapla.plugin.abstractcalendar.show_navigation" value="false"/>
+                           </rapla:map>
+                        </options>
+                     </rapla:calendar>
+                  </rapla:mapentry>
+               </rapla:map>
+            </rapla:entry>
+         </rapla:preferences>
+      </rapla:user>
+   </rapla:users>
+
+   <rapla:resources>
+      <!-- resources -->
+      <rapla:resource id="resource_1" owner="user_1" created-at="2012-11-16" last-changed="2012-12-07" last-changed-by="user_1">
+         <dynatt:raum>
+            <dynatt:fluegel>category[key='c1']</dynatt:fluegel>
+            <dynatt:raumnr>12</dynatt:raumnr>
+            <dynatt:raumart>category[key='c2']</dynatt:raumart>
+            <dynatt:a1>16</dynatt:a1>
+            <dynatt:a2>false</dynatt:a2>
+            <dynatt:a8>false</dynatt:a8>
+            <dynatt:a4>27</dynatt:a4>
+         </dynatt:raum>
+         <rapla:permission/>
+         <rapla:permission user="user_3" access="read"/>
+      </rapla:resource>
+      <rapla:resource id="resource_2" owner="user_1" created-at="2012-11-20" last-changed="2012-12-07" last-changed-by="user_1">
+         <dynatt:raum>
+            <dynatt:fluegel>category[key='c3']</dynatt:fluegel>
+            <dynatt:raumnr>1</dynatt:raumnr>
+            <dynatt:raumart>category[key='c6']</dynatt:raumart>
+            <dynatt:a1>20</dynatt:a1>
+            <dynatt:a2>false</dynatt:a2>
+            <dynatt:a8>false</dynatt:a8>
+         </dynatt:raum>
+         <rapla:permission/>
+         <rapla:permission user="user_3" access="read"/>
+      </rapla:resource>
+      <rapla:resource id="resource_3" owner="user_1" created-at="2012-11-21" last-changed="2012-11-24" last-changed-by="user_1">
+         <dynatt:kurs>
+            <dynatt:name>B1</dynatt:name>
+            <dynatt:studiengang>category[key='W']/category[key='WI']</dynatt:studiengang>
+            <dynatt:jahrgang>category[key='c1']</dynatt:jahrgang>
+            <dynatt:a3>0</dynatt:a3>
+            <dynatt:a1></dynatt:a1>
+         </dynatt:kurs>
+         <rapla:permission/>
+      </rapla:resource>
+      <rapla:resource id="resource_5" owner="user_1" created-at="2012-11-21" last-changed="2012-11-24" last-changed-by="user_1">
+         <dynatt:kurs>
+            <dynatt:name>B2</dynatt:name>
+            <dynatt:studiengang>category[key='W']/category[key='WI']</dynatt:studiengang>
+            <dynatt:jahrgang>category[key='c4']</dynatt:jahrgang>
+            <dynatt:a3>0</dynatt:a3>
+            <dynatt:a1></dynatt:a1>
+         </dynatt:kurs>
+         <rapla:permission/>
+      </rapla:resource>
+      <rapla:resource id="resource_8" owner="user_1" created-at="2012-11-24" last-changed="2012-11-24">
+         <dynatt:sonstiges>
+            <dynatt:name>Rektorat</dynatt:name>
+            <dynatt:raumart>category[key='c6']</dynatt:raumart>
+            <dynatt:raum>C003</dynatt:raum>
+            <dynatt:info>Räume des Rektorats</dynatt:info>
+         </dynatt:sonstiges>
+         <rapla:permission/>
+      </rapla:resource>
+      <rapla:resource id="resource_9" owner="user_1" created-at="2012-12-07" last-changed="2012-12-07">
+         <dynatt:kurs>
+            <dynatt:name>A1</dynatt:name>
+            <dynatt:raum>C551</dynatt:raum>
+            <dynatt:studiengang>category[key='W']/category[key='WI']</dynatt:studiengang>
+            <dynatt:jahrgang>category[key='c4']</dynatt:jahrgang>
+            <dynatt:a3>0</dynatt:a3>
+            <dynatt:a1></dynatt:a1>
+         </dynatt:kurs>
+         <rapla:permission/>
+      </rapla:resource>
+      <rapla:resource id="resource_10" owner="user_1" created-at="2012-12-07" last-changed="2012-12-07" last-changed-by="user_1">
+         <dynatt:kurs>
+            <dynatt:name>K3</dynatt:name>
+            <dynatt:raum>C551</dynatt:raum>
+            <dynatt:studiengang>category[key='T']/category[key='TI']</dynatt:studiengang>
+            <dynatt:jahrgang>category[key='c1']</dynatt:jahrgang>
+            <dynatt:a3>0</dynatt:a3>
+            <dynatt:a1></dynatt:a1>
+         </dynatt:kurs>
+         <rapla:permission/>
+      </rapla:resource>
+      <rapla:resource id="resource_12" owner="user_1" created-at="2012-12-07" last-changed="2012-12-07" last-changed-by="user_1">
+         <dynatt:raum>
+            <dynatt:fluegel>category[key='c3']</dynatt:fluegel>
+            <dynatt:raumnr>402</dynatt:raumnr>
+            <dynatt:raumart>category[key='c6']</dynatt:raumart>
+            <dynatt:studiengang>category[key='W']</dynatt:studiengang>
+            <dynatt:a2>false</dynatt:a2>
+            <dynatt:a8>false</dynatt:a8>
+            <dynatt:a4>35</dynatt:a4>
+         </dynatt:raum>
+         <rapla:permission/>
+         <rapla:permission user="user_3" access="allocate"/>
+      </rapla:resource>
+      <rapla:person id="resource_4" owner="user_1" created-at="2012-11-21" last-changed="2012-12-20" last-changed-by="user_1">
+         <dynatt:professor>
+            <dynatt:surname>Küstermann</dynatt:surname>
+            <dynatt:forename>Roland</dynatt:forename>
+            <dynatt:title>Prof.</dynatt:title>
+            <dynatt:email>kuestermann@dhbw-karlsruhe.de</dynatt:email>
+            <dynatt:abteilung>category[key='W']/category[key='WI']</dynatt:abteilung>
+            <dynatt:telefon>+49 (0) 721 9735 – 940</dynatt:telefon>
+            <dynatt:raum>C552</dynatt:raum>
+         </dynatt:professor>
+         <rapla:permission/>
+      </rapla:person>
+      <rapla:person id="resource_11" owner="user_1" created-at="2012-12-07" last-changed="2012-12-20" last-changed-by="user_1">
+         <dynatt:mitarbeiter>
+            <dynatt:surname>Kohlhaas</dynatt:surname>
+            <dynatt:forename>Christopher</dynatt:forename>
+            <dynatt:title></dynatt:title>
+            <dynatt:email></dynatt:email>
+            <dynatt:raum>C551</dynatt:raum>
+         </dynatt:mitarbeiter>
+         <rapla:permission user="user_3" access="read"/>
+      </rapla:person>
+      <rapla:person id="resource_13" owner="user_1" created-at="2012-12-07" last-changed="2012-12-07" last-changed-by="user_1">
+         <dynatt:mitarbeiter>
+            <dynatt:surname>James</dynatt:surname>
+            <dynatt:forename>Bond</dynatt:forename>
+            <dynatt:title>007</dynatt:title>
+            <dynatt:email></dynatt:email>
+         </dynatt:mitarbeiter>
+         <rapla:permission/>
+         <rapla:permission user="user_3" access="denied"/>
+      </rapla:person>
+      <rapla:person id="resource_14" owner="user_1" created-at="2012-12-09" last-changed="2012-12-19" last-changed-by="user_1">
+         <dynatt:mitarbeiter>
+            <dynatt:surname>Hans</dynatt:surname>
+            <dynatt:forename>Peters</dynatt:forename>
+            <dynatt:title></dynatt:title>
+            <dynatt:email></dynatt:email>
+         </dynatt:mitarbeiter>
+         <rapla:permission access="read_no_allocation"/>
+         <rapla:permission user="user_3" access="read_no_allocation"/>
+      </rapla:person>
+
+   </rapla:resources>
+
+   <rapla:periods>
+   </rapla:periods>
+
+   <rapla:reservations>
+      <rapla:reservation id="reservation_1" owner="user_1" created-at="2012-11-17" last-changed="2012-12-07" last-changed-by="user_1">
+         <dynatt:reservation2>
+            <dynatt:title>Einführung in Java</dynatt:title>
+            <dynatt:a3>category[key='c1']</dynatt:a3>
+            <dynatt:a5>category[key='c2']/category[key='c1']</dynatt:a5>
+            <dynatt:a2>false</dynatt:a2>
+            <dynatt:a4>0</dynatt:a4>
+            <dynatt:a1></dynatt:a1>
+            <dynatt:color>category[key='c2']</dynatt:color>
+            <dynatt:a6></dynatt:a6>
+         </dynatt:reservation2>
+         <rapla:appointment start-date="2012-12-03" start-time="09:00:00" end-date="2012-12-03" end-time="11:00:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-04" start-time="09:00:00" end-date="2012-12-04" end-time="11:00:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-05" start-time="09:00:00" end-date="2012-12-05" end-time="11:00:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-06" start-time="09:00:00" end-date="2012-12-06" end-time="11:00:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-07" start-time="09:00:00" end-date="2012-12-07" end-time="11:00:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-08" start-time="09:00:00" end-date="2012-12-08" end-time="11:00:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-09" start-time="09:00:00" end-date="2012-12-09" end-time="11:00:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:allocate idref="resource_1"/>
+         <rapla:allocate idref="resource_5"/>
+         <rapla:allocate idref="resource_4"/>
+         <rapla:allocate idref="resource_10"/>
+      </rapla:reservation>
+      <rapla:reservation id="reservation_11" owner="user_1" created-at="2012-11-17" last-changed="2012-12-07" last-changed-by="user_1">
+         <dynatt:reservation2>
+            <dynatt:title>Objektorientiertes Programmieren</dynatt:title>
+            <dynatt:a3>category[key='c1']</dynatt:a3>
+            <dynatt:a5>category[key='c2']/category[key='c1']</dynatt:a5>
+            <dynatt:a2>false</dynatt:a2>
+            <dynatt:a4>0</dynatt:a4>
+            <dynatt:a1></dynatt:a1>
+            <dynatt:color>category[key='c2']</dynatt:color>
+            <dynatt:a6></dynatt:a6>
+         </dynatt:reservation2>
+         <rapla:appointment start-date="2012-12-03" start-time="11:15:00" end-date="2012-12-03" end-time="13:15:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-04" start-time="11:15:00" end-date="2012-12-04" end-time="13:15:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-05" start-time="11:15:00" end-date="2012-12-05" end-time="13:15:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-06" start-time="11:15:00" end-date="2012-12-06" end-time="13:15:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-07" start-time="11:15:00" end-date="2012-12-07" end-time="13:15:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-08" start-time="11:15:00" end-date="2012-12-08" end-time="13:15:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-09" start-time="11:15:00" end-date="2012-12-09" end-time="13:15:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:allocate idref="resource_1"/>
+         <rapla:allocate idref="resource_5"/>
+         <rapla:allocate idref="resource_4"/>
+         <rapla:allocate idref="resource_9"/>
+         <rapla:allocate idref="resource_3"/>
+      </rapla:reservation>
+      <rapla:reservation id="reservation_13" owner="user_1" created-at="2012-11-17" last-changed="2012-12-07" last-changed-by="user_1">
+         <dynatt:reservation2>
+            <dynatt:title>Betriebswirtschaftslehre</dynatt:title>
+            <dynatt:a3>category[key='c1']</dynatt:a3>
+            <dynatt:a5>category[key='c2']/category[key='c1']</dynatt:a5>
+            <dynatt:a2>false</dynatt:a2>
+            <dynatt:a4>0</dynatt:a4>
+            <dynatt:a1></dynatt:a1>
+            <dynatt:color>category[key='c2']</dynatt:color>
+            <dynatt:a6></dynatt:a6>
+         </dynatt:reservation2>
+         <rapla:appointment start-date="2012-12-03" start-time="13:30:00" end-date="2012-12-03" end-time="15:30:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-04" start-time="13:30:00" end-date="2012-12-04" end-time="15:30:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-05" start-time="13:30:00" end-date="2012-12-05" end-time="15:30:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-06" start-time="13:30:00" end-date="2012-12-06" end-time="15:30:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-07" start-time="13:30:00" end-date="2012-12-07" end-time="15:30:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-08" start-time="13:30:00" end-date="2012-12-08" end-time="15:30:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-09" start-time="13:30:00" end-date="2012-12-09" end-time="15:30:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:allocate idref="resource_4"/>
+         <rapla:allocate idref="resource_9"/>
+         <rapla:allocate idref="resource_10"/>
+         <rapla:allocate idref="resource_1"/>
+      </rapla:reservation>
+      <rapla:reservation id="reservation_15" owner="user_1" created-at="2012-11-17" last-changed="2012-12-09" last-changed-by="user_1">
+         <dynatt:reservation2>
+            <dynatt:title>Praktikum Rapla</dynatt:title>
+            <dynatt:a3>category[key='c1']</dynatt:a3>
+            <dynatt:a5>category[key='c2']/category[key='c1']</dynatt:a5>
+            <dynatt:a2>false</dynatt:a2>
+            <dynatt:a4>0</dynatt:a4>
+            <dynatt:a1></dynatt:a1>
+            <dynatt:color>category[key='c2']</dynatt:color>
+            <dynatt:a6></dynatt:a6>
+         </dynatt:reservation2>
+         <rapla:appointment start-date="2012-12-03" start-time="13:15:00" end-date="2012-12-03" end-time="15:45:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-04" start-time="13:15:00" end-date="2012-12-04" end-time="15:45:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-05" start-time="13:15:00" end-date="2012-12-05" end-time="15:45:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-06" start-time="13:15:00" end-date="2012-12-06" end-time="15:45:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-07" start-time="13:15:00" end-date="2012-12-07" end-time="15:15:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-08" start-time="13:15:00" end-date="2012-12-08" end-time="15:15:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-09" start-time="13:15:00" end-date="2012-12-09" end-time="15:15:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:allocate idref="resource_2"/>
+         <rapla:allocate idref="resource_5"/>
+         <rapla:allocate idref="resource_3"/>
+         <rapla:allocate idref="resource_11"/>
+      </rapla:reservation>
+      <rapla:reservation id="reservation_17" owner="user_1" created-at="2012-11-17" last-changed="2012-12-09" last-changed-by="user_1">
+         <dynatt:reservation2>
+            <dynatt:title>Praktikum Extreme Programming</dynatt:title>
+            <dynatt:a3>category[key='c1']</dynatt:a3>
+            <dynatt:a5>category[key='c2']/category[key='c1']</dynatt:a5>
+            <dynatt:a2>false</dynatt:a2>
+            <dynatt:a4>0</dynatt:a4>
+            <dynatt:a1></dynatt:a1>
+            <dynatt:color>category[key='c2']</dynatt:color>
+            <dynatt:a6></dynatt:a6>
+         </dynatt:reservation2>
+         <rapla:appointment start-date="2012-12-03" start-time="16:15:00" end-date="2012-12-03" end-time="18:15:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-04" start-time="16:15:00" end-date="2012-12-04" end-time="18:15:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-05" start-time="16:15:00" end-date="2012-12-05" end-time="18:15:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-06" start-time="16:15:00" end-date="2012-12-06" end-time="18:15:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-07" start-time="16:15:00" end-date="2012-12-07" end-time="18:15:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-08" start-time="16:15:00" end-date="2012-12-08" end-time="18:15:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-09" start-time="16:15:00" end-date="2012-12-09" end-time="18:15:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:allocate idref="resource_2"/>
+         <rapla:allocate idref="resource_5"/>
+         <rapla:allocate idref="resource_3"/>
+         <rapla:allocate idref="resource_10"/>
+         <rapla:allocate idref="resource_13"/>
+      </rapla:reservation>
+      <rapla:reservation id="reservation_19" owner="user_1" created-at="2012-11-17" last-changed="2012-12-07" last-changed-by="user_1">
+         <dynatt:reservation2>
+            <dynatt:title>Statistik</dynatt:title>
+            <dynatt:a3>category[key='c1']</dynatt:a3>
+            <dynatt:a5>category[key='c2']/category[key='c1']</dynatt:a5>
+            <dynatt:a2>false</dynatt:a2>
+            <dynatt:a4>0</dynatt:a4>
+            <dynatt:a1></dynatt:a1>
+            <dynatt:color>category[key='c2']</dynatt:color>
+            <dynatt:a6></dynatt:a6>
+         </dynatt:reservation2>
+         <rapla:appointment start-date="2012-12-03" start-time="15:45:00" end-date="2012-12-03" end-time="17:45:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-04" start-time="15:45:00" end-date="2012-12-04" end-time="17:45:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-05" start-time="15:45:00" end-date="2012-12-05" end-time="17:45:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-06" start-time="15:45:00" end-date="2012-12-06" end-time="17:45:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-07" start-time="15:45:00" end-date="2012-12-07" end-time="17:45:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-08" start-time="15:45:00" end-date="2012-12-08" end-time="17:45:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-09" start-time="15:45:00" end-date="2012-12-09" end-time="17:45:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:allocate idref="resource_4"/>
+         <rapla:allocate idref="resource_9"/>
+         <rapla:allocate idref="resource_1"/>
+      </rapla:reservation>
+      <rapla:reservation id="reservation_21" owner="user_1" created-at="2012-11-17" last-changed="2012-12-08" last-changed-by="user_1">
+         <dynatt:reservation2>
+            <dynatt:title>Nachtprogrammierung</dynatt:title>
+            <dynatt:a3>category[key='c1']</dynatt:a3>
+            <dynatt:a5>category[key='c2']/category[key='c1']</dynatt:a5>
+            <dynatt:a2>false</dynatt:a2>
+            <dynatt:a4>0</dynatt:a4>
+            <dynatt:a1></dynatt:a1>
+            <dynatt:color>category[key='c2']</dynatt:color>
+            <dynatt:a6></dynatt:a6>
+         </dynatt:reservation2>
+         <rapla:appointment start-date="2012-12-03" start-time="22:00:00" end-date="2012-12-04" end-time="00:00:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-04" start-time="22:00:00" end-date="2012-12-05" end-time="00:00:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-05" start-time="22:00:00" end-date="2012-12-06" end-time="00:00:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-06" start-time="22:00:00" end-date="2012-12-07" end-time="00:00:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-07" start-time="22:00:00" end-date="2012-12-08" end-time="00:00:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-08" start-time="22:00:00" end-date="2012-12-09" end-time="00:00:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:appointment start-date="2012-12-09" start-time="22:00:00" end-date="2012-12-10" end-time="00:00:00">
+            <rapla:repeating type="weekly"/>
+         </rapla:appointment>
+         <rapla:allocate idref="resource_2"/>
+         <rapla:allocate idref="resource_5"/>
+         <rapla:allocate idref="resource_3"/>
+         <rapla:allocate idref="resource_10"/>
+         <rapla:allocate idref="resource_13"/>
+      </rapla:reservation>
+      <rapla:reservation id="reservation_22" owner="user_1" created-at="2012-12-12" last-changed="2012-12-12" last-changed-by="user_1">
+         <dynatt:xxxxx>
+            <dynatt:title>Test</dynatt:title>
+            <dynatt:a1></dynatt:a1>
+         </dynatt:xxxxx>
+         <rapla:appointment start-date="2012-12-10" start-time="08:00:00" end-date="2012-12-10" end-time="09:00:00"/>
+         <rapla:allocate idref="resource_1"/>
+      </rapla:reservation>
+   </rapla:reservations>
+
+</rapla:data>

@@ -1,0 +1,24 @@
+.kurs-row {
+   font-size: 10pt;
+   float: clear;
+}
+
+.kurs-column {
+   float: left;
+   width: 60pt;
+}
+
+.time-column {
+   float: left;
+   width: 80pt;
+}
+
+.name-column {
+   float: left;
+   width: 200pt;
+}
+
+.resource-column {
+   float: none;
+}
+
