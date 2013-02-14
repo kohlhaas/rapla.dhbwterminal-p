@@ -231,51 +231,30 @@ class AllocatableExporter extends XMLWriter implements TerminalConstants
 	        addSearchIfThere(classification, search, "abteilung");
 	        
 	        printAttributeIfThere(classification, "EMail","email");
+            printAttributeIfThere(classification, "Bild","bild");
 	        printAttributeIfThere(classification, "Telefon","telefon");
-	        printAttributeIfThere(classification, "Raumart","raumart");
+	        printAttributeIfThere(classification, "Raumart", "raumart");
+            for (int i = 0; i < 10; i++)
+                printAttributeIfThereWithElementAsLabel(classification, "zeile"+i, "zeile"+i);
+
 	        addSearchIfThere(classification, search, "raumart");
-    		Object raum = classification.getAttribute("raum") != null ? classification.getValue("raum") : null;
+            final Attribute raumAttr = classification.getAttribute("raum");
+            final Object raum = raumAttr != null ? classification.getValue("raum") : null;
+
     		if ( raum != null)
+                // alle ressourcen ausser raum haben evt ein raum attribut
     		{
-//    			StringBuffer nummer = new StringBuffer();
-//    			String string = raum.toString().trim();
-//				for ( char c :string.toCharArray())
-//    			{
-//    				if ( Character.isDigit(c))
-//    				{
-//    					nummer.append( c);
-//    				}
-//    			}
-//				if ( string.length() > 0)
-//				{
-//					Character first = string.charAt(0);
-//					if ( Character.isAlphabetic(first))
-//					{
-//						String fluegel = first.toString();
-//						printOnLineIfNotNull("fluegel", null, fluegel);
-//					}
-//				}
-//    			String asNumber = nummer.toString();
-//    			if ( asNumber.length() > 0)
-//    			{
-//    				printOnLineIfNotNull("raumnr", null, asNumber);
-//    				search.add( asNumber);
-//    			}
-                Object fluegel = classification.getAttribute("fluegel") != null ? classification.getValue("fluegel") : null;
-
-                String raumnr = (fluegel != null ? fluegel.toString() :"")+raum.toString();
-
-    			printOnLineIfNotNull("raumnr", null, raumnr);
+                printAttributeIfThereWithElementAsLabel(classification, "raum", "raumnr");
     		}
     		else
     		{
-                String raumnr = getRoomName(classification);
-                if ("".equals(raumnr)) {
-    			    printAttributeIfThere(classification, null,"raumnr");
-                } else {
-                    printOnLineIfNotNull("raumnr", null, raumnr);
+                if ( elementName.equals(ROOM_KEY)) {
+                    // nur bei Räumen der Fall  !!
+                    String raumnr = getRoomName(classification);
+                    printOnLineIfNotNull("raumnr", "Raum", raumnr);
+                    addSearchIfThere(classification, search, "raumnr");
                 }
-    			addSearchIfThere(classification, search, "raumnr");
+
     		}
 			if ( exportReservations )
 			{
@@ -312,20 +291,20 @@ class AllocatableExporter extends XMLWriter implements TerminalConstants
 
 			Attribute emailAttr = classification.getAttribute("email");
 		        
-	        if ( emailAttr != null)
+	       /* if ( emailAttr != null)
 	        {
 		    	String email = (String)classification.getValue(emailAttr );
 		    	if ( email != null )
 		    	{
 		        	int indexOf = email.indexOf('@');
-		        	if ( indexOf >0 )
-		        	{
-			        	String attributeName = "personalFoto";
-			        	String username = email.substring(0, indexOf);
-			        	printOnLine(attributeName, "Personalfoto", username);
-		        	}	
-		    	}
-	        }
+                    //if ( indexOf >0 )
+                    {
+                        String attributeName = "personalFoto";
+                        String username = email.substring(0, indexOf);
+                        printOnLine(attributeName, "Personalfoto", username);
+                    }
+                }
+	        }*/
 	    	
 	        Attribute infoAttr = classification.getAttribute("info");
 	        List<AppointmentBlock> blocks = getReservationBlocksToday( allocatable);
@@ -507,7 +486,7 @@ class AllocatableExporter extends XMLWriter implements TerminalConstants
 	}
 	
 	private void printAttributeIfThere(Classification classification,
-			String label,String attributeName) throws IOException, RaplaException {
+			String label, String attributeName) throws IOException, RaplaException {
 		Attribute attribute = classification.getAttribute(attributeName);
 		if ( attribute != null)
 		{
@@ -515,6 +494,15 @@ class AllocatableExporter extends XMLWriter implements TerminalConstants
 			printOnLineIfNotNull(attributeName, label, value);
 		}
 	}
+
+    private void printAttributeIfThereWithElementAsLabel(Classification classification, String attributeName, String tagName) throws IOException, RaplaException {
+        Attribute attribute = classification.getAttribute(attributeName);
+        if ( attribute != null)
+        {
+            Object value = classification.getValue(attribute);
+            printOnLineIfNotNull(tagName, attribute.getName().toString(), value);
+        }
+    }
 	
 	private void addSearchIfThere(Classification classification,
 			Set<String> search,String attributeName) throws IOException, RaplaException {
