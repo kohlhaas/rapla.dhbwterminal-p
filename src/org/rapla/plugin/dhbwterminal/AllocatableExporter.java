@@ -75,7 +75,7 @@ class AllocatableExporter extends XMLWriter implements TerminalConstants
 	{
 		String encoding = "utf-8";
 		buf.append("<?xml version=\"1.0\" encoding=\"" + encoding + "\"?>");
-		buf.append("\n<RaplaImport>\n");
+		buf.append("\n<RaplaImport version=\"0.9\">\n");
 		setWriter( buf);
 		setIndentLevel(1);
 		User stele = facade.getUser(STELE_USER);
@@ -85,7 +85,7 @@ class AllocatableExporter extends XMLWriter implements TerminalConstants
 			for ( String typeKey: exportTypeNames)
 			{
 				ClassificationFilter filter = facade.getDynamicType(typeKey).newClassificationFilter();
-				ArrayList sortedAllocatables = new ArrayList(Arrays.asList(facade.getAllocatables(filter.toArray())));
+				ArrayList<Allocatable> sortedAllocatables = new ArrayList<Allocatable>(Arrays.asList(facade.getAllocatables(filter.toArray())));
 				Collections.sort( sortedAllocatables, new NamedComparator<Allocatable>(locale));
 				allocatables.addAll( sortedAllocatables);
 			}
@@ -264,6 +264,7 @@ class AllocatableExporter extends XMLWriter implements TerminalConstants
 					SimpleIdentifier localname = (org.rapla.entities.storage.internal.SimpleIdentifier)id;
 					String key = /*allocatable.getRaplaType().getLocalName() + "_" + */ "" +localname.getKey() ;
 					String url = linkPrefix +"/rapla?page=calendar&user="+STELE_USER + "&file="+ elementName +"&allocatable_id=" + key;
+                    //todo: activate encryption
 		        	try
 		        	{
 		        		printOnLine(attributeName,"Link",new URI(url));
@@ -289,9 +290,9 @@ class AllocatableExporter extends XMLWriter implements TerminalConstants
 				}
 			}
 
-			Attribute emailAttr = classification.getAttribute("email");
+			/*Attribute emailAttr = classification.getAttribute("email");
 		        
-	       /* if ( emailAttr != null)
+	       if ( emailAttr != null)
 	        {
 		    	String email = (String)classification.getValue(emailAttr );
 		    	if ( email != null )
