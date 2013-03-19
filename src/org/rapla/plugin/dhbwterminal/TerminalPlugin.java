@@ -13,12 +13,11 @@
 package org.rapla.plugin.dhbwterminal;
 import java.net.URL;
 
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
+import org.rapla.framework.Configuration;
 import org.rapla.framework.Container;
 import org.rapla.framework.PluginDescriptor;
 import org.rapla.framework.StartupEnvironment;
+import org.rapla.framework.logger.Logger;
 import org.rapla.plugin.RaplaExtensionPoints;
 import org.rapla.servletpages.RaplaResourcePageGenerator;
 
@@ -27,15 +26,18 @@ import org.rapla.servletpages.RaplaResourcePageGenerator;
    to the rapla-system.
  */
 
-public class TerminalPlugin extends AbstractLogEnabled
-    implements
-    PluginDescriptor
+public class TerminalPlugin implements PluginDescriptor
 {
     public static final String PLUGIN_CLASS = TerminalPlugin.class.getName();
 
+    Logger logger;
     
     public TerminalPlugin(Logger logger) {
-        enableLogging( logger);
+        this.logger = logger;
+    }
+   
+    public Logger getLogger() {
+        return logger;
     }
 
     public String toString() {
