@@ -181,8 +181,8 @@ class CourseExporter extends XMLWriter implements TerminalConstants
 	private String getResourceString(
 			Appointment appointment) {
 		Reservation reservation = appointment.getReservation();
-		boolean isKurs = true;
-		boolean isRaum= false;
+		//boolean isKurs = true;
+		//boolean isRaum= false;
 		List<String> allocatableName = new ArrayList<String>();
 		for (Allocatable alloc: reservation.getAllocatablesFor( appointment))
 		{
