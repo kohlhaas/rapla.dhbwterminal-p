@@ -17,7 +17,7 @@ import org.rapla.servletpages.RaplaPageGenerator;
 public class SteleExportPageGenerator extends RaplaComponent implements RaplaPageGenerator {
 
 	
-	public SteleExportPageGenerator(RaplaContext context) throws RaplaException {
+	public SteleExportPageGenerator(RaplaContext context) {
 		super(context);
 	}
 
@@ -47,6 +47,11 @@ public class SteleExportPageGenerator extends RaplaComponent implements RaplaPag
 			out.println( IOUtil.getStackTraceAsString( ex ) );
 			throw new ServletException( ex );
 		}
+		finally
+		{
+		    out.close();
+		}
+		
 	}
 
 }

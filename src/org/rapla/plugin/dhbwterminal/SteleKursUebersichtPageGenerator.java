@@ -22,7 +22,7 @@ import org.rapla.servletpages.RaplaPageGenerator;
 public class SteleKursUebersichtPageGenerator extends RaplaComponent implements RaplaPageGenerator, TerminalConstants {
 
 	
-	public SteleKursUebersichtPageGenerator(RaplaContext context) throws RaplaException {
+	public SteleKursUebersichtPageGenerator(RaplaContext context) {
 		super(context);
 	}
 
@@ -82,8 +82,10 @@ public class SteleKursUebersichtPageGenerator extends RaplaComponent implements 
 			out.println( IOUtil.getStackTraceAsString( ex ) );
 			throw new ServletException( ex );
 		}
-		
-		out.close();
+		finally
+		{
+		    out.close();
+		}
 	}
 
 }

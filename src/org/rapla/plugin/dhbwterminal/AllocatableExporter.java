@@ -55,7 +55,7 @@ class AllocatableExporter extends XMLWriter implements TerminalConstants
 		
 	 }
 	 
-	 public void printFreeAllocatable( String name, Date ende) throws IOException, RaplaException
+	 public void printFreeAllocatable( String name, Date ende) throws IOException
 	 {
 		 String elementName = "freierRaum";
 		 openElement(elementName);
@@ -116,7 +116,7 @@ class AllocatableExporter extends XMLWriter implements TerminalConstants
 				}
 	
 				Date ende = null;
-				Date start = null;
+				//Date start = null;
 				boolean isUsed = false;
 				for ( AppointmentBlock block:getReservationBlocksToday(allocatable))
 				{
@@ -260,7 +260,8 @@ class AllocatableExporter extends XMLWriter implements TerminalConstants
 			{
 				{
 					String attributeName = "resourceURL";
-					Object id = ((RefEntity<Allocatable>) allocatable).getId();
+					@SuppressWarnings("unchecked")
+                    Object id = ((RefEntity<Allocatable>) allocatable).getId();
 					SimpleIdentifier localname = (org.rapla.entities.storage.internal.SimpleIdentifier)id;
 					String key = /*allocatable.getRaplaType().getLocalName() + "_" + */ "" +localname.getKey() ;
 					String url = linkPrefix +"/rapla?page=calendar&user="+STELE_USER + "&file="+ elementName +"&allocatable_id=" + key;
@@ -437,7 +438,7 @@ class AllocatableExporter extends XMLWriter implements TerminalConstants
 	}
 	 
 	
-	private void printOnLineIfNotNull(String tagName,String label, Object content) throws IOException,RaplaException
+	private void printOnLineIfNotNull(String tagName,String label, Object content) throws IOException
 	 {
 		 if ( content != null)
 		 {
@@ -445,7 +446,7 @@ class AllocatableExporter extends XMLWriter implements TerminalConstants
 		 }
 	 }
 	 
-	private void printOnLine(String tagName,String label, Object content) throws IOException,RaplaException
+	private void printOnLine(String tagName,String label, Object content) throws IOException
 	 {
 		 openTag(tagName);
 		 if (label != null)
@@ -487,7 +488,7 @@ class AllocatableExporter extends XMLWriter implements TerminalConstants
 	}
 	
 	private void printAttributeIfThere(Classification classification,
-			String label, String attributeName) throws IOException, RaplaException {
+			String label, String attributeName) throws IOException {
 		Attribute attribute = classification.getAttribute(attributeName);
 		if ( attribute != null)
 		{
@@ -496,7 +497,7 @@ class AllocatableExporter extends XMLWriter implements TerminalConstants
 		}
 	}
 
-    private void printAttributeIfThereWithElementAsLabel(Classification classification, String attributeName, String tagName) throws IOException, RaplaException {
+    private void printAttributeIfThereWithElementAsLabel(Classification classification, String attributeName, String tagName) throws IOException {
         Attribute attribute = classification.getAttribute(attributeName);
         if ( attribute != null)
         {
@@ -506,7 +507,7 @@ class AllocatableExporter extends XMLWriter implements TerminalConstants
     }
 	
 	private void addSearchIfThere(Classification classification,
-			Set<String> search,String attributeName) throws IOException, RaplaException {
+			Set<String> search,String attributeName){
 		Attribute attribute = classification.getAttribute(attributeName);
 		if ( attribute != null)
 		{
@@ -519,7 +520,7 @@ class AllocatableExporter extends XMLWriter implements TerminalConstants
 		}
 	}
 	  
-	private void printValue( Object value) throws IOException,RaplaException 
+	private void printValue( Object value) throws IOException 
 	{
 		if ( value == null)
 		{
@@ -538,7 +539,7 @@ class AllocatableExporter extends XMLWriter implements TerminalConstants
 		}
 	}
 	  
-	private String getStringValue(Object value) throws IOException 
+	private String getStringValue(Object value)  
 	{
 		if (value instanceof Category)
 		{

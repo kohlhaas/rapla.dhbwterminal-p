@@ -28,8 +28,6 @@ import org.rapla.servletpages.RaplaResourcePageGenerator;
 
 public class TerminalPlugin implements PluginDescriptor
 {
-    public static final String PLUGIN_CLASS = TerminalPlugin.class.getName();
-
     Logger logger;
     
     public TerminalPlugin(Logger logger) {
@@ -52,13 +50,13 @@ public class TerminalPlugin implements PluginDescriptor
         	return;
 
         StartupEnvironment env = container.getStartupEnvironment();
-        container.addContainerProvidedComponent(RaplaExtensionPoints.PLUGIN_OPTION_PANEL_EXTENSION, TerminalOption.class.getName(), TerminalPlugin.class.getName(), config);
-        
+        container.addContainerProvidedComponent(RaplaExtensionPoints.PLUGIN_OPTION_PANEL_EXTENSION, TerminalOption.class, TerminalPlugin.class.getName());
+       
         if ( env.getStartupMode() == StartupEnvironment.SERVLET) {
-            container.addContainerProvidedComponent(RaplaExtensionPoints.SERVLET_PAGE_EXTENSION, SteleExportPageGenerator.class.getName(), "terminal-export", config);
-            container.addContainerProvidedComponent(RaplaExtensionPoints.SERVLET_PAGE_EXTENSION, SteleKursUebersichtPageGenerator.class.getName(), "terminal-kurse", config);
+            container.addContainerProvidedComponent(RaplaExtensionPoints.SERVLET_PAGE_EXTENSION, SteleExportPageGenerator.class, "terminal-export");
+            container.addContainerProvidedComponent(RaplaExtensionPoints.SERVLET_PAGE_EXTENSION, SteleKursUebersichtPageGenerator.class, "terminal-kurse");
             try {
-                RaplaResourcePageGenerator resourcePageGenerator = (RaplaResourcePageGenerator)container.getContext().lookup(RaplaExtensionPoints.SERVLET_PAGE_EXTENSION + "/resource");
+                RaplaResourcePageGenerator resourcePageGenerator = container.getContext().lookup(RaplaResourcePageGenerator.class);
                 // registers the standard calendar files
                 
                 URL resource = this.getClass().getResource("/org/rapla/plugin/dhbwterminal/kursuebersicht.css");
