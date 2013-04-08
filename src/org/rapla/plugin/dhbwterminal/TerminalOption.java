@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import org.rapla.components.layout.TableLayout;
 import org.rapla.framework.Configuration;
 import org.rapla.framework.DefaultConfiguration;
+import org.rapla.framework.PluginDescriptor;
 import org.rapla.framework.RaplaContext;
 import org.rapla.framework.RaplaException;
 import org.rapla.gui.DefaultPluginOption;
@@ -93,8 +94,8 @@ public class TerminalOption extends DefaultPluginOption {
     
     
 	@Override
-	public String getDescriptorClassName() {
-		return TerminalPlugin.class.getName();
+	public Class<? extends PluginDescriptor> getPluginClass() {
+		return TerminalPlugin.class;
 	}
 
 

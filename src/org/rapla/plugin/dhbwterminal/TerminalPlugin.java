@@ -16,9 +16,11 @@ import java.net.URL;
 import org.rapla.framework.Configuration;
 import org.rapla.framework.Container;
 import org.rapla.framework.PluginDescriptor;
+import org.rapla.framework.RaplaContextException;
 import org.rapla.framework.StartupEnvironment;
 import org.rapla.framework.logger.Logger;
 import org.rapla.plugin.RaplaExtensionPoints;
+import org.rapla.server.ServerServiceContainer;
 import org.rapla.servletpages.RaplaResourcePageGenerator;
 
 /**
@@ -43,18 +45,20 @@ public class TerminalPlugin implements PluginDescriptor
     }
 
     /**
+     * @throws RaplaContextException 
      * @see org.rapla.framework.PluginDescriptor#provideServices(org.rapla.framework.general.Container)
      */
-    public void provideServices(Container container, Configuration config) {
+    public void provideServices(Container container, Configuration config) throws RaplaContextException {
         if ( !config.getAttributeAsBoolean("enabled", false) )
         	return;
 
         StartupEnvironment env = container.getStartupEnvironment();
-        container.addContainerProvidedComponent(RaplaExtensionPoints.PLUGIN_OPTION_PANEL_EXTENSION, TerminalOption.class, TerminalPlugin.class.getName());
+        container.addContainerProvidedComponent(RaplaExtensionPoints.PLUGIN_OPTION_PANEL_EXTENSION, TerminalOption.class);
        
         if ( env.getStartupMode() == StartupEnvironment.SERVLET) {
-            container.addContainerProvidedComponent(RaplaExtensionPoints.SERVLET_PAGE_EXTENSION, SteleExportPageGenerator.class, "terminal-export");
-            container.addContainerProvidedComponent(RaplaExtensionPoints.SERVLET_PAGE_EXTENSION, SteleKursUebersichtPageGenerator.class, "terminal-kurse");
+        	ServerServiceContainer serviceContainer = container.getContext().lookup( ServerServiceContainer.class);
+        	serviceContainer.addWebpage("terminal-export",SteleExportPageGenerator.class );
+        	serviceContainer.addWebpage("terminal-kurse", SteleKursUebersichtPageGenerator.class );
             try {
                 RaplaResourcePageGenerator resourcePageGenerator = container.getContext().lookup(RaplaResourcePageGenerator.class);
                 // registers the standard calendar files
