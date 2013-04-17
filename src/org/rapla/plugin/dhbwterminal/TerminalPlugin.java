@@ -17,9 +17,9 @@ import org.rapla.framework.Configuration;
 import org.rapla.framework.Container;
 import org.rapla.framework.PluginDescriptor;
 import org.rapla.framework.RaplaContextException;
-import org.rapla.framework.StartupEnvironment;
 import org.rapla.framework.logger.Logger;
 import org.rapla.plugin.RaplaExtensionPoints;
+import org.rapla.server.ServerService;
 import org.rapla.server.ServerServiceContainer;
 import org.rapla.servletpages.RaplaResourcePageGenerator;
 
@@ -52,10 +52,9 @@ public class TerminalPlugin implements PluginDescriptor
         if ( !config.getAttributeAsBoolean("enabled", false) )
         	return;
 
-        StartupEnvironment env = container.getStartupEnvironment();
         container.addContainerProvidedComponent(RaplaExtensionPoints.PLUGIN_OPTION_PANEL_EXTENSION, TerminalOption.class);
        
-        if ( env.getStartupMode() == StartupEnvironment.SERVLET) {
+        if ( container.getContext().has(ServerService.class)) {
         	ServerServiceContainer serviceContainer = container.getContext().lookup( ServerServiceContainer.class);
         	serviceContainer.addWebpage("terminal-export",SteleExportPageGenerator.class );
         	serviceContainer.addWebpage("terminal-kurse", SteleKursUebersichtPageGenerator.class );
