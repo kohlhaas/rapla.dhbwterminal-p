@@ -18,7 +18,7 @@ public class TerminalExportTest extends RaplaTestCase
 	
 	public void testExport() throws Exception
 	{
-		ClientFacade facade = getContext().lookup(ClientFacade.class , "local-facade2");
+		ClientFacade facade = raplaContainer.lookup(ClientFacade.class , "local-facade2");
 		facade.login("stele", new char[] {});
 		
 		StringWriter writer = new StringWriter();
