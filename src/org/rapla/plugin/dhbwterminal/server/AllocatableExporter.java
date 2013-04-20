@@ -1,4 +1,4 @@
-package org.rapla.plugin.dhbwterminal;
+package org.rapla.plugin.dhbwterminal.server;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -33,8 +33,9 @@ import org.rapla.entities.storage.internal.SimpleIdentifier;
 import org.rapla.facade.ClientFacade;
 import org.rapla.framework.RaplaException;
 import org.rapla.framework.RaplaLocale;
+import org.rapla.plugin.dhbwterminal.TerminalConstants;
 
-class AllocatableExporter extends XMLWriter implements TerminalConstants
+public class AllocatableExporter extends XMLWriter implements TerminalConstants
 {
 	 
 	 public SerializableDateTimeFormat dateTimeFormat;

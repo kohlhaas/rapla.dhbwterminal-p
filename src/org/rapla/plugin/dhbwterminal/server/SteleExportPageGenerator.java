@@ -1,4 +1,4 @@
-package org.rapla.plugin.dhbwterminal;
+package org.rapla.plugin.dhbwterminal.server;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

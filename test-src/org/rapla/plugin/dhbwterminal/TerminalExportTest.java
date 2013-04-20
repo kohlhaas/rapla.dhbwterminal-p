@@ -8,6 +8,7 @@ import java.io.StringWriter;
 
 import org.rapla.RaplaTestCase;
 import org.rapla.facade.ClientFacade;
+import org.rapla.plugin.dhbwterminal.server.AllocatableExporter;
 
 public class TerminalExportTest extends RaplaTestCase 
 {

@@ -94,7 +94,7 @@ public class TerminalOption extends DefaultPluginOption {
     
     
 	@Override
-	public Class<? extends PluginDescriptor> getPluginClass() {
+	public Class<? extends PluginDescriptor<?>> getPluginClass() {
 		return TerminalPlugin.class;
 	}
 

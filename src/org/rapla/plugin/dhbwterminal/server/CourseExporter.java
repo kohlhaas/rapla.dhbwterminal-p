@@ -1,4 +1,4 @@
-package org.rapla.plugin.dhbwterminal;
+package org.rapla.plugin.dhbwterminal.server;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -26,6 +26,7 @@ import org.rapla.entities.dynamictype.ClassificationFilter;
 import org.rapla.facade.ClientFacade;
 import org.rapla.framework.RaplaException;
 import org.rapla.framework.RaplaLocale;
+import org.rapla.plugin.dhbwterminal.TerminalConstants;
 
 class CourseExporter extends XMLWriter implements TerminalConstants
 {

@@ -1,4 +1,4 @@
-package org.rapla.plugin.dhbwterminal;
+package org.rapla.plugin.dhbwterminal.server;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -17,6 +17,8 @@ import org.rapla.framework.DefaultConfiguration;
 import org.rapla.framework.RaplaContext;
 import org.rapla.framework.RaplaException;
 import org.rapla.framework.RaplaLocale;
+import org.rapla.plugin.dhbwterminal.TerminalConstants;
+import org.rapla.plugin.dhbwterminal.TerminalPlugin;
 import org.rapla.servletpages.RaplaPageGenerator;
 
 public class SteleKursUebersichtPageGenerator extends RaplaComponent implements RaplaPageGenerator, TerminalConstants {
