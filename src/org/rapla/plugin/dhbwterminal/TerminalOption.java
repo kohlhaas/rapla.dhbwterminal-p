@@ -97,6 +97,11 @@ public class TerminalOption extends DefaultPluginOption {
 	public Class<? extends PluginDescriptor<?>> getPluginClass() {
 		return TerminalPlugin.class;
 	}
+	
+	@Override
+	public String getName(Object object) {
+        return "DHBW Info Terminal";
+	}
 
 
 }

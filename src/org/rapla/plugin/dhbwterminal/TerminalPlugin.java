@@ -24,10 +24,8 @@ import org.rapla.plugin.RaplaClientExtensionPoints;
 
 public class TerminalPlugin implements PluginDescriptor<ClientServiceContainer>
 {
-
-    public String toString() {
-        return "DHBW Info Terminal";
-    }
+    public static final boolean ENABLE_BY_DEFAULT = true;
+  
 
     /**
      * @throws RaplaContextException 
@@ -35,7 +33,7 @@ public class TerminalPlugin implements PluginDescriptor<ClientServiceContainer>
      */
     public void provideServices(ClientServiceContainer container, Configuration config) throws RaplaContextException {
         container.addContainerProvidedComponent(RaplaClientExtensionPoints.PLUGIN_OPTION_PANEL_EXTENSION, TerminalOption.class);
-    	if ( !config.getAttributeAsBoolean("enabled", false) )
+    	if ( !config.getAttributeAsBoolean("enabled", ENABLE_BY_DEFAULT) )
         	return;
     }
 
