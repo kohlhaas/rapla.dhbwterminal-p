@@ -13,12 +13,12 @@
 package org.rapla.plugin.dhbwterminal.server;
 import java.net.URL;
 
+import org.rapla.client.RaplaClientExtensionPoints;
 import org.rapla.framework.Configuration;
 import org.rapla.framework.Container;
 import org.rapla.framework.PluginDescriptor;
 import org.rapla.framework.RaplaContextException;
 import org.rapla.framework.logger.Logger;
-import org.rapla.plugin.RaplaClientExtensionPoints;
 import org.rapla.plugin.dhbwterminal.server.SteleExportPageGenerator;
 import org.rapla.plugin.dhbwterminal.server.SteleKursUebersichtPageGenerator;
 import org.rapla.server.ServerService;
