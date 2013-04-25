@@ -51,7 +51,7 @@ public class TerminalServerPlugin implements PluginDescriptor<ServerServiceConta
         	return;
 
     	container.addWebpage("terminal-export",SteleExportPageGenerator.class );
-    	container.addWebpage("terminal-kurse", SteleKursUebersichtPageGenerator.class );
+    	container.addWebpage("terminal-kurse", SteleKursUebersichtPageGenerator.class, config );
         try {
             RaplaResourcePageGenerator resourcePageGenerator = container.getContext().lookup(RaplaResourcePageGenerator.class);
             // registers the standard calendar files

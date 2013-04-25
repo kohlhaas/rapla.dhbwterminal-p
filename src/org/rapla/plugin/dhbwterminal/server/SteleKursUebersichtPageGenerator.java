@@ -10,22 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.rapla.components.util.IOUtil;
-import org.rapla.entities.configuration.RaplaConfiguration;
 import org.rapla.facade.RaplaComponent;
 import org.rapla.framework.Configuration;
-import org.rapla.framework.DefaultConfiguration;
 import org.rapla.framework.RaplaContext;
 import org.rapla.framework.RaplaException;
 import org.rapla.framework.RaplaLocale;
 import org.rapla.plugin.dhbwterminal.TerminalConstants;
-import org.rapla.plugin.dhbwterminal.TerminalPlugin;
 import org.rapla.servletpages.RaplaPageGenerator;
 
 public class SteleKursUebersichtPageGenerator extends RaplaComponent implements RaplaPageGenerator, TerminalConstants {
 
-	
-	public SteleKursUebersichtPageGenerator(RaplaContext context) {
+	Configuration config;
+	public SteleKursUebersichtPageGenerator(RaplaContext context, Configuration config) {
 		super(context);
+		this.config=config;
 	}
 
 	public void generatePage(ServletContext context,
@@ -40,17 +38,9 @@ public class SteleKursUebersichtPageGenerator extends RaplaComponent implements 
 		{
 
 	        //		response.setContentType("content-type text/html charset=utf-8");
-	        RaplaConfiguration raplaConfig  = (RaplaConfiguration)getQuery().getPreferences(null).getEntry("org.rapla.plugin");
-	        Configuration pluginConfig = null;
-            if ( raplaConfig != null) {
-                pluginConfig = raplaConfig.find("class", TerminalPlugin.class.getName());
-            }
-            if ( pluginConfig == null) {
-            	pluginConfig = new DefaultConfiguration("plugin");
-            } 
                 
-	        String title = pluginConfig.getChild( "ueberschrift").getValue(TerminalConstants.KURS_UEBERSCHRIFT);
-	        String no_courses = pluginConfig.getChild( "keinekurse").getValue(TerminalConstants.NO_COURSES);
+	        String title = config.getChild( "ueberschrift").getValue(TerminalConstants.KURS_UEBERSCHRIFT);
+	        String no_courses = config.getChild( "keinekurse").getValue(TerminalConstants.NO_COURSES);
 			
 	        out.println("<html>");
 			out.println("<head>");
