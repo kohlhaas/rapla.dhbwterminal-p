@@ -4,12 +4,10 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import org.rapla.components.util.DateTools;
 import org.rapla.components.util.xml.XMLWriter;
@@ -40,7 +38,7 @@ class CourseExporter extends XMLWriter implements TerminalConstants
 		this.raplaLocale = raplaLocale;
 		this.facade = facade;
 		locale = raplaLocale.getLocale();
-		currentTime = getCurrentTimeForRaplaGMTZone(raplaLocale,facade.today());
+		currentTime = raplaLocale.toRaplaTime(raplaLocale.getSystemTimeZone(),new Date());
 	 }
 	 
 	/** prints all courses for a current day with the next reservation. Prints one course in one row.*/
@@ -157,22 +155,6 @@ class CourseExporter extends XMLWriter implements TerminalConstants
 
 	protected void printScaleImage() throws IOException {
 		print("<img class=\"empty\" src=\"images/empty.gif\"/>");
-	}
-
-	static public Date getCurrentTimeForRaplaGMTZone(RaplaLocale raplaLocale, Date today) {
-		TimeZone systemTimezone = raplaLocale.getSystemTimezone();
-		Calendar cal = Calendar.getInstance(systemTimezone);
-		cal.setTime(new Date());
-		int hour = cal.get(Calendar.HOUR_OF_DAY);
-		int minute = cal.get(Calendar.MINUTE);
-		
-		Calendar cal2 = raplaLocale.createCalendar();
-		cal2.setTime( today);
-		cal2.set( Calendar.HOUR_OF_DAY, hour );
-		cal2.set( Calendar.MINUTE, minute );
-		// We need to adjust to rapla time which is GMT
-		Date currentTimeInGMT = cal2.getTime();
-		return currentTimeInGMT;
 	}
 
 	public  String getRoomName(Classification classification) {

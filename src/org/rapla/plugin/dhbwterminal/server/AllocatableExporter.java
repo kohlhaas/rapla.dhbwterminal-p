@@ -52,7 +52,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants
 		this.facade = facade;
 		dateTimeFormat= new SerializableDateTimeFormat( raplaLocale.createCalendar());
 		locale = raplaLocale.getLocale();
-		currentTimeInGMT = CourseExporter.getCurrentTimeForRaplaGMTZone(raplaLocale,facade.today());
+		currentTimeInGMT =  raplaLocale.toRaplaTime(raplaLocale.getSystemTimeZone(),new Date());
 		
 	 }
 	 
