@@ -85,8 +85,14 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants
 			
 			for ( String typeKey: exportTypeNames)
 			{
-				ClassificationFilter filter = facade.getDynamicType(typeKey).newClassificationFilter();
-				ArrayList<Allocatable> sortedAllocatables = new ArrayList<Allocatable>(Arrays.asList(facade.getAllocatables(filter.toArray())));
+                ClassificationFilter filter = null;
+                try {
+                    filter = facade.getDynamicType(typeKey).newClassificationFilter();
+                } catch (RaplaException e) {
+                    System.err.println(e.getMessage());
+                    continue;
+                }
+                ArrayList<Allocatable> sortedAllocatables = new ArrayList<Allocatable>(Arrays.asList(facade.getAllocatables(filter.toArray())));
 				Collections.sort( sortedAllocatables, new NamedComparator<Allocatable>(locale));
 				allocatables.addAll( sortedAllocatables);
 			}
@@ -138,7 +144,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants
 				}
 				if ( ! isUsed)
 				{
-					String name = getRoomName(allocatable.getClassification());
+					String name = getRoomName(allocatable.getClassification(), true);
 					printFreeAllocatable(  name, ende);
 				}
 			}
@@ -162,22 +168,22 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants
 	        	final String label;
 	        	if ( elementName.equals(ROOM_KEY))
 	        	{
-	        		name = getRoomName(classification);
+	        		name = getRoomName(classification, true);
 	        		label = "Raum";
 	        	}
 	        	else if ( elementName.equals(KURS_KEY))
 	        	{
 	        		StringBuffer buf = new StringBuffer();
-	        		Category studiengang = (Category)classification.getValue("studiengang");
-					if ( studiengang != null)
+	        		Category abteilung = (Category)classification.getValue("abteilung");
+					if ( abteilung != null)
 					{
-						Category fakultaet = studiengang.getParent();
+						Category fakultaet = abteilung.getParent();
 						if ( fakultaet != null )
 						{
 							buf.append(fakultaet.getKey());
 						}
-						buf.append(studiengang.getKey());
-						search.add(studiengang.getKey());
+						buf.append(abteilung.getKey());
+						search.add(abteilung.getKey());
 					}
 	        		Category jahrgang = (Category)classification.getValue("jahrgang");
 					if ( jahrgang != null)
@@ -226,9 +232,9 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants
 		          
 	        
 	        printAttributeIfThere(classification, "Jahrgang","jahrgang");
-	        printAttributeIfThere(classification, "Studiengang","studiengang");
-	        printAttributeIfThere(classification, "Abteilung","abteilung");
-	        addSearchIfThere(classification, search, "studiengang");
+	        printAttributeIfThere(classification, "Studiengang","abteilung");
+	        //printAttributeIfThere(classification, "Abteilung","abteilung");
+	        //addSearchIfThere(classification, search, "studiengang");
 	        addSearchIfThere(classification, search, "abteilung");
 	        
 	        printAttributeIfThere(classification, "EMail","email");
@@ -239,24 +245,31 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants
                 printAttributeIfThereWithElementAsLabel(classification, "zeile"+i, "zeile"+i);
 
 	        addSearchIfThere(classification, search, "raumart");
-            final Attribute raumAttr = classification.getAttribute("raum");
-            final Object raum = raumAttr != null ? classification.getValue("raum") : null;
+            String roomName = getRoomName(classification, true);
+            printOnLine("raumnr", "Raum", roomName);
+            //printAttributeIfThereWithElementAsLabel(classification, "raum", "raumnr");
+            //addSearchIfThere(classification, search, "raum");
 
-    		if ( raum != null)
+            //final Attribute raumAttr = classification.getAttribute("raum");
+            //final Object raum = raumAttr != null ? classification.getValue("raum") : null;
+
+    		//if ( raum != null)
                 // alle ressourcen ausser raum haben evt ein raum attribut
+/*
     		{
                 printAttributeIfThereWithElementAsLabel(classification, "raum", "raumnr");
     		}
-    		else
-    		{
-                if ( elementName.equals(ROOM_KEY)) {
+*/
+    		//else
+  //  		{
+            /*    if ( elementName.equals(ROOM_KEY)) {
                     // nur bei Räumen der Fall  !!
-                    String raumnr = getRoomName(classification);
-                    printOnLineIfNotNull("raumnr", "Raum", raumnr);
-                    addSearchIfThere(classification, search, "raumnr");
+                    //String raumnr = getRoomName(classification, true);
+                    //printOnLineIfNotNull("raumnr", "Raum", raumnr);
+                    //addSearchIfThere(classification, search, "raum");
                 }
-
     		}
+*/
 			if ( exportReservations )
 			{
 				{
@@ -357,23 +370,21 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants
 			closeElement(elementName);
 	}
 
-	public  String getRoomName(Classification classification) 
+	public  String getRoomName(Classification classification, boolean fluegel)
 	{
-		StringBuffer buf = new StringBuffer();
-        if (classification.getAttribute("fluegel") != null)
+        Category superCategory = facade.getSuperCategory();
+        StringBuffer buf = new StringBuffer();
+        if (classification.getAttribute("raum") != null)
         {
-            Category category = (Category)classification.getValue("fluegel");
+            Category category = (Category)classification.getValue("raum");
             if ( category != null)
             {
-                buf.append( category.getName( locale ));
-            }
-        }
-        if (classification.getAttribute("raumnr") != null)
-        {
-            Object value = classification.getValue("raumnr");
-            if ( value != null)
-            {
-                buf.append( value );
+                Category parent = category.getParent();
+                if (!fluegel || parent.getParent().equals(superCategory))
+                    parent = null;
+                buf.append(
+                        (parent != null ? parent.getName(locale) : "") +
+                        category.getName( locale ));
             }
         }
 		String result = buf.toString();
