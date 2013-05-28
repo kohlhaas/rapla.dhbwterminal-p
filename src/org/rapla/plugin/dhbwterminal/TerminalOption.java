@@ -30,6 +30,7 @@ import org.rapla.gui.DefaultPluginOption;
 public class TerminalOption extends DefaultPluginOption {
     JTextField textField1;
     JTextField textField2;
+    JTextField textField3;
     
     public TerminalOption(RaplaContext sm) throws RaplaException {
         super( sm);
@@ -41,7 +42,7 @@ public class TerminalOption extends DefaultPluginOption {
     	double pre = TableLayout.PREFERRED;
     	double fill = TableLayout.FILL;
     	JPanel panel = new JPanel();
-    	panel.setLayout( new TableLayout(new double[][] {{pre, 5, pre,5, pre}, {pre,pre, pre,pre, fill}}));
+    	panel.setLayout( new TableLayout(new double[][] {{pre, 5, pre,5, pre}, {pre,pre, pre,pre,pre,pre, fill}}));
     	
          textField1 = new JTextField();
          addCopyPaste( textField1);
@@ -51,12 +52,19 @@ public class TerminalOption extends DefaultPluginOption {
          textField1.setEnabled(true);
          
          textField2 = new JTextField();
-         addCopyPaste( textField1);
+         addCopyPaste( textField2);
          textField2.setColumns(30);
          panel.add( new JLabel("Text fuer keine Veranstaltungen"),"0,2"  );
          panel.add( textField2,"2,2");
          textField2.setEnabled(true);
-         
+
+         textField3 = new JTextField();
+         addCopyPaste( textField3);
+         textField3.setColumns(30);
+         panel.add( new JLabel("URL fuer custom css"),"0,4"  );
+         panel.add( textField3,"2,4");
+         textField3.setEnabled(true);
+
          main.add(panel, BorderLayout.CENTER);
          return main;
     }
@@ -77,6 +85,11 @@ public class TerminalOption extends DefaultPluginOption {
 	        conf.setValue( textField2.getText() );
 	        newConfig.addChild( conf );
     	}
+    	{
+	    	DefaultConfiguration conf = new DefaultConfiguration("cssurl");
+	        conf.setValue( textField3.getText() );
+	        newConfig.addChild( conf );
+    	}
     }
 
     protected void readConfig( Configuration config)   
@@ -88,6 +101,10 @@ public class TerminalOption extends DefaultPluginOption {
     	{
     		String value = config.getChild("keinekurse").getValue(TerminalConstants.NO_COURSES);
     		textField2.setText( value );
+    	}
+    	{
+    		String value = config.getChild("cssurl").getValue("");
+    		textField3.setText( value );
     	}
 
     }

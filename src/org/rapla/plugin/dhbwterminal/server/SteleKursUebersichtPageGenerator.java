@@ -2,7 +2,6 @@ package org.rapla.plugin.dhbwterminal.server;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -41,16 +40,16 @@ public class SteleKursUebersichtPageGenerator extends RaplaComponent implements 
                 
 	        String title = config.getChild( "ueberschrift").getValue(TerminalConstants.KURS_UEBERSCHRIFT);
 	        String no_courses = config.getChild( "keinekurse").getValue(TerminalConstants.NO_COURSES);
+	        String cssurl = config.getChild( "cssurl").getValue("");
 			
 	        out.println("<html>");
 			out.println("<head>");
 			out.println("  <title>" + title + "</title>");
 	
 			out.println("  <link REL=\"stylesheet\" href=\"rapla?page=resource&name=kursuebersicht.css\" type=\"text/css\">");
-			URL cssFile = context.getResource(TerminalConstants.CUSTOM_CSS_FILE_PATH);
-			if ( cssFile != null)
+			if ( cssurl != null && cssurl.trim().length() > 0)
 			{
-				out.println("  <link REL=\"stylesheet\" href=\""+ TerminalConstants.CUSTOM_CSS_FILE_PATH + "\" type=\"text/css\">");
+				out.println("  <link REL=\"stylesheet\" href=\""+ cssurl + "\" type=\"text/css\">");
 			}
 			out.println("  <link REL=\"stylesheet\" href=\"default.css\" type=\"text/css\">");
 			// tell the html page where its favourite icon is stored
