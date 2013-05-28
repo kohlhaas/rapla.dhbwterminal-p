@@ -26,7 +26,7 @@ import org.rapla.framework.RaplaException;
 import org.rapla.framework.RaplaLocale;
 import org.rapla.plugin.dhbwterminal.TerminalConstants;
 
-class CourseExporter extends XMLWriter implements TerminalConstants
+public class CourseExporter extends XMLWriter implements TerminalConstants
 {
 	 RaplaLocale raplaLocale;
 	 Locale locale;
@@ -157,10 +157,32 @@ class CourseExporter extends XMLWriter implements TerminalConstants
 		print("<img class=\"empty\" src=\"images/empty.gif\"/>");
 	}
 
+    public  String getRoomName(Classification classification, boolean fluegel)
+    {
+        Category superCategory = facade.getSuperCategory();
+        StringBuffer buf = new StringBuffer();
+        if (classification.getAttribute("raum") != null)
+        {
+            Category category = (Category)classification.getValue("raum");
+            if ( category != null)
+            {
+                Category parent = category.getParent();
+                if (!fluegel || parent.getParent().equals(superCategory))
+                    parent = null;
+                buf.append(
+                        (parent != null ? parent.getName(locale) : "") +
+                                category.getName( locale ));
+            }
+        }
+        String result = buf.toString();
+        return  result;
+    }
+
+
 	public  String getRoomName(Classification classification) {
-		return ((Category)classification.getValue("fluegel")).getName( locale ) + classification.getValue("raumnr");
+		return getRoomName(classification, true);//((Category)classification.getValue("fluegel")).getName( locale ) + classification.getValue("raumnr");
 	}
-	
+
 	private String getResourceString(
 			Appointment appointment) {
 		Reservation reservation = appointment.getReservation();

@@ -1,19 +1,16 @@
 package org.rapla.plugin.dhbwterminal;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-
 import org.rapla.RaplaTestCase;
 import org.rapla.facade.ClientFacade;
 import org.rapla.plugin.dhbwterminal.server.AllocatableExporter;
+import org.rapla.plugin.dhbwterminal.server.CourseExporter;
 
-public class TerminalExportTest extends RaplaTestCase 
+import java.io.*;
+
+public class CourseExportTest extends RaplaTestCase
 {
 
-	public TerminalExportTest(String name) {
+	public CourseExportTest(String name) {
 		super(name);
 	}
 
@@ -29,12 +26,12 @@ public class TerminalExportTest extends RaplaTestCase
 		
 		StringWriter writer = new StringWriter();
 		BufferedWriter buf = new BufferedWriter(writer);
-		AllocatableExporter exporter = new AllocatableExporter(getRaplaLocale(), facade);
-		exporter.export( buf, "https://dhbw-karlsruhe.de/");
+		CourseExporter exporter = new CourseExporter(getRaplaLocale(), facade);
+		exporter.printKurseAmTag( buf, "https://dhbw-karlsruhe.de/");
 		buf.close();
 		writer.close();
 		String xml = writer.toString();
-		File file = new File("raplaexport.xml"); 
+		File file = new File("courseexport.html");
 		OutputStreamWriter filewriter = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
 		filewriter.write( xml);
 		filewriter.close();
