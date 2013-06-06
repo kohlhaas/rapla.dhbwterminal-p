@@ -233,7 +233,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants
 	        
 	        printAttributeIfThere(classification, "Jahrgang","jahrgang");
 	        printAttributeIfThere(classification, "Studiengang","abteilung");
-	        //printAttributeIfThere(classification, "Abteilung","abteilung");
+	        printAttributeIfThere(classification, "Studiengang","studiengang");
 	        //addSearchIfThere(classification, search, "studiengang");
 	        addSearchIfThere(classification, search, "abteilung");
 	        
