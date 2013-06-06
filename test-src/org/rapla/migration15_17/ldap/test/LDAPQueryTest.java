@@ -57,8 +57,7 @@ public class LDAPQueryTest extends ServletTestBase {
     }
 
     public void testLDAPConnection () throws Exception {
-        Scanner scanner = new Scanner(System.in);
-        String password =  scanner.nextLine();
+        String password =  LDAPQuery.PASSWORD;
         LDAPQuery ldapQuery = new LDAPQueryImpl(raplaServer.getContext());
         Map<String,Map<String,String>> ldapValues = ldapQuery.getLDAPValues(
                 LDAPQuery.SEARCH_TERM_ABTEILUNGEN, password

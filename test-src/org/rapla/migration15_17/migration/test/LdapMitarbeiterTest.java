@@ -97,13 +97,13 @@ public class LdapMitarbeiterTest extends ServletTestBase {
 	
 	public void testLDAPConnection () throws Exception {
         LDAPQuery ldapQuery = new LDAPQueryImpl(raplaServer.getContext());
-        Scanner scanner = new Scanner(System.in);
-        String password =  scanner.nextLine();
+        String password =  LDAPQuery.PASSWORD;
         Map<String,Map<String,String>> ldapValues = ldapQuery.getLDAPValues(
                 LDAPQuery.SEARCH_TERM_ALL, password
         );
 
-        DynamicType person2 = facade.getDynamicType("person2");
+        String personTyp = "mitarbeiter";
+        DynamicType person2 = facade.getDynamicType(personTyp);
         if (person2.getAttribute("telefon") == null)
         {
             Attribute attribute = facade.newAttribute(AttributeType.STRING);
@@ -112,7 +112,7 @@ public class LdapMitarbeiterTest extends ServletTestBase {
             DynamicType editPerson2 = facade.edit(person2);
             editPerson2.addAttribute(attribute);
             facade.store(editPerson2);
-            person2 = facade.getDynamicType("person2");
+            person2 = facade.getDynamicType(personTyp);
         }
 
         ClassificationFilter filter = person2.newClassificationFilter();

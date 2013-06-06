@@ -25,7 +25,7 @@ ClientFacade facade;
 		Category root = facade.edit(facade.getSuperCategory());
 		if (root.getCategory("c3") != null)
 		root.removeCategory(facade.getSuperCategory().getCategory("c3"));
-		root.getCategory("c9").getName().setName("de", "Räume");
+		root.getCategory("c9").getName().setName("de", "RÃ¤ume");
 		facade.store(root);
 	}
 

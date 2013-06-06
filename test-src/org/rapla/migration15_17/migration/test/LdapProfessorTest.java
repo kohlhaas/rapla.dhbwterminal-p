@@ -94,19 +94,19 @@ public class LdapProfessorTest extends ServletTestBase {
 	
 	public void testLDAPConnection () throws Exception {
         LDAPQuery ldapQuery = new LDAPQueryImpl(raplaServer.getContext());
-        Scanner scanner = new Scanner(System.in);
-        String password =  scanner.nextLine();
+        String password =  LDAPQuery.PASSWORD;
         Map<String,Map<String,String>> ldapValues = ldapQuery.getLDAPValues(
                 LDAPQuery.SEARCH_TERM_ABTEILUNGEN,password
         );
-        
-        ClassificationFilter filter = facade.getDynamicType("defaultPerson").newClassificationFilter();
+
+        String personKey = "professor"; //"defaultPerson";
+        ClassificationFilter filter = facade.getDynamicType(personKey).newClassificationFilter();
         ClassificationFilter[] filters = new ClassificationFilter[] {filter};
         Allocatable[] professor = facade.getAllocatables(filters);
         
         for (Map.Entry<String, Map<String, String>> stringMapEntry : ldapValues.entrySet()) {
             //System.out.println(ldapValues.get(stringMapEntry.getKey()).get("sn"));
-            filter = facade.getDynamicType("defaultPerson").newClassificationFilter();
+            filter = facade.getDynamicType(personKey).newClassificationFilter();
             filter.addEqualsRule("forename", ldapValues.get(stringMapEntry.getKey()).get("givenName"));
             filter.addEqualsRule("surname", ldapValues.get(stringMapEntry.getKey()).get("sn"));
             filters = new ClassificationFilter[] {filter};
@@ -197,7 +197,7 @@ public class LdapProfessorTest extends ServletTestBase {
             		profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W"));
             	}
             }
-            else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Fakult�t Technik"))
+            else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Fakultät Technik"))
             {
             	if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Elektrotechnik"))
             	{
@@ -241,7 +241,7 @@ public class LdapProfessorTest extends ServletTestBase {
             	else
             	{
             		Allocatable person = facade.newPerson();
-            		person.setClassification(facade.getDynamicType("defaultPerson").newClassification());
+            		person.setClassification(facade.getDynamicType(personKey).newClassification());
             		person.getClassification().setValue("forename", ldapValues.get(stringMapEntry.getKey()).get("givenName"));
             		person.getClassification().setValue("surname", ldapValues.get(stringMapEntry.getKey()).get("sn"));
             		person.getClassification().setValue("telefon", "+49 (0)721 9735 - " + ldapValues.get(stringMapEntry.getKey()).get("telephoneNumber"));
@@ -317,7 +317,7 @@ public class LdapProfessorTest extends ServletTestBase {
                     		person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W"));
                     	}
                     }
-                    else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Fakult�t Technik"))
+                    else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Fakultät Technik"))
                     {
                     	if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Elektrotechnik"))
                     	{

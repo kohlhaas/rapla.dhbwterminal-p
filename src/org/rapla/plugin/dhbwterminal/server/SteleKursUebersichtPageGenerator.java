@@ -58,7 +58,14 @@ public class SteleKursUebersichtPageGenerator extends RaplaComponent implements 
 			out.println("</head>");
 			out.println("<body>");
 			out.println("  <h1 class=\"title\">" + title + "</h1>");
-			out.println("<marquee scrollamount=\"1\" scrolldelay=\"1\" direction=\"up\" >");
+            out.println("  <div class=\"kurs-row\">"
+                            +"<div class=\"kurs-column\"><img class=\"empty\" src=\"./images/empty.gif\">Kurs</div>"
+                            +"<div class=\"time-column\"><img class=\"empty\" src=\"./images/empty.gif\">Zeitraum</div>"
+                            +"<div class=\"name-column\"><img class=\"empty\" src=\"./images/empty.gif\">Veranstaltung</div>"
+                            +"<div class=\"resource-column\"><img class=\"empty\" src=\"./images/empty.gif\">Raum</div>"
+                        +"</div>");
+
+            out.println("<marquee scrollamount=\"1\" scrolldelay=\"1\" direction=\"up\" >");
 			CourseExporter allocatableExporter;
 			allocatableExporter = new CourseExporter( raplaLocale, getClientFacade());
 			BufferedWriter buf = new BufferedWriter(out);

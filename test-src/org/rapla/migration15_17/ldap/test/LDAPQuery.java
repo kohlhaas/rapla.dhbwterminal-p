@@ -7,6 +7,7 @@ public abstract interface LDAPQuery {
     String CONNECTION_URL = "ldap://10.203.15.7:389";
     String CONTEXT_FACTORY = "com.sun.jndi.ldap.LdapCtxFactory";
     String SEARCH_USER_BASE = "DC=dhbw-karlsruhe,DC=aa";
+    String PASSWORD = "XXX";
 
     String[] SEARCH_TERM_ABTEILUNGEN = {
             "(memberOf=CN=us-interneDozierendeTechnik,OU=Abteilungen,OU=Dateiserver,DC=dhbw-karlsruhe,DC=aa)",

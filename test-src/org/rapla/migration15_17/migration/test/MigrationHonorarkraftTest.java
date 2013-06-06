@@ -182,7 +182,7 @@ public class MigrationHonorarkraftTest extends MigrationTestCase {
                     treffer = true;
                 }
                 if (!treffer) {
-                    System.out.println("Keine Zuordnung für: [" + listarray2[i].toString() + " " + listarray3[i].toString() + "]" + " [" + listarray[i].toString() + "]");
+                    System.out.println("Keine Zuordnung fÃ¼r: [" + listarray2[i].toString() + " " + listarray3[i].toString() + "]" + " [" + listarray[i].toString() + "]");
                 }
                 edit.getClassification().setValues(facade.getDynamicType("person1").getAttribute("abteilung"), categories);
                 facade.store(edit);
