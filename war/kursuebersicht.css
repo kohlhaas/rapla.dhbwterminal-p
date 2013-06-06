@@ -1,0 +1,57 @@
+body {
+	margin: 15px;
+	border: 0px;
+
+}
+
+marquee {	
+	height:1000px;
+	width: 1920px;
+	border-top: 2px solid #CCCCCC;
+	border-bottom: 2px solid #CCCCCC;
+}
+
+h1.title {	
+	font-size: 48px;
+	height: 300px;
+	vertical-align: middle;
+	background:url("logo_dhbw_gross.jpg") no-repeat left top;
+/*	border: 1px black solid; */
+}
+
+.kurs-row {
+   font-size: 36px;
+   
+   width: 1910px;
+   height: 60px;
+   line-height: 40px;
+ /*  border: 1px black solid; */
+}
+
+.kurs-column {
+   float: left;
+   width: 250px;
+   overflow:hidden;
+   /* border: 1px black solid; */
+}
+
+.time-column {
+   float: left;
+   width: 300px;
+       overflow:hidden;
+  /*  border: 1px black solid; */
+}
+
+.name-column {   
+   width: 850px;
+   float: clear;
+  /*  border: 1px black solid; */
+     overflow:hidden;
+}
+
+.resource-column {
+   float: left;
+   width: 500px;
+ /*   border: 1px black solid;*/
+   overflow:hidden;
+}
