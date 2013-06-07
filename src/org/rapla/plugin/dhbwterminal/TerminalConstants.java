@@ -9,7 +9,7 @@ public interface TerminalConstants
     static final String KURS_KEY = "kurs";
 	static final String STELE_USER = "stele";
 	static final String ROOM_KEY = "raum";
-	static final String[]  exportTypeNames = new String[] {ROOM_KEY,"professor", "mitarbeiter",KURS_KEY, "sonstiges"};
+	static final String[]  exportTypeNames = new String[] {ROOM_KEY,"professor", "honorarkraefte", "mitarbeiter",KURS_KEY, "sonstiges"};
 //	static final String CUSTOM_CSS_FILE_PATH = "kursuebersicht_dhbw.css";
 	static final String KURS_UEBERSCHRIFT = "Kurse mit aktuellen Veranstaltungen";
 	static final String NO_COURSES = "Heute sind keine weiteren Veranstaltungen geplant.";

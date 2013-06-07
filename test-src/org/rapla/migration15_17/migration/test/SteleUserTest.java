@@ -45,7 +45,7 @@ public class SteleUserTest extends MigrationTestCase {
 		ClassificationFilter[] filters1 = {filter1, filter2, filter3};
 		model1.setAllocatableFilter(filters1);
 		model1.setViewId("day");
-		model1.setTitle("Vorlesungsplan");
+		model1.setTitle("Vorlesungsplan für {allocatables} am {selectedDate}");
 		model1.setOption(AutoExportPlugin.HTML_EXPORT, "true");
 		model1.setOption(CalendarModel.SHOW_NAVIGATION_ENTRY, "false");
 		model1.save("person");
@@ -55,25 +55,25 @@ public class SteleUserTest extends MigrationTestCase {
 		ClassificationFilter[] filters2 = {filter4};
 		model2.setAllocatableFilter(filters2);
 		model2.setViewId("day");
-		model2.setTitle("Belegungsgsplan");
+		model2.setTitle("Belegungsgsplan für {allocatables} am {selectedDate}");
 		model2.setOption(AutoExportPlugin.HTML_EXPORT, "true");
-		model2.setOption(CalendarModel.SHOW_NAVIGATION_ENTRY, "true");
+		model2.setOption(CalendarModel.SHOW_NAVIGATION_ENTRY, "false");
 		model2.save("raum");
 		CalendarSelectionModel model3;
 		model3 = facade.newCalendarModel(stele);
 		model3.setAllocatableFilter(filters2);
 		model3.setViewId("day");
-		model3.setTitle("Belegungsgsplan");
+		model3.setTitle("Belegungsgsplan für {allocatables} am {selectedDate}");
 		model3.setOption(AutoExportPlugin.HTML_EXPORT, "true");
-		model3.setOption(CalendarModel.SHOW_NAVIGATION_ENTRY, "true");
+		model3.setOption(CalendarModel.SHOW_NAVIGATION_ENTRY, "false");
 		model3.save("kurs");
 		CalendarSelectionModel model4;
 		model4 = facade.newCalendarModel(stele);
 		model4.setAllocatableFilter(filters2);
 		model4.setViewId("day");
-		model4.setTitle("Belegungsgsplan");
+		model4.setTitle("Belegungsgsplan für {allocatables} am {selectedDate}");
 		model4.setOption(AutoExportPlugin.HTML_EXPORT, "true");
-		model4.setOption(CalendarModel.SHOW_NAVIGATION_ENTRY, "true");
+		model4.setOption(CalendarModel.SHOW_NAVIGATION_ENTRY, "false");
 		model4.save("sonstiges");
 		
 	}

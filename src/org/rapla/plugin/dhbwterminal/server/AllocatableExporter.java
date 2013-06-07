@@ -60,7 +60,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants
 	 {
 		 String elementName = "freierRaum";
 		 openElement(elementName);
-		 String endString = "24:00";
+		 String endString = "19:00";
 		 if ( ende != null)
 		 {
 				endString = raplaLocale.formatTime(ende);
@@ -106,7 +106,20 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants
 				}
 			}
 		}
-		{
+
+        int maxFreeAllocatables = 99;
+        //testbetrieb
+       /* {
+            String elementName = "freierRaum";
+            openElement(elementName);
+            printOnLine("name", "Name", "Achtung: ");
+            printOnLine("freiBis", "freiBis","Daten vom 21.05.13");
+            closeElement(elementName);
+            maxFreeAllocatables = 2;
+
+        }*/
+
+        {
 			List<Allocatable> allocatables = new ArrayList<Allocatable>();
 			String[] types = new String[] {ROOM_KEY};
 			for ( String typeKey: types)
@@ -115,8 +128,11 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants
 				allocatables.addAll( Arrays.asList(facade.getAllocatables(filter.toArray())));
 			}
 			Date today = facade.today();
+            int c = 1;
 			for ( Allocatable allocatable: allocatables)
 			{
+                if (c > maxFreeAllocatables)
+                    break;
 				if (!allocatable.canAllocate(stele, null, null, today))
 				{
 					continue;
@@ -146,6 +162,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants
 				{
 					String name = getRoomName(allocatable.getClassification(), true);
 					printFreeAllocatable(  name, ende);
+                    c ++;
 				}
 			}
 		}
@@ -174,8 +191,8 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants
 	        	else if ( elementName.equals(KURS_KEY))
 	        	{
 	        		StringBuffer buf = new StringBuffer();
-	        		Category abteilung = (Category)classification.getValue("abteilung");
-					if ( abteilung != null)
+	        		//Category abteilung = (Category)classification.getValue("abteilung");
+					/*if ( abteilung != null)
 					{
 						Category fakultaet = abteilung.getParent();
 						if ( fakultaet != null )
@@ -189,7 +206,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants
 					if ( jahrgang != null)
 					{
 						buf.append(jahrgang.getName(locale).substring(2));
-					}
+					}*/
 					Object titel = classification.getValue("name");
 					if ( titel != null)
 					{
@@ -233,7 +250,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants
 	        
 	        printAttributeIfThere(classification, "Jahrgang","jahrgang");
 	        printAttributeIfThere(classification, "Studiengang","abteilung");
-	        printAttributeIfThere(classification, "Studiengang","studiengang");
+	        printAttributeIfThere(classification, "Studiengang", "abteilung", "studiengang");
 	        //addSearchIfThere(classification, search, "studiengang");
 	        addSearchIfThere(classification, search, "abteilung");
 	        
@@ -370,7 +387,17 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants
 			closeElement(elementName);
 	}
 
-	public  String getRoomName(Classification classification, boolean fluegel)
+    private void printAttributeIfThere(Classification classification, String label, String attributeName, String tagName) throws IOException {
+        Attribute attribute = classification.getAttribute(attributeName);
+        if ( attribute != null)
+        {
+            Object value = classification.getValue(attribute);
+            printOnLineIfNotNull(tagName, label, value);
+        }
+
+    }
+
+    public  String getRoomName(Classification classification, boolean fluegel)
 	{
         Category superCategory = facade.getSuperCategory();
         StringBuffer buf = new StringBuffer();
@@ -501,12 +528,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants
 	
 	private void printAttributeIfThere(Classification classification,
 			String label, String attributeName) throws IOException {
-		Attribute attribute = classification.getAttribute(attributeName);
-		if ( attribute != null)
-		{
-			Object value = classification.getValue(attribute);
-			printOnLineIfNotNull(attributeName, label, value);
-		}
+		printAttributeIfThere(classification, label, attributeName, attributeName);
 	}
 
     private void printAttributeIfThereWithElementAsLabel(Classification classification, String attributeName, String tagName) throws IOException {
