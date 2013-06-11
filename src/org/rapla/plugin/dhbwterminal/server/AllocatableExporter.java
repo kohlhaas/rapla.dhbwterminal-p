@@ -4,14 +4,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 import org.rapla.components.util.DateTools;
 import org.rapla.components.util.SerializableDateTimeFormat;
@@ -31,9 +24,12 @@ import org.rapla.entities.dynamictype.DynamicType;
 import org.rapla.entities.storage.RefEntity;
 import org.rapla.entities.storage.internal.SimpleIdentifier;
 import org.rapla.facade.ClientFacade;
+import org.rapla.framework.Configuration;
 import org.rapla.framework.RaplaException;
 import org.rapla.framework.RaplaLocale;
 import org.rapla.plugin.dhbwterminal.TerminalConstants;
+
+import javax.swing.*;
 
 public class AllocatableExporter extends XMLWriter implements TerminalConstants {
 
@@ -42,15 +38,57 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
     Locale locale;
     ClientFacade facade;
     Date currentTimeInGMT;
+    private String terminalUser;
+    private DynamicType[] courseType;
+    private DynamicType[] roomType;
+    private DynamicType[] resourceTypes;
+    private DynamicType[] eventTypes;
 
 
-    public AllocatableExporter(RaplaLocale raplaLocale, ClientFacade facade) {
+    public AllocatableExporter(Configuration config, RaplaLocale raplaLocale, ClientFacade facade) throws RaplaException {
         this.raplaLocale = raplaLocale;
         this.facade = facade;
         dateTimeFormat = new SerializableDateTimeFormat(raplaLocale.createCalendar());
         locale = raplaLocale.getLocale();
         currentTimeInGMT = raplaLocale.toRaplaTime(raplaLocale.getSystemTimeZone(), new Date());
+        eventTypes = getDynamicTypesForKey(config, facade, TerminalConstants.EVENT_TYPES_KEY);
+        resourceTypes = getDynamicTypesForKey(config, facade, TerminalConstants.RESOURCE_TYPES_KEY);
+        roomType = getDynamicTypesForKey(config, facade, TerminalConstants.ROOM_KEY);
+        courseType = getDynamicTypesForKey(config, facade, TerminalConstants.KURS_KEY);
+        terminalUser = config.getChild(TerminalConstants.USER_KEY).getValue(null);
+        if (terminalUser == null) {
+            throw new RaplaException("Terminal User must be set to use export");
+        }
+    }
 
+    static DynamicType[] getDynamicTypesForKey(Configuration config, ClientFacade facade, String configKey) throws RaplaException {
+        final List<DynamicType> result = new ArrayList<DynamicType>();
+        String configValues = config.getChild(configKey).getValue(null);
+        if (configValues == null) {
+            throw new RaplaException("Configuration in Terminal Plugin incorrect. Please check setting for "+configKey);
+        }
+        try {
+            final String [] dynamicTypeKeys = configValues.split(",");
+            for (String dynamicTypeKey : dynamicTypeKeys) {
+                if (dynamicTypeKey.trim().isEmpty())
+                    continue;
+                DynamicType dynamicType = facade.getDynamicType(dynamicTypeKey);
+                if (dynamicType == null) {
+                    throw new RaplaException("Configuration in Terminal Plugin incorrect. Dynamic Type '"+dynamicTypeKey+"' does not exist. Please check setting for "+configKey);
+                }
+                result.add(dynamicType);
+            }
+        } catch (RaplaException e) {
+            throw new RaplaException("Configuration in Terminal Plugin incorrect. Please check setting for "+configKey, e);
+        }
+        // sort to use arrays binary search afterwards
+        Collections.sort(result, new Comparator<DynamicType>() {
+            @Override
+            public int compare(DynamicType o1, DynamicType o2) {
+                return o1.getElementKey().compareTo(o2.getElementKey());
+            }
+        });
+        return result.toArray(new DynamicType[result.size()]);
     }
 
     public void printFreeAllocatable(String name, Date ende) throws IOException {
@@ -75,11 +113,13 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         buf.append("\n<RaplaImport version=\"0.9\">\n");
         setWriter(buf);
         setIndentLevel(1);
-        User stele = facade.getUser(STELE_USER);
+        User stele = facade.getUser(terminalUser);
         {
             List<Allocatable> allocatables = new ArrayList<Allocatable>();
 
-            for (String typeKey : exportTypeNames) {
+
+            for (DynamicType dynamicType : resourceTypes) {
+                String typeKey = dynamicType.getElementKey();
                 ClassificationFilter filter = null;
                 try {
                     filter = facade.getDynamicType(typeKey).newClassificationFilter();
@@ -102,7 +142,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
 
         int maxFreeAllocatables = 99;
         //testbetrieb
-       /* {
+        /* {
             String elementName = "freierRaum";
             openElement(elementName);
             printOnLine("name", "Name", "Achtung: ");
@@ -114,9 +154,8 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
 
         {
             List<Allocatable> allocatables = new ArrayList<Allocatable>();
-            String[] types = new String[]{ROOM_KEY};
-            for (String typeKey : types) {
-                ClassificationFilter filter = facade.getDynamicType(typeKey).newClassificationFilter();
+            for (DynamicType typeKey : roomType) {
+                ClassificationFilter filter = typeKey.newClassificationFilter();
                 allocatables.addAll(Arrays.asList(facade.getAllocatables(filter.toArray())));
             }
             Date today = facade.today();
@@ -144,7 +183,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
                     }
                 }
                 if (!isUsed) {
-                    String name = getRoomName(allocatable.getClassification(), true);
+                    String name = getRoomName(allocatable.getClassification(), true, false);
                     printFreeAllocatable(name, ende);
                     c++;
                 }
@@ -167,27 +206,11 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         {
             String name;
             final String label;
-            if (elementName.equals(ROOM_KEY)) {
-                name = getRoomName(classification, true);
+            if (Arrays.binarySearch(roomType, dynamicType)>=0){ //elementName.equals(ROOM_KEY)) {
+                name = getRoomName(classification, true, false);
                 label = "Raum";
-            } else if (elementName.equals(KURS_KEY)) {
+            } else if (Arrays.binarySearch(courseType, dynamicType)>=0){ //elementName.equals(KURS_KEY)) {
                 StringBuffer buf = new StringBuffer();
-                //Category abteilung = (Category)classification.getValue("abteilung");
-                    /*if ( abteilung != null)
-					{
-						Category fakultaet = abteilung.getParent();
-						if ( fakultaet != null )
-						{
-							buf.append(fakultaet.getKey());
-						}
-						buf.append(abteilung.getKey());
-						search.add(abteilung.getKey());
-					}
-	        		Category jahrgang = (Category)classification.getValue("jahrgang");
-					if ( jahrgang != null)
-					{
-						buf.append(jahrgang.getName(locale).substring(2));
-					}*/
                 Object titel = classification.getValue("name");
                 if (titel != null) {
                     buf.append(titel);
@@ -224,7 +247,6 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         printAttributeIfThere(classification, "Jahrgang", "jahrgang");
         printAttributeIfThere(classification, "Studiengang", "abteilung");
         printAttributeIfThere(classification, "Studiengang", "abteilung", "studiengang");
-        //addSearchIfThere(classification, search, "studiengang");
         addSearchIfThere(classification, search, "abteilung");
 
         printAttributeIfThere(classification, "EMail", "email");
@@ -235,31 +257,8 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
             printAttributeIfThereWithElementAsLabel(classification, "zeile" + i, "zeile" + i);
 
         addSearchIfThere(classification, search, "raumart");
-        String roomName = getRoomName(classification, true);
+        String roomName = getRoomName(classification, true, true);
         printOnLine("raumnr", "Raum", roomName);
-        //printAttributeIfThereWithElementAsLabel(classification, "raum", "raumnr");
-        //addSearchIfThere(classification, search, "raum");
-
-        //final Attribute raumAttr = classification.getAttribute("raum");
-        //final Object raum = raumAttr != null ? classification.getValue("raum") : null;
-
-        //if ( raum != null)
-        // alle ressourcen ausser raum haben evt ein raum attribut
-/*
-    		{
-                printAttributeIfThereWithElementAsLabel(classification, "raum", "raumnr");
-    		}
-*/
-        //else
-        //  		{
-            /*    if ( elementName.equals(ROOM_KEY)) {
-                    // nur bei Räumen der Fall  !!
-                    //String raumnr = getRoomName(classification, true);
-                    //printOnLineIfNotNull("raumnr", "Raum", raumnr);
-                    //addSearchIfThere(classification, search, "raum");
-                }
-    		}
-*/
         if (exportReservations) {
             {
                 String attributeName = "resourceURL";
@@ -267,7 +266,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
                 Object id = ((RefEntity<Allocatable>) allocatable).getId();
                 SimpleIdentifier localname = (org.rapla.entities.storage.internal.SimpleIdentifier) id;
                 String key = /*allocatable.getRaplaType().getLocalName() + "_" + */ "" + localname.getKey();
-                String url = linkPrefix + "/rapla?page=calendar&user=" + STELE_USER + "&file=" + elementName + "&allocatable_id=" + key;
+                String url = linkPrefix + "/rapla?page=calendar&user=" + terminalUser + "&file=" + elementName + "&allocatable_id=" + key;
                 //todo: activate encryption
                 try {
                     printOnLine(attributeName, "Link", new URI(url));
@@ -280,9 +279,9 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
                 openElementOnLine(attributeName);
                 if (allocatable.isPerson())
                     printEncode(LINK_TITEL_PERSON);
-                else if (KURS_KEY.equals(dynamicType.getElementKey()))
+                else if (Arrays.binarySearch(courseType, dynamicType) >= 0)
                     printEncode(LINK_TITEL_KURS);
-                else if (ROOM_KEY.equals(dynamicType.getElementKey()))
+                else if (Arrays.binarySearch(roomType, dynamicType) >= 0)
                     printEncode(LINK_TITEL_RAUM);
                 else
                     printEncode(LINK_TITEL_DEFAULT);
@@ -290,23 +289,6 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
                 println();
             }
         }
-
-			/*Attribute emailAttr = classification.getAttribute("email");
-		        
-	       if ( emailAttr != null)
-	        {
-		    	String email = (String)classification.getValue(emailAttr );
-		    	if ( email != null )
-		    	{
-		        	int indexOf = email.indexOf('@');
-                    //if ( indexOf >0 )
-                    {
-                        String attributeName = "personalFoto";
-                        String username = email.substring(0, indexOf);
-                        printOnLine(attributeName, "Personalfoto", username);
-                    }
-                }
-	        }*/
 
         Attribute infoAttr = classification.getAttribute("info");
         List<AppointmentBlock> blocks = getReservationBlocksToday(allocatable);
@@ -335,11 +317,11 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
             closeElement(attributeName);
         } else {
             // if there are no blocks and no info attribute just add an empty attribute
-            String attributeName = "info";
+            /*String attributeName = "info";
             openTag(attributeName);
             att("label", "Info");
             closeTag();
-            closeElement(attributeName);
+            closeElement(attributeName);*/
         }
 
         for (String tag : search) {
@@ -360,7 +342,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
 
     }
 
-    public String getRoomName(Classification classification, boolean fluegel) {
+    public String getRoomName(Classification classification, boolean fluegel, boolean validFilename) {
         Category superCategory = facade.getSuperCategory();
         StringBuffer buf = new StringBuffer();
         if (classification.getAttribute("raum") != null) {
@@ -375,21 +357,22 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
             }
         }
         String result = buf.toString();
-        return result;
+        return validFilename ? result.replaceAll("[-,\\,/,\\s,.,\\,,:]*", "") : result;
     }
 
     private String getResourceString(DynamicType dynamicType,
                                      Appointment appointment) {
         Reservation reservation = appointment.getReservation();
-        boolean isKurs = dynamicType.getElementKey().equals(KURS_KEY);
-        boolean isRaum = dynamicType.getElementKey().equals(ROOM_KEY);
+        boolean isKurs = Arrays.binarySearch(courseType, dynamicType) >= 0;
+        boolean isRaum = Arrays.binarySearch(roomType, dynamicType) >= 0;
         List<String> allocatableName = new ArrayList<String>();
         for (Allocatable alloc : reservation.getAllocatablesFor(appointment)) {
-            String elementKey = alloc.getClassification().getType().getElementKey();
-            if (!isKurs && elementKey.equals(KURS_KEY)) {
+            DynamicType type = alloc.getClassification().getType();
+            //String elementKey = type.getElementKey();
+            if (!isKurs && Arrays.binarySearch(courseType, type) >= 0) { //elementKey.equals(KURS_KEY)) {
                 allocatableName.add(alloc.getName(locale));
             }
-            if (!isRaum && elementKey.equals(ROOM_KEY)) {
+            if (!isRaum && Arrays.binarySearch(courseType, type) >= 0) { //elementKey.equals(ROOM_KEY)) {
                 allocatableName.add(alloc.getName(locale));
             }
         }
@@ -418,12 +401,10 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         List<AppointmentBlock> array = new ArrayList<AppointmentBlock>();
         Reservation[] reservations = facade.getReservations(new Allocatable[]{allocatable}, start, end);
         for (Reservation res : reservations) {
-            if (Arrays.binarySearch(
-                    TerminalConstants.exportEventTypeNames, res.getClassification().getType().getElementKey()) >= 0) {
+            if (Arrays.binarySearch(eventTypes, res.getClassification().getType()) >= 0)
                 for (Appointment app : res.getAppointmentsFor(allocatable)) {
                     app.createBlocks(start, end, array);
                 }
-            }
         }
         Collections.sort(array, new AppointmentBlockStartComparator());
         return array;

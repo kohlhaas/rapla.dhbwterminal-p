@@ -50,7 +50,7 @@ public class TerminalServerPlugin implements PluginDescriptor<ServerServiceConta
         if ( !config.getAttributeAsBoolean("enabled", false) )
         	return;
 
-    	container.addWebpage("terminal-export",SteleExportPageGenerator.class );
+    	container.addWebpage("terminal-export",SteleExportPageGenerator.class, config  );
     	container.addWebpage("terminal-kurse", SteleKursUebersichtPageGenerator.class, config );
         try {
             RaplaResourcePageGenerator resourcePageGenerator = container.getContext().lookup(RaplaResourcePageGenerator.class);
@@ -59,7 +59,7 @@ public class TerminalServerPlugin implements PluginDescriptor<ServerServiceConta
             URL resource = this.getClass().getResource("/org/rapla/plugin/dhbwterminal/kursuebersicht.css");
 			resourcePageGenerator.registerResource( "kursuebersicht.css", "text/css", resource);
         } catch ( Exception ex) {
-        	getLogger().error("Could not initialize autoexportplugin on server" , ex);
+        	getLogger().error("Could not initialize terminal plugin on server" , ex);
         }
     }
 

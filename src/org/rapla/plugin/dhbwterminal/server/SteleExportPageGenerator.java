@@ -10,15 +10,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.rapla.components.util.IOUtil;
 import org.rapla.facade.RaplaComponent;
+import org.rapla.framework.Configuration;
 import org.rapla.framework.RaplaContext;
 import org.rapla.framework.RaplaException;
 import org.rapla.servletpages.RaplaPageGenerator;
 
 public class SteleExportPageGenerator extends RaplaComponent implements RaplaPageGenerator {
 
-	
-	public SteleExportPageGenerator(RaplaContext context) {
+
+    private Configuration config;
+
+    public SteleExportPageGenerator(RaplaContext context, Configuration config) {
 		super(context);
+        this.config=config;
 	}
 
 	public void generatePage(ServletContext context,
@@ -30,11 +34,12 @@ public class SteleExportPageGenerator extends RaplaComponent implements RaplaPag
 		
 		java.io.PrintWriter out = response.getWriter();
 		
-		AllocatableExporter allocatableExporter;
-		allocatableExporter = new AllocatableExporter( getRaplaLocale(), getClientFacade());
-		try 
+		try
 		{
-			BufferedWriter buf = new BufferedWriter(out);
+            AllocatableExporter allocatableExporter;
+            allocatableExporter = new AllocatableExporter(config, getRaplaLocale(), getClientFacade());
+
+            BufferedWriter buf = new BufferedWriter(out);
 			StringBuffer a = request.getRequestURL();
 			
 			int indexOf = a.lastIndexOf("/rapla");
@@ -44,8 +49,9 @@ public class SteleExportPageGenerator extends RaplaComponent implements RaplaPag
 			buf.close();
 		} 
 		catch (RaplaException ex) {
-			out.println( IOUtil.getStackTraceAsString( ex ) );
-			throw new ServletException( ex );
+			//out.println( IOUtil.getStackTraceAsString( ex ) );
+            getLogger().error(ex.getMessage(), ex);
+            writeError(response, "Error in plugin configuration. Please contact administrator. See log files");
 		}
 		finally
 		{
@@ -54,4 +60,12 @@ public class SteleExportPageGenerator extends RaplaComponent implements RaplaPag
 		
 	}
 
+    private void writeError( HttpServletResponse response, String message ) throws IOException
+    {
+        response.setStatus( 500 );
+        response.setContentType( "text/html; charset=" + getRaplaLocale().getCharsetNonUtf() );
+        java.io.PrintWriter out = response.getWriter();
+        out.println( message );
+        out.close();
+    }
 }

@@ -67,7 +67,7 @@ public class SteleKursUebersichtPageGenerator extends RaplaComponent implements 
 
             out.println("<marquee scrollamount=\"1\" scrolldelay=\"1\" direction=\"up\" >");
 			CourseExporter allocatableExporter;
-			allocatableExporter = new CourseExporter( raplaLocale, getClientFacade());
+			allocatableExporter = new CourseExporter(config, raplaLocale, getClientFacade());
 			BufferedWriter buf = new BufferedWriter(out);
 		
 			allocatableExporter.printKurseAmTag( buf, no_courses);

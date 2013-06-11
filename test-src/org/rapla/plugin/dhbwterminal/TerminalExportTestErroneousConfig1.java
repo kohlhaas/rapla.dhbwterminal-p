@@ -4,14 +4,13 @@ import org.rapla.RaplaTestCase;
 import org.rapla.facade.ClientFacade;
 import org.rapla.framework.DefaultConfiguration;
 import org.rapla.plugin.dhbwterminal.server.AllocatableExporter;
-import org.rapla.plugin.dhbwterminal.server.CourseExporter;
 
 import java.io.*;
 
-public class CourseExportTest extends RaplaTestCase
+public class TerminalExportTestErroneousConfig1 extends RaplaTestCase
 {
 
-	public CourseExportTest(String name) {
+	public TerminalExportTestErroneousConfig1(String name) {
 		super(name);
 	}
 
@@ -28,18 +27,19 @@ public class CourseExportTest extends RaplaTestCase
 		StringWriter writer = new StringWriter();
 		BufferedWriter buf = new BufferedWriter(writer);
         DefaultConfiguration config = new DefaultConfiguration("element");
+
         config.addChild(new DefaultConfiguration(TerminalConstants.KURS_KEY, "kurs"));
         config.addChild(new DefaultConfiguration(TerminalConstants.ROOM_KEY, "raum"));
         config.addChild(new DefaultConfiguration(TerminalConstants.USER_KEY, "stele"));
-        config.addChild(new DefaultConfiguration(TerminalConstants.EVENT_TYPES_KEY, "reservation2,reservation4"));
+        config.addChild(new DefaultConfiguration(TerminalConstants.EVENT_TYPES_KEY, "reservation4"));
         config.addChild(new DefaultConfiguration(TerminalConstants.RESOURCE_TYPES_KEY, "professor,mitarbeiter,raum,kurs"));
 
-        CourseExporter exporter = new CourseExporter(config, getRaplaLocale(), facade);
-		exporter.printKurseAmTag( buf, "https://dhbw-karlsruhe.de/");
+        AllocatableExporter exporter = new AllocatableExporter(config, getRaplaLocale(), facade);
+		exporter.export( buf, "https://dhbw-karlsruhe.de/");
 		buf.close();
 		writer.close();
 		String xml = writer.toString();
-		File file = new File("courseexport.html");
+		File file = new File("raplaexport.xml"); 
 		OutputStreamWriter filewriter = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
 		filewriter.write( xml);
 		filewriter.close();

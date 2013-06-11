@@ -3,15 +3,15 @@ package org.rapla.plugin.dhbwterminal;
 import org.rapla.RaplaTestCase;
 import org.rapla.facade.ClientFacade;
 import org.rapla.framework.DefaultConfiguration;
-import org.rapla.plugin.dhbwterminal.server.AllocatableExporter;
 import org.rapla.plugin.dhbwterminal.server.CourseExporter;
+import org.rapla.plugin.dhbwterminal.server.CourseExporter2;
 
 import java.io.*;
 
-public class CourseExportTest extends RaplaTestCase
+public class CourseExportTest2 extends RaplaTestCase
 {
 
-	public CourseExportTest(String name) {
+	public CourseExportTest2(String name) {
 		super(name);
 	}
 
@@ -34,7 +34,7 @@ public class CourseExportTest extends RaplaTestCase
         config.addChild(new DefaultConfiguration(TerminalConstants.EVENT_TYPES_KEY, "reservation2,reservation4"));
         config.addChild(new DefaultConfiguration(TerminalConstants.RESOURCE_TYPES_KEY, "professor,mitarbeiter,raum,kurs"));
 
-        CourseExporter exporter = new CourseExporter(config, getRaplaLocale(), facade);
+        CourseExporter exporter = new CourseExporter2(config, getRaplaLocale(), facade);
 		exporter.printKurseAmTag( buf, "https://dhbw-karlsruhe.de/");
 		buf.close();
 		writer.close();
