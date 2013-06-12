@@ -372,7 +372,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
             if (!isKurs && Arrays.binarySearch(courseType, type) >= 0) { //elementKey.equals(KURS_KEY)) {
                 allocatableName.add(alloc.getName(locale));
             }
-            if (!isRaum && Arrays.binarySearch(courseType, type) >= 0) { //elementKey.equals(ROOM_KEY)) {
+            if (!isRaum && Arrays.binarySearch(roomType, type) >= 0) { //elementKey.equals(ROOM_KEY)) {
                 allocatableName.add(alloc.getName(locale));
             }
         }
