@@ -44,7 +44,7 @@ public class TerminalServerPlugin implements PluginDescriptor<ServerServiceConta
 
     /**
      * @throws RaplaContextException 
-     * @see org.rapla.framework.PluginDescriptor#provideServices(org.rapla.framework.general.Container)
+     * @see org.rapla.framework.PluginDescriptor
      */
     public void provideServices(ServerServiceContainer container, Configuration config) throws RaplaContextException {
         if ( !config.getAttributeAsBoolean("enabled", false) )
@@ -59,6 +59,10 @@ public class TerminalServerPlugin implements PluginDescriptor<ServerServiceConta
             
             URL resource = this.getClass().getResource("/org/rapla/plugin/dhbwterminal/kursuebersicht.css");
 			resourcePageGenerator.registerResource( "kursuebersicht.css", "text/css", resource);
+
+            resource = this.getClass().getResource("/org/rapla/plugin/dhbwterminal/kursuebersicht2.css");
+            resourcePageGenerator.registerResource( "kursuebersicht2.css", "text/css", resource);
+
         } catch ( Exception ex) {
         	getLogger().error("Could not initialize terminal plugin on server" , ex);
         }

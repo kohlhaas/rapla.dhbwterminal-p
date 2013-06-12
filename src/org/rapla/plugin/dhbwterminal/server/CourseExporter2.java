@@ -80,8 +80,8 @@ public class CourseExporter2 extends CourseExporter {
 
 
                     boolean hasPrinted = true;
-                    //boolean hasPrinted = printAllocatableForUebersicht(alloc);
-                    println("Testtext<br/>");
+                    hasPrinted = printAllocatableForUebersicht(alloc);
+                    //println("Testtext<br/>");
                     if (hasPrinted) {
                         hasAllocatablesPrinted = true;
                     }

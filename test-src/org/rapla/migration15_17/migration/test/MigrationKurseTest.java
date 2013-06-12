@@ -33,6 +33,7 @@ public class MigrationKurseTest extends MigrationTestCase {
 		boolean zuletztExists = false;
 		boolean fachrichtungExists = false;
 		boolean studiengangExists = false;
+		boolean bildExists = false;
 		String[] keys = new String[facade.getDynamicType("resource2").getAttributes().length];
 		for(int i=0; i<keys.length; i++)
 		{
@@ -46,6 +47,8 @@ public class MigrationKurseTest extends MigrationTestCase {
 				fachrichtungExists = true;
 			if (facade.getDynamicType("resource2").getAttributes()[i].getKey().equals("studiengang"))
 				studiengangExists = true;
+            if (facade.getDynamicType("resource2").getAttributes()[i].getKey().equals("bild"))
+                bildExists = true;
 		}
 		Attribute raum = facade.newAttribute(AttributeType.CATEGORY);
 		raum.setKey("raum");
@@ -56,6 +59,15 @@ public class MigrationKurseTest extends MigrationTestCase {
 		jahrgang.getName().setName("de", "Jahrgang");
 		jahrgang.getName().setName("en", "Year");
 		final DynamicType editKurs = facade.edit(facade.getDynamicType("resource2"));
+        if(!bildExists)
+        {
+            Attribute bild = facade.newAttribute(AttributeType.STRING);
+            bild.setKey("bild");
+            bild.getName().setName("de", "Bild");
+            bild.getName().setName("en", "Image");
+            bild.setDefaultValue("kurs");
+            editKurs.addAttribute(bild);
+        }
 		if(!raumExists)
 		{
 			editKurs.addAttribute(raum);
@@ -147,6 +159,9 @@ public class MigrationKurseTest extends MigrationTestCase {
 		for (int i = 0; i < allocatable.length; i++)
 		{
 			Allocatable edit = facade.edit(allocatable[i]);
+            //default value für bild
+            edit.getClassification().setValue("bild","kurs");
+
 			if (edit.getClassification().getValue("name").toString().contains("08"))
 			{
 				edit.getClassification().setValue("jahrgang", facade.getSuperCategory().getCategory("c10").getCategory("j08"));
