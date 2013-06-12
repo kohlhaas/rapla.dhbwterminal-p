@@ -1,13 +1,5 @@
 package org.rapla.plugin.dhbwterminal.server;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.rapla.components.util.IOUtil;
 import org.rapla.facade.RaplaComponent;
 import org.rapla.framework.Configuration;
@@ -17,10 +9,17 @@ import org.rapla.framework.RaplaLocale;
 import org.rapla.plugin.dhbwterminal.TerminalConstants;
 import org.rapla.servletpages.RaplaPageGenerator;
 
-public class SteleKursUebersichtPageGenerator extends RaplaComponent implements RaplaPageGenerator, TerminalConstants {
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedWriter;
+import java.io.IOException;
+
+public class SteleKursUebersichtPageGenerator2 extends RaplaComponent implements RaplaPageGenerator, TerminalConstants {
 
 	Configuration config;
-	public SteleKursUebersichtPageGenerator(RaplaContext context, Configuration config) {
+	public SteleKursUebersichtPageGenerator2(RaplaContext context, Configuration config) {
 		super(context);
 		this.config=config;
 	}
@@ -46,7 +45,7 @@ public class SteleKursUebersichtPageGenerator extends RaplaComponent implements 
 			out.println("<head>");
 			out.println("  <title>" + title + "</title>");
 	
-			out.println("  <link REL=\"stylesheet\" href=\"rapla?page=resource&name=kursuebersicht.css\" type=\"text/css\">");
+			out.println("  <link REL=\"stylesheet\" href=\"rapla?page=resource&name=kursuebersicht2.css\" type=\"text/css\">");
 			if ( cssurl != null && cssurl.trim().length() > 0)
 			{
 				out.println("  <link REL=\"stylesheet\" href=\""+ cssurl + "\" type=\"text/css\">");
@@ -66,7 +65,7 @@ public class SteleKursUebersichtPageGenerator extends RaplaComponent implements 
                         +"</div>");
 
 			CourseExporter allocatableExporter;
-			allocatableExporter = new CourseExporter(config, raplaLocale, getClientFacade());
+			allocatableExporter = new CourseExporter2(config, raplaLocale, getClientFacade());
 			BufferedWriter buf = new BufferedWriter(out);
 		
 			allocatableExporter.printKurseAmTag( buf, no_courses);

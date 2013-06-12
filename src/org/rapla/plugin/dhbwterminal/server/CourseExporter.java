@@ -60,6 +60,7 @@ public class CourseExporter extends XMLWriter {
      * prints all courses for a current day with the next reservation. Prints one course in one row.
      */
     public void printKurseAmTag(BufferedWriter buf, String noAllocatables) throws RaplaException, IOException {
+        buf.append("<marquee scrollamount=\"1\" scrolldelay=\"1\" direction=\"up\" >");
         setWriter(buf);
         setIndentLevel(1);
         boolean hasAllocatablesPrinted = false;
@@ -83,6 +84,7 @@ public class CourseExporter extends XMLWriter {
         if (!hasAllocatablesPrinted) {
             buf.write(noAllocatables);
         }
+        buf.append("</marquee>");
     }
 
     protected boolean printAllocatableForUebersicht(Allocatable allocatable) throws RaplaException, IOException {
@@ -98,7 +100,8 @@ public class CourseExporter extends XMLWriter {
                 if (Arrays.binarySearch(eventTypes, reservation.getClassification().getType()) >= 0) {
                     Date beginn = new Date(block.getStart());
                     Date end = new Date(block.getEnd());
-                    if (end.after(currentTime)) {
+                    //if (end.after(currentTime))
+                    {
                         String resources = getResourceString(appointment);
                         String title = reservation.getName(locale);
                         printKursRow(beginn, end, title, resources, allocatable);

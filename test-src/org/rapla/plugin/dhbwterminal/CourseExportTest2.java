@@ -35,7 +35,7 @@ public class CourseExportTest2 extends RaplaTestCase
         config.addChild(new DefaultConfiguration(TerminalConstants.RESOURCE_TYPES_KEY, "professor,mitarbeiter,raum,kurs"));
 
         CourseExporter exporter = new CourseExporter2(config, getRaplaLocale(), facade);
-		exporter.printKurseAmTag( buf, "https://dhbw-karlsruhe.de/");
+		exporter.printKurseAmTag( buf, "Nichts mehr da!");
 		buf.close();
 		writer.close();
 		String xml = writer.toString();
