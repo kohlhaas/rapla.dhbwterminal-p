@@ -259,7 +259,10 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         addSearchIfThere(classification, search, "raumart");
         String roomName = getRoomName(classification, true, true);
         printOnLine("raumnr", "Raum", roomName);
-        if (exportReservations) {
+
+        List<AppointmentBlock> blocks = getReservationBlocksToday(allocatable);
+
+        if (exportReservations && blocks.size() > 0) {
             {
                 String attributeName = "resourceURL";
                 @SuppressWarnings("unchecked")
@@ -291,10 +294,9 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         }
 
         Attribute infoAttr = classification.getAttribute("info");
-        List<AppointmentBlock> blocks = getReservationBlocksToday(allocatable);
         if (infoAttr != null) {
             printAttributeIfThere(classification, "Info", "info");
-        } else if (blocks.size() > 0) {
+        } else if (blocks.size() > 0 && exportReservations) {
             String attributeName = "info";
             openTag(attributeName);
             att("label", "Info");
