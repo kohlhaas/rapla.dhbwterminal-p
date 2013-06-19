@@ -17,7 +17,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import javax.swing.*;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ListModel;
+import javax.swing.ListSelectionModel;
 
 import org.rapla.components.layout.TableLayout;
 import org.rapla.entities.User;
@@ -136,15 +146,16 @@ public class TerminalOption extends DefaultPluginOption {
             conf.setValue(textField3.getText());
             newConfig.addChild(conf);
         }
+        // TODO Replace with RaplaMap and store in preferences to save real references instead of keys (in case the keys or username changes)
         {
             DefaultConfiguration conf = new DefaultConfiguration(TerminalConstants.EVENT_TYPES_KEY);
-            String value = getDynamicTypeKeysFromListSelection(eventTypes.getSelectedValuesList());
+            String value = getDynamicTypeKeysFromListSelection(Arrays.asList(eventTypes.getSelectedValues()));
             conf.setValue(value);
             newConfig.addChild(conf);
         }
         {
             DefaultConfiguration conf = new DefaultConfiguration(TerminalConstants.RESOURCE_TYPES_KEY);
-            String value = getDynamicTypeKeysFromListSelection(resourceTypes.getSelectedValuesList());
+            String value = getDynamicTypeKeysFromListSelection(Arrays.asList(resourceTypes.getSelectedValuesList()));
             conf.setValue(value);
             newConfig.addChild(conf);
         }
