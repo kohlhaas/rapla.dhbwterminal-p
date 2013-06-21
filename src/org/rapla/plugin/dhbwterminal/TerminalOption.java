@@ -149,13 +149,13 @@ public class TerminalOption extends DefaultPluginOption {
         // TODO Replace with RaplaMap and store in preferences to save real references instead of keys (in case the keys or username changes)
         {
             DefaultConfiguration conf = new DefaultConfiguration(TerminalConstants.EVENT_TYPES_KEY);
-            String value = getDynamicTypeKeysFromListSelection(Arrays.asList(eventTypes.getSelectedValues()));
+            String value = getDynamicTypeKeysFromListSelection(eventTypes.getSelectedValuesList());
             conf.setValue(value);
             newConfig.addChild(conf);
         }
         {
             DefaultConfiguration conf = new DefaultConfiguration(TerminalConstants.RESOURCE_TYPES_KEY);
-            String value = getDynamicTypeKeysFromListSelection(Arrays.asList(resourceTypes.getSelectedValuesList()));
+            String value = getDynamicTypeKeysFromListSelection(resourceTypes.getSelectedValuesList());
             conf.setValue(value);
             newConfig.addChild(conf);
         }
