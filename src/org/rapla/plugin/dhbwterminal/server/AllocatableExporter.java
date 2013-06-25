@@ -43,6 +43,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
     private DynamicType[] roomType;
     private DynamicType[] resourceTypes;
     private DynamicType[] eventTypes;
+    private DynamicType[] externalPersonTypes;
 
 
     public AllocatableExporter(Configuration config, RaplaLocale raplaLocale, ClientFacade facade) throws RaplaException {
@@ -56,6 +57,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         roomType = getDynamicTypesForKey(config, facade, TerminalConstants.ROOM_KEY);
         courseType = getDynamicTypesForKey(config, facade, TerminalConstants.KURS_KEY);
         terminalUser = config.getChild(TerminalConstants.USER_KEY).getValue(null);
+        externalPersonTypes = getDynamicTypesForKey(config, facade, TerminalConstants.EXTERNAL_PERSON_TYPES_KEY);
         if (terminalUser == null) {
             throw new RaplaException("Terminal User must be set to use export");
         }
@@ -196,9 +198,18 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
     private void printAllocatable(Allocatable allocatable, String linkPrefix, boolean exportReservations) throws IOException, RaplaException {
         Classification classification = allocatable.getClassification();
         LinkedHashSet<String> search = new LinkedHashSet<String>();
+
         if (classification == null)
             return;
+        List<AppointmentBlock> blocks = getReservationBlocksToday(allocatable);
+
+
         DynamicType dynamicType = classification.getType();
+        // only export resource if it matches external persons
+        // because they have lecture today
+        if (Arrays.binarySearch(externalPersonTypes, dynamicType) >= 0  && blocks.size() == 0)
+            return;
+
         String elementName = allocatable.isPerson() ? "person" : dynamicType.getElementKey();
         openTag(elementName);
         att("typ", dynamicType.getElementKey());
@@ -260,7 +271,6 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         String roomName = getRoomName(classification, true, true);
         printOnLine("raumnr", "Raum", roomName);
 
-        List<AppointmentBlock> blocks = getReservationBlocksToday(allocatable);
 
         if (exportReservations && blocks.size() > 0) {
             {

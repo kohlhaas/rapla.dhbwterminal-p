@@ -47,6 +47,7 @@ public class TerminalOption extends DefaultPluginOption {
     JTextField textField3;
     JList eventTypes;
     JList resourceTypes;
+    JList externalPersonTypes;
     JComboBox kursTyp;
     JComboBox raumTyp;
     JComboBox steleUser;
@@ -61,7 +62,7 @@ public class TerminalOption extends DefaultPluginOption {
         double pre = TableLayout.PREFERRED;
         double fill = TableLayout.FILL;
         JPanel panel = new JPanel();
-        panel.setLayout(new TableLayout(new double[][]{{pre, 5, pre, 5, pre}, {pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, fill}}));
+        panel.setLayout(new TableLayout(new double[][]{{pre, 5, pre, 5, pre}, {pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, fill}}));
 
         textField1 = new JTextField();
         addCopyPaste(textField1);
@@ -92,33 +93,41 @@ public class TerminalOption extends DefaultPluginOption {
         panel.add(new JScrollPane(resourceTypes), "2,6");
         resourceTypes.setEnabled(true);
 
+        externalPersonTypes = new JList();
+        externalPersonTypes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        externalPersonTypes.setCellRenderer(new NamedListCellRenderer(getRaplaLocale().getLocale()));
+        addCopyPaste(externalPersonTypes);
+        panel.add(new JLabel("Externe Personen-Ressourcen"), "0,8");
+        panel.add(new JScrollPane(externalPersonTypes), "2,8");
+        externalPersonTypes.setEnabled(true);
+
         eventTypes = new JList();
         eventTypes.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         eventTypes.setCellRenderer(new NamedListCellRenderer(getRaplaLocale().getLocale()));
         addCopyPaste(eventTypes);
-        panel.add(new JLabel("Exportierte Veranstaltungstypen"), "0,8");
-        panel.add(new JScrollPane(eventTypes), "2,8");
+        panel.add(new JLabel("Exportierte Veranstaltungstypen"), "0,10");
+        panel.add(new JScrollPane(eventTypes), "2,10");
         eventTypes.setEnabled(true);
 
         kursTyp = new JComboBox();
         kursTyp.setRenderer(new NamedListCellRenderer(getRaplaLocale().getLocale()));
         addCopyPaste(kursTyp);
-        panel.add(new JLabel("Kurs Ressource"), "0,10");
-        panel.add(kursTyp, "2,10");
+        panel.add(new JLabel("Kurs Ressource"), "0,12");
+        panel.add(kursTyp, "2,12");
         kursTyp.setEnabled(true);
 
         raumTyp = new JComboBox();
         raumTyp.setRenderer(new NamedListCellRenderer(getRaplaLocale().getLocale()));
         addCopyPaste(raumTyp);
-        panel.add(new JLabel("Raum Ressource"), "0,12");
-        panel.add(raumTyp, "2,12");
+        panel.add(new JLabel("Raum Ressource"), "0,14");
+        panel.add(raumTyp, "2,14");
         raumTyp.setEnabled(true);
 
         steleUser = new JComboBox();
         steleUser.setRenderer(new NamedListCellRenderer(getRaplaLocale().getLocale()));
         addCopyPaste(steleUser);
-        panel.add(new JLabel("Stele User"), "0,14");
-        panel.add(steleUser, "2,14");
+        panel.add(new JLabel("Stele User"), "0,16");
+        panel.add(steleUser, "2,16");
         steleUser.setEnabled(true);
 
 
@@ -153,6 +162,14 @@ public class TerminalOption extends DefaultPluginOption {
             conf.setValue(value);
             newConfig.addChild(conf);
         }
+        {
+            DefaultConfiguration conf = new DefaultConfiguration(TerminalConstants.EXTERNAL_PERSON_TYPES_KEY);
+            String value = getDynamicTypeKeysFromListSelection(externalPersonTypes.getSelectedValuesList());
+            conf.setValue(value);
+            newConfig.addChild(conf);
+        }
+
+
         {
             DefaultConfiguration conf = new DefaultConfiguration(TerminalConstants.RESOURCE_TYPES_KEY);
             String value = getDynamicTypeKeysFromListSelection(resourceTypes.getSelectedValuesList());
@@ -254,8 +271,6 @@ public class TerminalOption extends DefaultPluginOption {
         }
 
         {
-
-
             DefaultListModel model = new DefaultListModel();
             for (DynamicType dynamicType : resources) {
                 model.addElement(dynamicType);
@@ -266,6 +281,21 @@ public class TerminalOption extends DefaultPluginOption {
             String[] keys = value.split(",");
             updateSelectionModel(keys, resourceTypes);
         }
+
+        {
+            DefaultListModel model = new DefaultListModel();
+            for (DynamicType dynamicType : resources) {
+                String annotation = dynamicType.getAnnotation(DynamicTypeAnnotations.KEY_CLASSIFICATION_TYPE);
+                if ( annotation != null && annotation.equals( DynamicTypeAnnotations.VALUE_CLASSIFICATION_TYPE_PERSON))
+                    model.addElement(dynamicType);
+            }
+            externalPersonTypes.setModel(model);
+
+            String value = config.getChild(TerminalConstants.EXTERNAL_PERSON_TYPES_KEY).getValue("");
+            String[] keys = value.split(",");
+            updateSelectionModel(keys, externalPersonTypes);
+        }
+
 
     }
 

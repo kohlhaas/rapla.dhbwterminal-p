@@ -14,7 +14,5 @@ public interface TerminalConstants
 
     String RESOURCE_TYPES_KEY ="resource_types";
     String EVENT_TYPES_KEY = "event_types";
-
-
-
+    String EXTERNAL_PERSON_TYPES_KEY = "external_persons";
 }
