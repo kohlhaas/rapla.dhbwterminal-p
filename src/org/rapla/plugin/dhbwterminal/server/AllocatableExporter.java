@@ -207,10 +207,10 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         DynamicType dynamicType = classification.getType();
         // only export resource if it matches external persons
         // because they have lecture today
-        if (Arrays.binarySearch(externalPersonTypes, dynamicType) >= 0  && blocks.size() == 0)
+        if (allocatable.isPerson() && Arrays.binarySearch(externalPersonTypes, dynamicType) >= 0  && blocks.size() == 0)
             return;
-
         String elementName = allocatable.isPerson() ? "person" : dynamicType.getElementKey();
+
         openTag(elementName);
         att("typ", dynamicType.getElementKey());
         closeTag();
@@ -369,7 +369,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
             }
         }
         String result = buf.toString();
-        return validFilename ? result.replaceAll("[-,\\,/,\\s,.,\\,,:]*", "") : result;
+        return validFilename ? result.replaceAll("[-,\\,/,\\s,\\,,:]*", "") : result;
     }
 
     private String getResourceString(DynamicType dynamicType,

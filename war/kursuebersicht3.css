@@ -1,0 +1,63 @@
+.kurs-column {
+  width: 250px;
+  height: 60px;
+}
+
+.time-column {
+   width: 350px;
+   height: 60px;
+}
+
+.name-column {
+  width: 750px;
+  height: 60px;
+}
+
+.resource-column {
+	width: 300px;
+	float: left;
+	height: 60px;
+}
+
+.kurs-row {
+  font-size: 40px;
+  line-height: 45px;
+  width: 1805px;
+  margin-left: 115px;
+}
+
+.empty
+{
+   height:50px;
+   width:1px;
+}
+body
+{
+	background-image: url("images/DHBW_CSS_Terminal.png") !important;
+	background-repeat: no-repeat;
+}
+
+marquee
+{
+	height: 600px;
+	marquee-direction: up;
+}
+
+h1.title
+{
+	font: Arial;
+	height: 60px;
+	margin-top: 200px;
+	margin-bottom: 50px;
+	margin-left: 115px;
+	font-size: 60px;
+}
+
+table
+{
+	font: Arial;
+	/*height: 60px;*/
+	margin-bottom: 50px;
+	margin-left: 115px;
+	/*font-size: 60px;*/
+}

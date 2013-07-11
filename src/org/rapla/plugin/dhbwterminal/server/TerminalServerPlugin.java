@@ -53,6 +53,7 @@ public class TerminalServerPlugin implements PluginDescriptor<ServerServiceConta
     	container.addWebpage("terminal-export",SteleExportPageGenerator.class, config  );
     	container.addWebpage("terminal-kurse", SteleKursUebersichtPageGenerator.class, config );
     	container.addWebpage("terminal-kurse2", SteleKursUebersichtPageGenerator2.class, config );
+    	container.addWebpage("terminal-kurse3", SteleKursUebersichtPageGenerator3.class, config );
         try {
             RaplaResourcePageGenerator resourcePageGenerator = container.getContext().lookup(RaplaResourcePageGenerator.class);
             // registers the standard calendar files
@@ -62,6 +63,10 @@ public class TerminalServerPlugin implements PluginDescriptor<ServerServiceConta
 
             resource = this.getClass().getResource("/org/rapla/plugin/dhbwterminal/kursuebersicht2.css");
             resourcePageGenerator.registerResource( "kursuebersicht2.css", "text/css", resource);
+
+            resource = this.getClass().getResource("/org/rapla/plugin/dhbwterminal/kursuebersicht3.css");
+            resourcePageGenerator.registerResource( "kursuebersicht3.css", "text/css", resource);
+
 
         } catch ( Exception ex) {
         	getLogger().error("Could not initialize terminal plugin on server" , ex);
