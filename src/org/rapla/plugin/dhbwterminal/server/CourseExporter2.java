@@ -1,25 +1,23 @@
 package org.rapla.plugin.dhbwterminal.server;
 
-import org.rapla.components.util.DateTools;
-import org.rapla.components.util.xml.XMLWriter;
-import org.rapla.entities.Category;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
 import org.rapla.entities.Named;
 import org.rapla.entities.NamedComparator;
 import org.rapla.entities.User;
-import org.rapla.entities.domain.*;
-import org.rapla.entities.dynamictype.Attribute;
-import org.rapla.entities.dynamictype.Classification;
+import org.rapla.entities.domain.Allocatable;
 import org.rapla.entities.dynamictype.ClassificationFilter;
 import org.rapla.entities.dynamictype.DynamicType;
 import org.rapla.facade.ClientFacade;
 import org.rapla.framework.Configuration;
 import org.rapla.framework.RaplaException;
 import org.rapla.framework.RaplaLocale;
-import org.rapla.plugin.dhbwterminal.TerminalConstants;
-
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.util.*;
 
 
 public class CourseExporter2 extends CourseExporter {

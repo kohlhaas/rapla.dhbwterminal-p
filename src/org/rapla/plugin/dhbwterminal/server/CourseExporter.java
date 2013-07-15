@@ -44,7 +44,7 @@ public class CourseExporter extends XMLWriter {
         this.raplaLocale = raplaLocale;
         this.facade = facade;
         locale = raplaLocale.getLocale();
-        currentTime = raplaLocale.toRaplaTime(raplaLocale.getSystemTimeZone(), new Date());
+        currentTime = raplaLocale.toRaplaTime(raplaLocale.getImportExportTimeZone(), new Date());
 
         eventTypes = AllocatableExporter.getDynamicTypesForKey(config, facade, TerminalConstants.EVENT_TYPES_KEY);
         resourceTypes = AllocatableExporter.getDynamicTypesForKey(config, facade, TerminalConstants.RESOURCE_TYPES_KEY);

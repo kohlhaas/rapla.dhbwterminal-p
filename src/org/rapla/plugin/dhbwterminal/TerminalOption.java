@@ -13,6 +13,8 @@
 package org.rapla.plugin.dhbwterminal;
 
 import java.awt.BorderLayout;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -38,8 +40,10 @@ import org.rapla.framework.DefaultConfiguration;
 import org.rapla.framework.PluginDescriptor;
 import org.rapla.framework.RaplaContext;
 import org.rapla.framework.RaplaException;
+import org.rapla.framework.StartupEnvironment;
 import org.rapla.gui.DefaultPluginOption;
 import org.rapla.gui.internal.common.NamedListCellRenderer;
+import org.rapla.plugin.urlencryption.UrlEncryption;
 
 public class TerminalOption extends DefaultPluginOption {
     JTextField textField1;
@@ -62,7 +66,7 @@ public class TerminalOption extends DefaultPluginOption {
         double pre = TableLayout.PREFERRED;
         double fill = TableLayout.FILL;
         JPanel panel = new JPanel();
-        panel.setLayout(new TableLayout(new double[][]{{pre, 5, pre, 5, pre}, {pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, fill}}));
+        panel.setLayout(new TableLayout(new double[][]{{pre, 5, pre, 5, pre}, {pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre, pre,pre, pre,fill}}));
 
         textField1 = new JTextField();
         addCopyPaste(textField1);
@@ -131,9 +135,61 @@ public class TerminalOption extends DefaultPluginOption {
         steleUser.setEnabled(true);
 
 
+        JTextField textField10 = new JTextField();
+        addCopyPaste(textField10);
+        textField10.setEditable( false);
+        textField10.setColumns(30);
+        panel.add(new JLabel("Addresse fuer export"), "0,18");
+        panel.add(textField10, "2,18");
+        textField10.setEnabled(true);
+        textField10.setText( getAddress());
         main.add(panel, BorderLayout.CENTER);
         return main;
     }
+    
+    public String getAddress() 
+	{
+		final URL codeBase;
+        try 
+        {
+            StartupEnvironment env = getService( StartupEnvironment.class );
+            codeBase = env.getDownloadURL();
+        }
+        catch (Exception ex)
+        {
+        	return "Not in webstart mode. Exportname is "  ;
+        }
+	
+            
+        try 
+        {
+            // In case of enabled and activated URL encryption:
+            String pageParameters = "page=" + "terminal-export";
+            final String urlExtension;
+
+            if( getContext().has( UrlEncryption.class))
+            {
+            	UrlEncryption webservice = getService(UrlEncryption.class);
+				String encryptedParamters = webservice.encrypt(pageParameters);
+				urlExtension = UrlEncryption.ENCRYPTED_PARAMETER_NAME+"="+encryptedParamters;
+            }
+            else
+            {
+                urlExtension = pageParameters;
+            }
+            return new URL( codeBase,"rapla?" + urlExtension).toExternalForm();
+        } 
+        catch (RaplaException ex)
+        {
+        	getLogger().error(ex.getMessage(), ex);
+        	return "Exportname is invalid ";
+        } 
+        catch (MalformedURLException e) 
+        {
+        	return "Malformed url. " + e.getMessage() + ". Exportname is invalid " ;
+		} 
+	}
+
 
     public String getName(Locale locale) {
         return "Terminal Einstellungen";
@@ -158,13 +214,13 @@ public class TerminalOption extends DefaultPluginOption {
         // TODO Replace with RaplaMap and store in preferences to save real references instead of keys (in case the keys or username changes)
         {
             DefaultConfiguration conf = new DefaultConfiguration(TerminalConstants.EVENT_TYPES_KEY);
-            String value = getDynamicTypeKeysFromListSelection(eventTypes.getSelectedValuesList());
+            String value = getDynamicTypeKeysFromListSelection(Arrays.asList(eventTypes.getSelectedValues()));
             conf.setValue(value);
             newConfig.addChild(conf);
         }
         {
             DefaultConfiguration conf = new DefaultConfiguration(TerminalConstants.EXTERNAL_PERSON_TYPES_KEY);
-            String value = getDynamicTypeKeysFromListSelection(externalPersonTypes.getSelectedValuesList());
+            String value = getDynamicTypeKeysFromListSelection(Arrays.asList(externalPersonTypes.getSelectedValues()));
             conf.setValue(value);
             newConfig.addChild(conf);
         }
@@ -172,7 +228,7 @@ public class TerminalOption extends DefaultPluginOption {
 
         {
             DefaultConfiguration conf = new DefaultConfiguration(TerminalConstants.RESOURCE_TYPES_KEY);
-            String value = getDynamicTypeKeysFromListSelection(resourceTypes.getSelectedValuesList());
+            String value = getDynamicTypeKeysFromListSelection(Arrays.asList(resourceTypes.getSelectedValues()));
             conf.setValue(value);
             newConfig.addChild(conf);
         }

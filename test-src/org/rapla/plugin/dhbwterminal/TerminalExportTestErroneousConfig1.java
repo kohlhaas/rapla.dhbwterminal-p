@@ -34,7 +34,7 @@ public class TerminalExportTestErroneousConfig1 extends RaplaTestCase
         config.addChild(new DefaultConfiguration(TerminalConstants.EVENT_TYPES_KEY, "reservation4"));
         config.addChild(new DefaultConfiguration(TerminalConstants.RESOURCE_TYPES_KEY, "professor,mitarbeiter,raum,kurs"));
 
-        AllocatableExporter exporter = new AllocatableExporter(config, getRaplaLocale(), facade);
+        AllocatableExporter exporter = new AllocatableExporter( getContext(), config,facade);
 		exporter.export( buf, "https://dhbw-karlsruhe.de/");
 		buf.close();
 		writer.close();

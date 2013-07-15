@@ -8,7 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.rapla.components.util.IOUtil;
 import org.rapla.facade.RaplaComponent;
 import org.rapla.framework.Configuration;
 import org.rapla.framework.RaplaContext;
@@ -16,8 +15,6 @@ import org.rapla.framework.RaplaException;
 import org.rapla.servletpages.RaplaPageGenerator;
 
 public class SteleExportPageGenerator extends RaplaComponent implements RaplaPageGenerator {
-
-
     private Configuration config;
 
     public SteleExportPageGenerator(RaplaContext context, Configuration config) {
@@ -37,7 +34,7 @@ public class SteleExportPageGenerator extends RaplaComponent implements RaplaPag
 		try
 		{
             AllocatableExporter allocatableExporter;
-            allocatableExporter = new AllocatableExporter(config, getRaplaLocale(), getClientFacade());
+            allocatableExporter = new AllocatableExporter(getContext(), config);
 
             BufferedWriter buf = new BufferedWriter(out);
 			StringBuffer a = request.getRequestURL();

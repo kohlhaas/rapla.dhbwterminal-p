@@ -4,7 +4,15 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import org.rapla.components.util.DateTools;
 import org.rapla.components.util.SerializableDateTimeFormat;
@@ -25,11 +33,11 @@ import org.rapla.entities.storage.RefEntity;
 import org.rapla.entities.storage.internal.SimpleIdentifier;
 import org.rapla.facade.ClientFacade;
 import org.rapla.framework.Configuration;
+import org.rapla.framework.RaplaContext;
 import org.rapla.framework.RaplaException;
 import org.rapla.framework.RaplaLocale;
 import org.rapla.plugin.dhbwterminal.TerminalConstants;
-
-import javax.swing.*;
+import org.rapla.plugin.urlencryption.UrlEncryption;
 
 public class AllocatableExporter extends XMLWriter implements TerminalConstants {
 
@@ -44,14 +52,21 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
     private DynamicType[] resourceTypes;
     private DynamicType[] eventTypes;
     private DynamicType[] externalPersonTypes;
-
-
-    public AllocatableExporter(Configuration config, RaplaLocale raplaLocale, ClientFacade facade) throws RaplaException {
-        this.raplaLocale = raplaLocale;
+    private UrlEncryption encryptionservice;
+    public AllocatableExporter(RaplaContext context, Configuration config) throws RaplaException {
+    	this( context, config, context.lookup( ClientFacade.class));
+    }
+    
+    public AllocatableExporter(RaplaContext context, Configuration config, ClientFacade facade) throws RaplaException {
+        raplaLocale = context.lookup( RaplaLocale.class);
         this.facade = facade;
-        dateTimeFormat = new SerializableDateTimeFormat(raplaLocale.createCalendar());
+        if ( context.has(UrlEncryption.class))
+        {
+        	encryptionservice =context.lookup(UrlEncryption.class);
+        }
+		dateTimeFormat = new SerializableDateTimeFormat(raplaLocale.createCalendar());
         locale = raplaLocale.getLocale();
-        currentTimeInGMT = raplaLocale.toRaplaTime(raplaLocale.getSystemTimeZone(), new Date());
+        currentTimeInGMT = raplaLocale.toRaplaTime(raplaLocale.getImportExportTimeZone(), new Date());
         eventTypes = getDynamicTypesForKey(config, facade, TerminalConstants.EVENT_TYPES_KEY);
         resourceTypes = getDynamicTypesForKey(config, facade, TerminalConstants.RESOURCE_TYPES_KEY);
         roomType = getDynamicTypesForKey(config, facade, TerminalConstants.ROOM_KEY);
@@ -279,7 +294,9 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
                 Object id = ((RefEntity<Allocatable>) allocatable).getId();
                 SimpleIdentifier localname = (org.rapla.entities.storage.internal.SimpleIdentifier) id;
                 String key = /*allocatable.getRaplaType().getLocalName() + "_" + */ "" + localname.getKey();
-                String url = linkPrefix + "/rapla?page=calendar&user=" + terminalUser + "&file=" + elementName + "&allocatable_id=" + key;
+                String pageParameters = "page=calendar&user=" + terminalUser + "&file=" + elementName + "&allocatable_id=" + key;
+                String encryptedParamters = encryptionservice != null ?  encryptionservice.encrypt(pageParameters) : pageParameters;
+				String url = linkPrefix + "/rapla?" + UrlEncryption.ENCRYPTED_PARAMETER_NAME+"="+encryptedParamters;
                 //todo: activate encryption
                 try {
                     printOnLine(attributeName, "Link", new URI(url));

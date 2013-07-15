@@ -9,6 +9,7 @@ import java.io.StringWriter;
 import org.rapla.RaplaTestCase;
 import org.rapla.facade.ClientFacade;
 import org.rapla.framework.DefaultConfiguration;
+import org.rapla.framework.RaplaContext;
 import org.rapla.plugin.dhbwterminal.server.AllocatableExporter;
 
 public class TerminalExportTest extends RaplaTestCase 
@@ -36,7 +37,8 @@ public class TerminalExportTest extends RaplaTestCase
         config.addChild(new DefaultConfiguration(TerminalConstants.USER_KEY, "stele"));
         config.addChild(new DefaultConfiguration(TerminalConstants.EVENT_TYPES_KEY, "reservation2,reservation4"));
         config.addChild(new DefaultConfiguration(TerminalConstants.RESOURCE_TYPES_KEY, "professor,mitarbeiter,raum,kurs"));
-         AllocatableExporter exporter = new AllocatableExporter(config, getRaplaLocale(), facade);
+         RaplaContext context = raplaContainer.getContext();
+		AllocatableExporter exporter = new AllocatableExporter(context,config, facade);
 		exporter.export( buf, "https://dhbw-karlsruhe.de/");
 		buf.close();
 		writer.close();
