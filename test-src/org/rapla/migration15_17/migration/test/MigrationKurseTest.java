@@ -34,20 +34,21 @@ public class MigrationKurseTest extends MigrationTestCase {
 		boolean fachrichtungExists = false;
 		boolean studiengangExists = false;
 		boolean bildExists = false;
-		String[] keys = new String[facade.getDynamicType("resource2").getAttributes().length];
+        DynamicType resource2 = facade.getDynamicType("resource2");
+        String[] keys = new String[resource2.getAttributes().length];
 		for(int i=0; i<keys.length; i++)
 		{
-			if (facade.getDynamicType("resource2").getAttributes()[i].getKey().equals("raum"))
+			if (resource2.getAttributes()[i].getKey().equals("raum"))
 				raumExists = true;
-			if (facade.getDynamicType("resource2").getAttributes()[i].getKey().equals("jahrgang"))
+			if (resource2.getAttributes()[i].getKey().equals("jahrgang"))
 				jahrgangExists = true;
-			if (facade.getDynamicType("resource2").getAttributes()[i].getKey().equals("last-modified"))
+			if (resource2.getAttributes()[i].getKey().equals("last-modified"))
 				zuletztExists = true;
-			if (facade.getDynamicType("resource2").getAttributes()[i].getKey().equals("a1"))
+			if (resource2.getAttributes()[i].getKey().equals("a1"))
 				fachrichtungExists = true;
-			if (facade.getDynamicType("resource2").getAttributes()[i].getKey().equals("studiengang"))
+			if (resource2.getAttributes()[i].getKey().equals("abteilung"))
 				studiengangExists = true;
-            if (facade.getDynamicType("resource2").getAttributes()[i].getKey().equals("bild"))
+            if (resource2.getAttributes()[i].getKey().equals("bild"))
                 bildExists = true;
 		}
 		Attribute raum = facade.newAttribute(AttributeType.CATEGORY);
@@ -58,7 +59,8 @@ public class MigrationKurseTest extends MigrationTestCase {
 		jahrgang.setKey("jahrgang");
 		jahrgang.getName().setName("de", "Jahrgang");
 		jahrgang.getName().setName("en", "Year");
-		final DynamicType editKurs = facade.edit(facade.getDynamicType("resource2"));
+		DynamicType editKurs = facade.edit(resource2);
+
         if(!bildExists)
         {
             Attribute bild = facade.newAttribute(AttributeType.STRING);
@@ -147,19 +149,19 @@ public class MigrationKurseTest extends MigrationTestCase {
 			editKurs.getAttribute("abteilung").setConstraint(ConstraintIds.KEY_ROOT_CATEGORY, facade.getSuperCategory().getCategory("c2"));
 		}
 		facade.store(editKurs);
-		assertNotNull(facade.getDynamicType("resource2").getAttribute("raum"));
-		assertNotNull(facade.getDynamicType("resource2").getAttribute("jahrgang"));
-		assertNull(facade.getDynamicType("resource2").getAttribute("last-modified"));
-		assertNull(facade.getDynamicType("resource2").getAttribute("a1"));
-		assertNotNull(facade.getDynamicType("resource2").getAttribute("abteilung"));
+		assertNotNull(resource2.getAttribute("raum"));
+		assertNotNull(resource2.getAttribute("jahrgang"));
+		assertNull(resource2.getAttribute("last-modified"));
+		assertNull(resource2.getAttribute("a1"));
+		assertNotNull(resource2.getAttribute("abteilung"));
 		
-		ClassificationFilter filter = facade.getDynamicType("resource2").newClassificationFilter();
+		ClassificationFilter filter = resource2.newClassificationFilter();
 		ClassificationFilter[] filters = new ClassificationFilter[] {filter};
 		Allocatable[] allocatable = facade.getAllocatables(filters);
 		for (int i = 0; i < allocatable.length; i++)
 		{
 			Allocatable edit = facade.edit(allocatable[i]);
-            //default value für bild
+            //default value für bild, jpg extension wird automatisch dran gehängt
             edit.getClassification().setValue("bild","kurs");
 
 			if (edit.getClassification().getValue("name").toString().contains("08"))
@@ -185,7 +187,10 @@ public class MigrationKurseTest extends MigrationTestCase {
 			else if (edit.getClassification().getValue("name").toString().contains("13"))
 			{
 				edit.getClassification().setValue("jahrgang", facade.getSuperCategory().getCategory("c10").getCategory("j13"));
-			}
+			} else if (edit.getClassification().getValue("bild") == null)
+            {
+                edit.getClassification().setValue("bild", "kurs");
+            }
 			facade.store(edit);
 		}
 	}

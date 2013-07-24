@@ -1,5 +1,6 @@
 package org.rapla.migration15_17.migration.test;
 
+import org.rapla.entities.Entity;
 import org.rapla.entities.User;
 import org.rapla.entities.domain.Allocatable;
 import org.rapla.entities.domain.Permission;
@@ -28,6 +29,7 @@ public class PermissionsTest extends MigrationTestCase {
 		ClassificationFilter filter = facade.getDynamicType("resource1").newClassificationFilter();
 		ClassificationFilter[] filters = new ClassificationFilter[] {filter};
 		Allocatable[] allocatable = facade.getAllocatables(filters);
+        Entity<?>[] edits = new Entity<?>[allocatable.length];
 		Permission permission;
 		User stele = facade.getUser("stele");
 		for(int i = 0; i < allocatable.length; i++)
@@ -37,11 +39,15 @@ public class PermissionsTest extends MigrationTestCase {
             permission.setUser(stele);
             permission.setAccessLevel(Permission.READ);
             edit.addPermission(permission);
-            facade.store(edit);
+            edits[i] = edit;
+            //facade.store(edit);
 		}
+
+        facade.storeObjects(edits);
 		filter = facade.getDynamicType("resource2").newClassificationFilter();
 		filters = new ClassificationFilter[] {filter};
 		allocatable = facade.getAllocatables(filters);
+        edits = new Entity<?>[allocatable.length];
 		for(int i = 0; i < allocatable.length; i++)
 		{
 			Allocatable edit = facade.edit(allocatable[i]);
@@ -49,23 +55,30 @@ public class PermissionsTest extends MigrationTestCase {
             permission.setUser(stele);
             permission.setAccessLevel(Permission.READ);
             edit.addPermission(permission);
-            facade.store(edit);
+            edits[i] = edit;
+            //facade.store(edit);
 		}
+        facade.storeObjects(edits);
 		filter = facade.getDynamicType("person1").newClassificationFilter();
 		filters = new ClassificationFilter[] {filter};
 		allocatable = facade.getAllocatables(filters);
-		for(int i = 0; i < allocatable.length; i++)
+        edits = new Entity<?>[allocatable.length];
+
+        for(int i = 0; i < allocatable.length; i++)
 		{
 			Allocatable edit = facade.edit(allocatable[i]);
 			permission = edit.newPermission();
             permission.setUser(stele);
             permission.setAccessLevel(Permission.READ);
             edit.addPermission(permission);
-            facade.store(edit);
+            edits[i] = edit;
+            //facade.store(edit);
 		}
+        facade.storeObjects(edits);
 		filter = facade.getDynamicType("defaultPerson").newClassificationFilter();
 		filters = new ClassificationFilter[] {filter};
 		allocatable = facade.getAllocatables(filters);
+        edits = new Entity<?>[allocatable.length];
 		for(int i = 0; i < allocatable.length; i++)
 		{
 			Allocatable edit = facade.edit(allocatable[i]);
@@ -73,7 +86,9 @@ public class PermissionsTest extends MigrationTestCase {
             permission.setUser(stele);
             permission.setAccessLevel(Permission.READ);
             edit.addPermission(permission);
-            facade.store(edit);
+            edits[i] = edit;
+            //facade.store(edit);
 		}
+        facade.storeObjects(edits);
 	}
 }

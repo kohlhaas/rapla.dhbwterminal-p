@@ -251,8 +251,8 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
                     buf.append(titel + " ");
                 }
                 Object vorname = classification.getValue("forename");
-                if (vorname != null) {
-                    buf.append(vorname + " ");
+                if (vorname != null && vorname.toString().length() > 0) {
+                    buf.append(vorname.toString().substring(0,1) + ". ");
                 }
                 Object surname = classification.getValue("surname");
                 if (surname != null) {
@@ -275,7 +275,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         printAttributeIfThere(classification, "Studiengang", "abteilung", "studiengang");
         addSearchIfThere(classification, search, "abteilung");
 
-        printAttributeIfThere(classification, "EMail", "email");
+        printAttributeIfThere(classification, "E-Mail", "email");
         printAttributeIfThere(classification, "Bild", "bild");
         printAttributeIfThere(classification, "Telefon", "telefon");
         printAttributeIfThere(classification, "Raumart", "raumart");

@@ -1,15 +1,13 @@
 package org.rapla.migration15_17.migration.test;
 
-import org.rapla.entities.dynamictype.Attribute;
-import org.rapla.entities.dynamictype.AttributeType;
-import org.rapla.entities.dynamictype.ConstraintIds;
-import org.rapla.entities.dynamictype.DynamicType;
+import org.rapla.entities.domain.Allocatable;
+import org.rapla.entities.dynamictype.*;
 import org.rapla.facade.ClientFacade;
 import org.rapla.migration15_17.MigrationTestCase;
 
 public class MigrationMitarbeiterTest extends MigrationTestCase {
 ClientFacade facade;
-	
+
 	public MigrationMitarbeiterTest(String name) {
 		super(name);
 	}
@@ -28,16 +26,21 @@ ClientFacade facade;
 		boolean fakultaetExists = false;
 		boolean zuletztExists = false;
 		boolean raumExists = false;
-		String[] keys = new String[facade.getDynamicType("person2").getAttributes().length];
+		boolean bildExists = false;
+        DynamicType personType = facade.getDynamicType("person2");
+        String[] keys = new String[personType.getAttributes().length];
 		for(int i=0; i<keys.length; i++)
 		{
-			if (facade.getDynamicType("person2").getAttributes()[i].getKey().equals("abteilung"))
+			if (personType.getAttributes()[i].getKey().equals("abteilung"))
 				fakultaetExists = true;
-			if (facade.getDynamicType("person2").getAttributes()[i].getKey().equals("last-modified"))
+			if (personType.getAttributes()[i].getKey().equals("last-modified"))
 				zuletztExists = true;
-			if (facade.getDynamicType("person2").getAttributes()[i].getKey().equals("raum"))
+			if (personType.getAttributes()[i].getKey().equals("raum"))
 				raumExists = true;
-		}
+            if (personType.getAttributes()[i].getKey().equals("bild"))
+                bildExists = true;
+
+        }
 		Attribute abteilung = facade.newAttribute(AttributeType.CATEGORY);
 		abteilung.setKey("abteilung");
 		abteilung.getName().setName("de", "Abteilung");
@@ -46,7 +49,17 @@ ClientFacade facade;
 		raum.setKey("raum");
 		raum.getName().setName("de", "Raum");
 		raum.getName().setName("en", "Room");
-		final DynamicType editmitarbeiter = facade.edit(facade.getDynamicType("person2"));
+        Attribute bild;
+        if (!bildExists) {
+            bild = facade.newAttribute(AttributeType.STRING);
+            bild.setKey("bild");
+            bild.getName().setName("de", "Bild");
+            bild.getName().setName("en", "Image");
+            bild.setDefaultValue("person");
+        } else {
+            bild = personType.getAttribute("bild");
+        }
+		final DynamicType editmitarbeiter = facade.edit(personType);
 		if(!fakultaetExists)
 		{
 			editmitarbeiter.addAttribute(abteilung);
@@ -66,10 +79,25 @@ ClientFacade facade;
 			editmitarbeiter.getAttribute("raum").setConstraint(ConstraintIds.KEY_ROOT_CATEGORY, facade.getSuperCategory().getCategory("c9"));
 			facade.store(editmitarbeiter);
 		}
-		facade.store(editmitarbeiter);
-		assertNotNull(facade.getDynamicType("person2").getAttribute("abteilung"));
-		assertNull(facade.getDynamicType("person2").getAttribute("last-modified"));
-		assertNotNull(facade.getDynamicType("person2").getAttribute("raum"));
+        if (!bildExists) {
+            editmitarbeiter.addAttribute(bild);
+        }
+       facade.store(editmitarbeiter);
+		assertNotNull(personType.getAttribute("abteilung"));
+		assertNull(personType.getAttribute("last-modified"));
+		assertNotNull(personType.getAttribute("raum"));
+
+        ClassificationFilter filter = personType.newClassificationFilter();
+        ClassificationFilter[] filters = new ClassificationFilter[]{filter};
+        Allocatable[] allocatable = facade.getAllocatables(filters);
+        Allocatable edit;
+        for (int i = 0; i <allocatable.length; i++)
+        {
+            edit = facade.edit(allocatable[i]);
+            edit.getClassification().setValue("bild", "person");
+            facade.store(edit);
+        }
+
 	}
 }
 

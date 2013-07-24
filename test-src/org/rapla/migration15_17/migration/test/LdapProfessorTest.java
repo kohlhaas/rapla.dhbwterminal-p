@@ -12,6 +12,7 @@ import org.rapla.facade.ClientFacade;
 import org.rapla.framework.Container;
 import org.rapla.framework.logger.ConsoleLogger;
 import org.rapla.framework.logger.Logger;
+import org.rapla.migration15_17.MigrationTestCase;
 import org.rapla.migration15_17.ldap.test.LDAPQuery;
 import org.rapla.migration15_17.ldap.test.LDAPQueryImpl;
 import org.rapla.server.ServerService;
@@ -25,17 +26,17 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
-public class LdapProfessorTest extends ServletTestBase {
-	ServerService raplaServer;
+public class LdapProfessorTest extends MigrationTestCase {
+	//ServerService raplaServer;
 	Logger logger = new ConsoleLogger(ConsoleLogger.LEVEL_WARN).getChildLogger("test");
     ClientFacade facade;
-    Locale locale;
-    protected RaplaStartupEnvironment env = new RaplaStartupEnvironment();
-    protected Container raplaContainer;
+    //Locale locale;
+    //protected RaplaStartupEnvironment env = new RaplaStartupEnvironment();
+    //protected Container raplaContainer;
     public static String TEST_FOLDER_NAME="temp/test";
 	public LdapProfessorTest(String name) {
 		super(name);
-		try {
+		/*try {
             new File("temp").mkdir();
             File testFolder =new File(TEST_FOLDER_NAME);
             System.setProperty("jetty.home",testFolder.getPath());
@@ -56,16 +57,20 @@ public class LdapProfessorTest extends ServletTestBase {
         	getLogger().warn("Can't install logging bridge  " + ex.getMessage());
         	// Todo bootstrap log
         }
-		
+		*/
 	}
 
 	protected void setUp() throws Exception {
-		super.setUp();
-		Container container = getContainer();
-		ServerServiceContainer raplaServerContainer = container.lookup(ServerServiceContainer.class,getStorageName());
+        super.setUp("test.xml");
+        facade = getContext().lookup(ClientFacade.class);
+        facade.login("admin", "".toCharArray());
+
+/*
+        Container container = getContainer();
+        ServerServiceContainer raplaServerContainer = container.lookup(ServerServiceContainer.class,getStorageName());
         raplaServer = raplaServerContainer.getContext().lookup( ServerService.class);
-        
-        
+
+
         URL configURL = new URL("file:./" + TEST_FOLDER_NAME + "/test.xconf");
         env.setConfigURL( configURL);
         try {
@@ -74,11 +79,12 @@ public class LdapProfessorTest extends ServletTestBase {
            throw new IOException("Failed to copy TestFile '" + "test-src/" + "test.xml" + "': " + ex.getMessage());
        }
         raplaContainer = new RaplaMainContainer( env );
-        
+
         facade = (ClientFacade) raplaContainer.getContext().lookup(ClientFacade.class);
-		facade.login("admin", "".toCharArray());
+        facade.login("admin", "".toCharArray());
         
         locale = Locale.getDefault();
+*/
 	}
 
 	protected void tearDown() throws Exception {
@@ -93,13 +99,13 @@ public class LdapProfessorTest extends ServletTestBase {
 	}
 	
 	public void testLDAPConnection () throws Exception {
-        LDAPQuery ldapQuery = new LDAPQueryImpl(raplaServer.getContext());
+        LDAPQuery ldapQuery = new LDAPQueryImpl(getContext());
         String password =  LDAPQuery.PASSWORD;
         Map<String,Map<String,String>> ldapValues = ldapQuery.getLDAPValues(
                 LDAPQuery.SEARCH_TERM_ABTEILUNGEN,password
         );
 
-        String personKey = "professor"; //"defaultPerson";
+        String personKey = "defaultPerson"; //"defaultPerson";
         ClassificationFilter filter = facade.getDynamicType(personKey).newClassificationFilter();
         ClassificationFilter[] filters = new ClassificationFilter[] {filter};
         Allocatable[] professor = facade.getAllocatables(filters);

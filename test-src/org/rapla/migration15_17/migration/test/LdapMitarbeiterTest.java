@@ -15,6 +15,7 @@ import org.rapla.facade.ClientFacade;
 import org.rapla.framework.Container;
 import org.rapla.framework.logger.ConsoleLogger;
 import org.rapla.framework.logger.Logger;
+import org.rapla.migration15_17.MigrationTestCase;
 import org.rapla.migration15_17.ldap.test.LDAPQuery;
 import org.rapla.migration15_17.ldap.test.LDAPQueryImpl;
 import org.rapla.server.ServerService;
@@ -28,13 +29,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
-public class LdapMitarbeiterTest extends ServletTestBase {
-	ServerService raplaServer;
-	Logger logger = new ConsoleLogger(ConsoleLogger.LEVEL_WARN).getChildLogger("test");
+public class LdapMitarbeiterTest extends MigrationTestCase {
+    //ServerService raplaServer;
+    	Logger logger = new ConsoleLogger(ConsoleLogger.LEVEL_WARN).getChildLogger("test");
     ClientFacade facade;
-    Locale locale;
-    protected RaplaStartupEnvironment env = new RaplaStartupEnvironment();
-    protected Container raplaContainer;
+//    Locale locale;
+//    protected RaplaStartupEnvironment env = new RaplaStartupEnvironment();
+//    protected Container raplaContainer;
     public static String TEST_FOLDER_NAME="temp/test";
 	public LdapMitarbeiterTest(String name) {
 		super(name);
@@ -63,7 +64,12 @@ public class LdapMitarbeiterTest extends ServletTestBase {
 	}
 
 	protected void setUp() throws Exception {
-		super.setUp();
+        super.setUp("test.xml");
+        facade = getContext().lookup(ClientFacade.class);
+        facade.login("admin", "".toCharArray());
+
+/*
+        super.setUp();
 		Container container = getContainer();
 		ServerServiceContainer raplaServerContainer = container.lookup(ServerServiceContainer.class,getStorageName());
         raplaServer = raplaServerContainer.getContext().lookup( ServerService.class);
@@ -82,6 +88,7 @@ public class LdapMitarbeiterTest extends ServletTestBase {
 		facade.login("admin", "".toCharArray());
         
         locale = Locale.getDefault();
+*/
 	}
 
 	protected void tearDown() throws Exception {
@@ -96,33 +103,33 @@ public class LdapMitarbeiterTest extends ServletTestBase {
 	}
 	
 	public void testLDAPConnection () throws Exception {
-        LDAPQuery ldapQuery = new LDAPQueryImpl(raplaServer.getContext());
+        LDAPQuery ldapQuery = new LDAPQueryImpl(getContext());
         String password =  LDAPQuery.PASSWORD;
         Map<String,Map<String,String>> ldapValues = ldapQuery.getLDAPValues(
                 LDAPQuery.SEARCH_TERM_ALL, password
         );
 
-        String personTyp = "mitarbeiter";
-        DynamicType person2 = facade.getDynamicType(personTyp);
-        if (person2.getAttribute("telefon") == null)
+        DynamicType personType = facade.getDynamicType("person2");
+        if (personType.getAttribute("telefon") == null)
         {
             Attribute attribute = facade.newAttribute(AttributeType.STRING);
             attribute.setKey("telefon");
             attribute.getName().setName("de","Telefon");
-            DynamicType editPerson2 = facade.edit(person2);
+            DynamicType editPerson2 = facade.edit(personType);
             editPerson2.addAttribute(attribute);
             facade.store(editPerson2);
-            person2 = facade.getDynamicType(personTyp);
+            personType = facade.getDynamicType("person2");
         }
 
-        ClassificationFilter filter = person2.newClassificationFilter();
+
+        ClassificationFilter filter = personType.newClassificationFilter();
 
         ClassificationFilter[] filters = new ClassificationFilter[] {filter};
         Allocatable[] mitarbeiter = facade.getAllocatables(filters);
         
         for (Map.Entry<String, Map<String, String>> stringMapEntry : ldapValues.entrySet()) {
             //System.out.println(ldapValues.get(stringMapEntry.getKey()).get("sn"));
-            filter = person2.newClassificationFilter();
+            filter = personType.newClassificationFilter();
             filter.addEqualsRule("forename", ldapValues.get(stringMapEntry.getKey()).get("givenName"));
             filter.addEqualsRule("surname", ldapValues.get(stringMapEntry.getKey()).get("sn"));
             filters = new ClassificationFilter[] {filter};
@@ -206,7 +213,7 @@ public class LdapMitarbeiterTest extends ServletTestBase {
             		mitarbeiterEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W"));
             	}
             }
-            else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Fakult�t Technik"))
+            else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Fakultät Technik"))
             {
             	if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Elektrotechnik"))
             	{
