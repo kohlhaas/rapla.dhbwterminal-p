@@ -12,6 +12,8 @@ import org.rapla.facade.RaplaComponent;
 import org.rapla.framework.Configuration;
 import org.rapla.framework.RaplaContext;
 import org.rapla.framework.RaplaException;
+import org.rapla.plugin.urlencryption.UrlEncryption;
+import org.rapla.plugin.urlencryption.server.EncryptedHttpServletRequest;
 import org.rapla.servletpages.RaplaPageGenerator;
 
 public class SteleExportPageGenerator extends RaplaComponent implements RaplaPageGenerator {
@@ -26,6 +28,13 @@ public class SteleExportPageGenerator extends RaplaComponent implements RaplaPag
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException 
 	{
+	    if ( getContext().has(UrlEncryption.class) && ! (request instanceof EncryptedHttpServletRequest))
+        {
+	    	response.sendError( 403 );
+	    	return;
+        }
+	
+		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("content-type text/xml charset=utf-8");
 		
