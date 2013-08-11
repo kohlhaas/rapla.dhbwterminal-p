@@ -143,7 +143,7 @@ public class TerminalOption extends DefaultPluginOption {
         panel.add(textField10, "2,18");
         textField10.setEnabled(true);
         textField10.setText( getAddress());
-        main.add(panel, BorderLayout.CENTER);
+        main.add(new JScrollPane(panel), BorderLayout.CENTER);
         return main;
     }
     
