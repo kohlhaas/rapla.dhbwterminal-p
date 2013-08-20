@@ -236,6 +236,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
             if (Arrays.binarySearch(roomType, dynamicType)>=0){ //elementName.equals(ROOM_KEY)) {
                 name = getRoomName(classification, true, false);
                 label = "Raum";
+                searchTerm = name;
             } else if (Arrays.binarySearch(courseType, dynamicType)>=0){ //elementName.equals(KURS_KEY)) {
                 StringBuffer buf = new StringBuffer();
                 Object titel = classification.getValue("name");
@@ -279,7 +280,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         printAttributeIfThere(classification, "Jahrgang", "jahrgang");
         printAttributeIfThere(classification, "Studiengang", "abteilung");
         printAttributeIfThere(classification, "Studiengang", "abteilung", "studiengang");
-        addSearchIfThere(classification, search, "abteilung");
+        //addSearchIfThere(classification, search, "abteilung");
 
         printAttributeIfThere(classification, "E-Mail", "email");
         printAttributeIfThere(classification, "Bild", "bild");
@@ -394,6 +395,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         String result = buf.toString();
         return validFilename ? result.replaceAll("[-,\\,/,\\s,\\,,:]*", "") : result;
     }
+
 
     private String getResourceString(DynamicType dynamicType,
                                      Appointment appointment) {
