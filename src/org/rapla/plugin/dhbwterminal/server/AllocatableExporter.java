@@ -231,6 +231,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         closeTag();
         {
             String name;
+            String searchTerm = null;
             final String label;
             if (Arrays.binarySearch(roomType, dynamicType)>=0){ //elementName.equals(ROOM_KEY)) {
                 name = getRoomName(classification, true, false);
@@ -242,6 +243,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
                     buf.append(titel);
                 }
                 name = buf.toString();
+                searchTerm = name;
                 label = "Kurs";
             } else if (allocatable.isPerson()) {
                 StringBuffer buf = new StringBuffer();
@@ -253,20 +255,24 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
                 Object vorname = classification.getValue("forename");
                 if (vorname != null && vorname.toString().length() > 0) {
                     buf.append(vorname.toString().substring(0,1) + ". ");
+                    searchTerm = vorname.toString();
                 }
                 Object surname = classification.getValue("surname");
                 if (surname != null) {
                     buf.append(surname);
+                    searchTerm = surname.toString();
                 }
                 name = buf.toString();
                 label = "Name";
             } else {
                 name = classification.getName(locale);
+                searchTerm = name;
                 label = "Bezeichnung";
             }
 
             printOnLine("name", label, name);
-            search.add(name);
+            if (searchTerm != null)
+                search.add(searchTerm);
         }
 
 
