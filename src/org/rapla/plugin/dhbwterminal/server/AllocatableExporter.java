@@ -64,7 +64,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         {
         	encryptionservice =context.lookup(UrlEncryption.class);
         }
-		dateTimeFormat = new SerializableDateTimeFormat(raplaLocale.createCalendar());
+		dateTimeFormat = new SerializableDateTimeFormat();
         locale = raplaLocale.getLocale();
         currentTimeInGMT = raplaLocale.toRaplaTime(raplaLocale.getImportExportTimeZone(), new Date());
         eventTypes = getDynamicTypesForKey(config, facade, TerminalConstants.EVENT_TYPES_KEY);
