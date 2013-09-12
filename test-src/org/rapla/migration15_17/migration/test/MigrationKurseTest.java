@@ -1,11 +1,15 @@
 package org.rapla.migration15_17.migration.test;
 
 import org.rapla.entities.Category;
+import org.rapla.entities.Entity;
 import org.rapla.entities.MultiLanguageName;
 import org.rapla.entities.domain.Allocatable;
 import org.rapla.entities.dynamictype.*;
 import org.rapla.facade.ClientFacade;
 import org.rapla.migration15_17.MigrationTestCase;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class MigrationKurseTest extends MigrationTestCase {
 	ClientFacade facade;
@@ -158,6 +162,7 @@ public class MigrationKurseTest extends MigrationTestCase {
 		ClassificationFilter filter = resource2.newClassificationFilter();
 		ClassificationFilter[] filters = new ClassificationFilter[] {filter};
 		Allocatable[] allocatable = facade.getAllocatables(filters);
+        Collection<Entity<?>> edits = new ArrayList<Entity<?>>();
 		for (int i = 0; i < allocatable.length; i++)
 		{
 			Allocatable edit = facade.edit(allocatable[i]);
@@ -191,7 +196,9 @@ public class MigrationKurseTest extends MigrationTestCase {
             {
                 edit.getClassification().setValue("bild", "kurs");
             }
-			facade.store(edit);
+            edits.add(edit);
+			//facade.store(edit);
 		}
+        facade.storeObjects(edits.toArray(new Entity[allocatable.length]));
 	}
 }

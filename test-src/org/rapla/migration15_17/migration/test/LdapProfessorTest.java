@@ -27,16 +27,17 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class LdapProfessorTest extends MigrationTestCase {
-	//ServerService raplaServer;
-	Logger logger = new ConsoleLogger(ConsoleLogger.LEVEL_WARN).getChildLogger("test");
+    //ServerService raplaServer;
+    Logger logger = new ConsoleLogger(ConsoleLogger.LEVEL_WARN).getChildLogger("test");
     ClientFacade facade;
     //Locale locale;
     //protected RaplaStartupEnvironment env = new RaplaStartupEnvironment();
     //protected Container raplaContainer;
-    public static String TEST_FOLDER_NAME="temp/test";
-	public LdapProfessorTest(String name) {
-		super(name);
-		/*try {
+    public static String TEST_FOLDER_NAME = "temp/test";
+
+    public LdapProfessorTest(String name) {
+        super(name);
+        /*try {
             new File("temp").mkdir();
             File testFolder =new File(TEST_FOLDER_NAME);
             System.setProperty("jetty.home",testFolder.getPath());
@@ -58,9 +59,9 @@ public class LdapProfessorTest extends MigrationTestCase {
         	// Todo bootstrap log
         }
 		*/
-	}
+    }
 
-	protected void setUp() throws Exception {
+    protected void setUp() throws Exception {
         super.setUp("test.xml");
         facade = getContext().lookup(ClientFacade.class);
         facade.login("admin", "".toCharArray());
@@ -85,289 +86,207 @@ public class LdapProfessorTest extends MigrationTestCase {
         
         locale = Locale.getDefault();
 */
-	}
+    }
 
-	protected void tearDown() throws Exception {
-		super.tearDown();
-		if (raplaContainer != null)
+    protected void tearDown() throws Exception {
+        super.tearDown();
+        if (raplaContainer != null)
             raplaContainer.dispose();
-		try {
-            IOUtil.copy( "temp/test" + "/test.xml", "test-src" + "/test.xml" );
-       } catch (IOException ex) {
-           throw new IOException("Failed to copy TestFile '" + "/test.xml" + "': " + ex.getMessage());
-       }
-	}
-	
-	public void testLDAPConnection () throws Exception {
+        try {
+            IOUtil.copy("temp/test" + "/test.xml", "test-src" + "/test.xml");
+        } catch (IOException ex) {
+            throw new IOException("Failed to copy TestFile '" + "/test.xml" + "': " + ex.getMessage());
+        }
+    }
+
+    public void testLDAPConnection() throws Exception {
         LDAPQuery ldapQuery = new LDAPQueryImpl(getContext());
-        String password =  LDAPQuery.PASSWORD;
-        Map<String,Map<String,String>> ldapValues = ldapQuery.getLDAPValues(
-                LDAPQuery.SEARCH_TERM_ABTEILUNGEN,password
+        String password = LDAPQuery.PASSWORD;
+        Map<String, Map<String, String>> ldapValues = ldapQuery.getLDAPValues(
+                LDAPQuery.SEARCH_TERM_ABTEILUNGEN, password
         );
 
         String personKey = "defaultPerson"; //"defaultPerson";
         ClassificationFilter filter = facade.getDynamicType(personKey).newClassificationFilter();
-        ClassificationFilter[] filters = new ClassificationFilter[] {filter};
+        ClassificationFilter[] filters = new ClassificationFilter[]{filter};
         Allocatable[] professor = facade.getAllocatables(filters);
-        
+
         for (Map.Entry<String, Map<String, String>> stringMapEntry : ldapValues.entrySet()) {
             //System.out.println(ldapValues.get(stringMapEntry.getKey()).get("sn"));
+            String physicalDeliveryOfficeNameValue = ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName");
+            String physicalDeliveryOfficeNameKey = makeValidKey(physicalDeliveryOfficeNameValue);
+            String physicalDeliveryOfficeNameFluegelKey = physicalDeliveryOfficeNameValue.substring(0, 1);
+
             filter = facade.getDynamicType(personKey).newClassificationFilter();
             filter.addEqualsRule("forename", ldapValues.get(stringMapEntry.getKey()).get("givenName"));
             filter.addEqualsRule("surname", ldapValues.get(stringMapEntry.getKey()).get("sn"));
-            filters = new ClassificationFilter[] {filter};
+            filters = new ClassificationFilter[]{filter};
             professor = facade.getAllocatables(filters);
             Allocatable profEdit;
             int counter;
             if (professor.length > 0)
-            	counter = professor.length;
+                counter = professor.length;
             else
-            	counter = 1;
-            for (int i = 0; i < counter; i++)
-            {
-            	if (professor.length >= 1)
-            	{
-            profEdit = facade.edit(professor[i]);
-            //Telefon
-            profEdit.getClassification().setValue("telefon", "+49 (0)721 9735 - "  + ldapValues.get(stringMapEntry.getKey()).get("telephoneNumber"));
-            //Email
-            profEdit.getClassification().setValue("email", ldapValues.get(stringMapEntry.getKey()).get("mail"));
-            //Raum
-            //Bestehender Raum
-            Category[] cats = facade.getSuperCategory().getCategory("c9").getCategory(
-            		ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName").substring(0, 1)).getCategories();
-            ArrayList<String> catsStr = new ArrayList<String>();
-            for (int j = 0; j < cats.length; j++)
-            {
-            	catsStr.add(cats[j].getKey());
-            }
-            if(catsStr.contains(
-            				ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName")))
-            {
-            profEdit.getClassification().setValue("raum", facade.getSuperCategory().getCategory("c9").getCategory(
-            		ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName").substring(0, 1)).getCategory(
-            				ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName")));
-            }
-            //Neuen Raum anlegen
-            else
-            {
-            	Category editCat = facade.edit(facade.getSuperCategory());
-            	Category newCat = facade.newCategory();
-            	newCat.setKey(ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName"));
-            	newCat.getName().setName("de", ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName").substring(1, 
-            			ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName").length()));
-            	editCat.getCategory("c9").getCategory(ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName").substring(0, 1)).
-            	addCategory(newCat);
-            	facade.store(editCat);
-            	profEdit.getClassification().setValue("raum", facade.getSuperCategory().getCategory("c9").getCategory(
-                		ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName").substring(0, 1)).getCategory(
-                				ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName")));
-            }
-            //Studiengang
-            if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Fakultät Wirtschaft"))
-            {
-            	if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Bank"))
-            	{
-            		profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("BK"));
-            	}
-            	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Handel"))
-            	{
-            		profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("HD"));
-            	}
-            	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Business"))
-            	{
-            		profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("IB"));
-            	}
-            	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Industrie"))
-            	{
-            		profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("IN"));
-            	}
-            	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("RSW"))
-            	{
-            		profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("SP"));
-            	}
-            	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Unternehmertum"))
-            	{
-            		profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("UN"));
-            	}
-            	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Versicherung"))
-            	{
-            		profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("VS"));
-            	}
-            	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Wirtschaftsinformatik"))
-            	{
-            		profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("WI"));
-            	}
-            	else
-            	{
-            		profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W"));
-            	}
-            }
-            else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Fakultät Technik"))
-            {
-            	if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Elektrotechnik"))
-            	{
-            		profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("EL"));
-            	}
-            	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Informatik"))
-            	{
-            		profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("INF"));
-            	}
-            	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Maschinenbau"))
-            	{
-            		profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("MB"));
-            	}
-            	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Mechatronik"))
-            	{
-            		profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("MT"));
-            	}
-            	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Papiertechnik"))
-            	{
-            		profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("PT"));
-            	}
-            	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Sicherheitswesen"))
-            	{
-            		profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("SHE"));
-            	}
-            	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Wirtschaftsingenieur"))
-            	{
-            		profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("WIW"));
-            	}
-            	else
-            	{
-            		profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T"));
-            	}
-            }
-            else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Arztassistent"))
-            {
-            	profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("G").getCategory("PA"));
-            }
-            facade.store(profEdit);
-            	}
-            	else
-            	{
-            		Allocatable person = facade.newPerson();
-            		person.setClassification(facade.getDynamicType(personKey).newClassification());
-            		person.getClassification().setValue("forename", ldapValues.get(stringMapEntry.getKey()).get("givenName"));
-            		person.getClassification().setValue("surname", ldapValues.get(stringMapEntry.getKey()).get("sn"));
-            		person.getClassification().setValue("telefon", "+49 (0)721 9735 - " + ldapValues.get(stringMapEntry.getKey()).get("telephoneNumber"));
-            		person.getClassification().setValue("email", ldapValues.get(stringMapEntry.getKey()).get("mail"));
-            		//Raum
+                counter = 1;
+            for (int i = 0; i < counter; i++) {
+                if (professor.length >= 1) {
+                    profEdit = facade.edit(professor[i]);
+                    //Telefon
+                    profEdit.getClassification().setValue("telefon", "+49 (0)721 9735 - " + ldapValues.get(stringMapEntry.getKey()).get("telephoneNumber"));
+                    //Email
+                    profEdit.getClassification().setValue("email", ldapValues.get(stringMapEntry.getKey()).get("mail"));
+                    //Raum
                     //Bestehender Raum
                     Category[] cats = facade.getSuperCategory().getCategory("c9").getCategory(
-                    		ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName").substring(0, 1)).getCategories();
+                            physicalDeliveryOfficeNameFluegelKey).getCategories();
                     ArrayList<String> catsStr = new ArrayList<String>();
-                    for (int j = 0; j < cats.length; j++)
-                    {
-                    	catsStr.add(cats[j].getKey());
+                    for (Category cat : cats) {
+                        catsStr.add(cat.getKey());
                     }
-                    if(catsStr.contains(
-                    				ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName")))
-                    {
-                    person.getClassification().setValue("raum", facade.getSuperCategory().getCategory("c9").getCategory(
-                    		ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName").substring(0, 1)).getCategory(
-                    				ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName")));
+                    if (catsStr.contains(physicalDeliveryOfficeNameKey)) {
+                        profEdit.getClassification().setValue("raum", facade.getSuperCategory().getCategory("c9").getCategory(
+                                physicalDeliveryOfficeNameFluegelKey).getCategory(
+                                physicalDeliveryOfficeNameKey));
                     }
                     //Neuen Raum anlegen
-                    else
-                    {
-                    	Category editCat = facade.edit(facade.getSuperCategory());
-                    	Category newCat = facade.newCategory();
-                    	newCat.setKey(ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName"));
-                    	newCat.getName().setName("de", ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName").substring(1, 
-                    			ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName").length()));
-                    	editCat.getCategory("c9").getCategory(ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName").substring(0, 1)).
-                    	addCategory(newCat);
-                    	facade.store(editCat);
-                    	person.getClassification().setValue("raum", facade.getSuperCategory().getCategory("c9").getCategory(
-                        		ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName").substring(0, 1)).getCategory(
-                        				ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName")));
+                    else {
+                        Category editCat = facade.edit(facade.getSuperCategory());
+                        Category newCat = facade.newCategory();
+                        newCat.setKey(physicalDeliveryOfficeNameKey);
+                        newCat.getName().setName("de", physicalDeliveryOfficeNameValue.substring(1,
+                                physicalDeliveryOfficeNameValue.length()));
+                        editCat.getCategory("c9").getCategory(physicalDeliveryOfficeNameFluegelKey).
+                                addCategory(newCat);
+                        facade.store(editCat);
+                        profEdit.getClassification().setValue("raum", facade.getSuperCategory().getCategory("c9").getCategory(
+                                physicalDeliveryOfficeNameFluegelKey).getCategory(physicalDeliveryOfficeNameKey));
                     }
-                  //Studiengang
-                    if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Fakultät Wirtschaft"))
-                    {
-                    	if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Bank"))
-                    	{
-                    		person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("BK"));
-                    	}
-                    	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Handel"))
-                    	{
-                    		person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("HD"));
-                    	}
-                    	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Business"))
-                    	{
-                    		person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("IB"));
-                    	}
-                    	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Industrie"))
-                    	{
-                    		person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("IN"));
-                    	}
-                    	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("RSW"))
-                    	{
-                    		person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("SP"));
-                    	}
-                    	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Unternehmertum"))
-                    	{
-                    		person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("UN"));
-                    	}
-                    	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Versicherung"))
-                    	{
-                    		person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("VS"));
-                    	}
-                    	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Wirtschaftsinformatik"))
-                    	{
-                    		person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("WI"));
-                    	}
-                    	else
-                    	{
-                    		person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W"));
-                    	}
+                    //Studiengang
+                    if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Fakultät Wirtschaft")) {
+                        if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Bank")) {
+                            profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("BK"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Handel")) {
+                            profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("HD"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Business")) {
+                            profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("IB"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Industrie")) {
+                            profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("IN"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("RSW")) {
+                            profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("SP"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Unternehmertum")) {
+                            profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("UN"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Versicherung")) {
+                            profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("VS"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Wirtschaftsinformatik")) {
+                            profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("WI"));
+                        } else {
+                            profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W"));
+                        }
+                    } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Fakultät Technik")) {
+                        if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Elektrotechnik")) {
+                            profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("EL"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Informatik")) {
+                            profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("INF"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Maschinenbau")) {
+                            profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("MB"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Mechatronik")) {
+                            profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("MT"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Papiertechnik")) {
+                            profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("PT"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Sicherheitswesen")) {
+                            profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("SHE"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Wirtschaftsingenieur")) {
+                            profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("WIW"));
+                        } else {
+                            profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T"));
+                        }
+                    } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Arztassistent")) {
+                        profEdit.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("G").getCategory("PA"));
                     }
-                    else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Fakultät Technik"))
-                    {
-                    	if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Elektrotechnik"))
-                    	{
-                    		person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("EL"));
-                    	}
-                    	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Informatik"))
-                    	{
-                    		person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("INF"));
-                    	}
-                    	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Maschinenbau"))
-                    	{
-                    		person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("MB"));
-                    	}
-                    	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Mechatronik"))
-                    	{
-                    		person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("MT"));
-                    	}
-                    	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Papiertechnik"))
-                    	{
-                    		person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("PT"));
-                    	}
-                    	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Sicherheitswesen"))
-                    	{
-                    		person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("SHE"));
-                    	}
-                    	else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Wirtschaftsingenieur"))
-                    	{
-                    		person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("WIW"));
-                    	}
-                    	else
-                    	{
-                    		person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T"));
-                    	}
+                    facade.store(profEdit);
+                } else {
+                    Allocatable person = facade.newPerson();
+                    person.setClassification(facade.getDynamicType(personKey).newClassification());
+                    person.getClassification().setValue("forename", ldapValues.get(stringMapEntry.getKey()).get("givenName"));
+                    person.getClassification().setValue("surname", ldapValues.get(stringMapEntry.getKey()).get("sn"));
+                    person.getClassification().setValue("telefon", "+49 (0)721 9735 - " + ldapValues.get(stringMapEntry.getKey()).get("telephoneNumber"));
+                    person.getClassification().setValue("email", ldapValues.get(stringMapEntry.getKey()).get("mail"));
+                    //Raum
+                    //Bestehender Raum
+                    Category[] cats = facade.getSuperCategory().getCategory("c9").getCategory(
+                            physicalDeliveryOfficeNameFluegelKey).getCategories();
+                    ArrayList<String> catsStr = new ArrayList<String>();
+                    for (int j = 0; j < cats.length; j++) {
+                        catsStr.add(cats[j].getKey());
                     }
-                    else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Arztassistent"))
-                    {
-                    	person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("G").getCategory("PA"));
+                    if (catsStr.contains(physicalDeliveryOfficeNameKey)) {
+                            //ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName"))) {
+                        person.getClassification().setValue("raum", facade.getSuperCategory().getCategory("c9").getCategory(
+                                physicalDeliveryOfficeNameFluegelKey).getCategory(physicalDeliveryOfficeNameKey));
+                                //ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName")));
+                    }
+                    //Neuen Raum anlegen
+                    else {
+                        Category editCat = facade.edit(facade.getSuperCategory());
+                        Category newCat = facade.newCategory();
+                        newCat.setKey(physicalDeliveryOfficeNameKey);
+                        newCat.getName().setName("de", physicalDeliveryOfficeNameValue.substring(1,
+                                physicalDeliveryOfficeNameValue.length()));
+                        editCat.getCategory("c9").getCategory(physicalDeliveryOfficeNameFluegelKey).
+                                addCategory(newCat);
+                        facade.store(editCat);
+                        person.getClassification().setValue("raum", facade.getSuperCategory().getCategory("c9").getCategory(
+                                physicalDeliveryOfficeNameFluegelKey).getCategory(physicalDeliveryOfficeNameKey));
+                                //ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName")));
+                    }
+                    //Studiengang
+                    if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Fakultät Wirtschaft")) {
+                        if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Bank")) {
+                            person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("BK"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Handel")) {
+                            person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("HD"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Business")) {
+                            person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("IB"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Industrie")) {
+                            person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("IN"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("RSW")) {
+                            person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("SP"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Unternehmertum")) {
+                            person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("UN"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Versicherung")) {
+                            person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("VS"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Wirtschaftsinformatik")) {
+                            person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W").getCategory("WI"));
+                        } else {
+                            person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("W"));
+                        }
+                    } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Fakultät Technik")) {
+                        if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Elektrotechnik")) {
+                            person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("EL"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Informatik")) {
+                            person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("INF"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Maschinenbau")) {
+                            person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("MB"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Mechatronik")) {
+                            person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("MT"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Papiertechnik")) {
+                            person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("PT"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Sicherheitswesen")) {
+                            person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("SHE"));
+                        } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Wirtschaftsingenieur")) {
+                            person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T").getCategory("WIW"));
+                        } else {
+                            person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("T"));
+                        }
+                    } else if (ldapValues.get(stringMapEntry.getKey()).get("department").contains("Arztassistent")) {
+                        person.getClassification().setValue("abteilung", facade.getSuperCategory().getCategory("c2").getCategory("G").getCategory("PA"));
                     }
                     facade.store(person);
-            	}
+                }
             }
         }
         //System.out.println(ldapValues.size());
-        
+
         //System.out.println(ldapValues.get("k�stermann.roland").get("department"));
 /*
         
@@ -378,7 +297,8 @@ public class LdapProfessorTest extends MigrationTestCase {
         }
 */
     }
-	protected Logger getLogger() {
+
+    protected Logger getLogger() {
         return logger;
     }
 

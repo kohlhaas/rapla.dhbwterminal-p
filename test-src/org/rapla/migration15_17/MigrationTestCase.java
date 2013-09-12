@@ -25,6 +25,7 @@ import org.rapla.client.ClientService;
 import org.rapla.client.ClientServiceContainer;
 import org.rapla.components.util.IOUtil;
 import org.rapla.components.util.SerializableDateTimeFormat;
+import org.rapla.components.util.Tools;
 import org.rapla.facade.ClientFacade;
 import org.rapla.framework.Container;
 import org.rapla.framework.RaplaContext;
@@ -139,6 +140,30 @@ public abstract class MigrationTestCase extends TestCase {
        } catch (IOException ex) {
            throw new IOException("Failed to copy TestFile '" + "/test.xml" + "': " + ex.getMessage());
        }
+    }
+
+    public static String makeValidKey (String key) {
+        if (key == null)
+            throw new IllegalArgumentException("Key must not be null");
+        key = key.trim();
+        if (key.isEmpty())
+            throw  new IllegalArgumentException("Trimmed key must not be empty");
+
+        key = key.replace('.','_');
+        key = key.replaceAll("[\\W]", "");
+
+
+        key = key.trim();
+        if (key.isEmpty())
+            throw  new IllegalArgumentException("Trimmed key must not be empty");
+
+        if (!Tools.isKey(key) || key.length()>50)
+        {
+            throw new IllegalArgumentException("invalid_key: " + key);
+        }
+
+        System.out.println ("Validated key "+key);
+        return key;
     }
 
    

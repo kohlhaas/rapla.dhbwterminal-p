@@ -163,7 +163,7 @@ public class LdapMitarbeiterTest extends MigrationTestCase {
             {
             	Category editCat = facade.edit(facade.getSuperCategory());
             	Category newCat = facade.newCategory();
-            	newCat.setKey(ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName"));
+            	newCat.setKey(makeValidKey(ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName")));
             	newCat.getName().setName("de", ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName").substring(1, 
             			ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName").length()));
             	editCat.getCategory("c9").getCategory(ldapValues.get(stringMapEntry.getKey()).get("physicalDeliveryOfficeName").substring(0, 1)).

@@ -134,7 +134,7 @@ public class MigrationRaumTest extends MigrationTestCase {
                         buchstabe = "G";
                     if (j == 8)
                         buchstabe = "X";
-                    cat.setKey(buchstabe + allocatable[i].getClassification().getValue("raumnr").toString());
+                    cat.setKey(makeValidKey(buchstabe + allocatable[i].getClassification().getValue("raumnr").toString()));
                     cat.getName().setName("de", allocatable[i].getClassification().getValue("raumnr").toString());
                     edit = facade.edit(facade.getSuperCategory().getCategory("c9").getCategory("c" + j));
                     edit.addCategory(cat);
