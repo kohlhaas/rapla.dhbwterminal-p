@@ -253,7 +253,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
                 if (titel != null) {
                     buf.append(titel + " ");
                 }
-                Object vorname = classification.getValue("forename");
+                Object vorname = classification.getValue("firstname");
                 if (vorname != null && vorname.toString().length() > 0) {
                     buf.append(vorname.toString().substring(0,1) + ". ");
                     searchTerm = vorname.toString();

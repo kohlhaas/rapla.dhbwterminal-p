@@ -166,36 +166,58 @@ public class MigrationKurseTest extends MigrationTestCase {
 		for (int i = 0; i < allocatable.length; i++)
 		{
 			Allocatable edit = facade.edit(allocatable[i]);
+
+
             //default value für bild, jpg extension wird automatisch dran gehängt
             edit.getClassification().setValue("bild","kurs");
 
-			if (edit.getClassification().getValue("name").toString().contains("08"))
-			{
-				edit.getClassification().setValue("jahrgang", facade.getSuperCategory().getCategory("c10").getCategory("j08"));
-			}
-			else if (edit.getClassification().getValue("name").toString().contains("09"))
-			{
-				edit.getClassification().setValue("jahrgang", facade.getSuperCategory().getCategory("c10").getCategory("j09"));
-			}
-			else if (edit.getClassification().getValue("name").toString().contains("10"))
-			{
-				edit.getClassification().setValue("jahrgang", facade.getSuperCategory().getCategory("c10").getCategory("j10"));
-			}
-			else if (edit.getClassification().getValue("name").toString().contains("11"))
-			{
-				edit.getClassification().setValue("jahrgang", facade.getSuperCategory().getCategory("c10").getCategory("j11"));
-			}
-			else if (edit.getClassification().getValue("name").toString().contains("12"))
-			{
-				edit.getClassification().setValue("jahrgang", facade.getSuperCategory().getCategory("c10").getCategory("j12"));
-			}
-			else if (edit.getClassification().getValue("name").toString().contains("13"))
-			{
-				edit.getClassification().setValue("jahrgang", facade.getSuperCategory().getCategory("c10").getCategory("j13"));
-			} else if (edit.getClassification().getValue("bild") == null)
-            {
-                edit.getClassification().setValue("bild", "kurs");
+            String kursName = edit.getClassification().getValue("name").toString().trim();
+            Category jahrKategorie = facade.getSuperCategory().getCategory("c10");
+
+            for (int j = 8; j <= 13; j++) {
+                String zehnerJahr = (j < 10 ? "0" : "") + j;
+                if (kursName.contains(zehnerJahr)) {
+                    edit.getClassification().setValue("jahrgang", jahrKategorie.getCategory("j"+zehnerJahr));
+                    if (kursName.lastIndexOf(zehnerJahr) > -1)
+                    {
+                        String kurs = kursName.substring(kursName.lastIndexOf(zehnerJahr) + zehnerJahr.length(), kursName.length()).trim();
+                        if (!kurs.isEmpty()) {
+                            edit.getClassification().setValue("name", kurs);
+                        }
+                    }
+
+                }
             }
+
+
+/*            if (kursName.contains("08"))
+			{
+				edit.getClassification().setValue("jahrgang", jahrKategorie.getCategory("j08"));
+                edit.getClassification().setValue("name","");
+            }
+			else if (kursName.contains("09"))
+			{
+				edit.getClassification().setValue("jahrgang", jahrKategorie.getCategory("j09"));
+			}
+			else if (kursName.contains("10"))
+			{
+				edit.getClassification().setValue("jahrgang", jahrKategorie.getCategory("j10"));
+			}
+			else if (kursName.contains("11"))
+			{
+				edit.getClassification().setValue("jahrgang", jahrKategorie.getCategory("j11"));
+			}
+			else if (kursName.contains("12"))
+			{
+				edit.getClassification().setValue("jahrgang", jahrKategorie.getCategory("j12"));
+			}
+			else if (kursName.contains("13"))
+			{
+				edit.getClassification().setValue("jahrgang", jahrKategorie.getCategory("j13"));
+			}*/
+
+
+
             edits.add(edit);
 			//facade.store(edit);
 		}
