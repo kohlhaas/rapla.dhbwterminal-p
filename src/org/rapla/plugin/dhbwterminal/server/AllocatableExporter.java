@@ -53,18 +53,18 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
     private DynamicType[] eventTypes;
     private DynamicType[] externalPersonTypes;
     private UrlEncryption encryptionservice;
+
     public AllocatableExporter(RaplaContext context, Configuration config) throws RaplaException {
-    	this( context, config, context.lookup( ClientFacade.class));
+        this(context, config, context.lookup(ClientFacade.class));
     }
-    
+
     public AllocatableExporter(RaplaContext context, Configuration config, ClientFacade facade) throws RaplaException {
-        raplaLocale = context.lookup( RaplaLocale.class);
+        raplaLocale = context.lookup(RaplaLocale.class);
         this.facade = facade;
-        if ( context.has(UrlEncryption.class))
-        {
-        	encryptionservice =context.lookup(UrlEncryption.class);
+        if (context.has(UrlEncryption.class)) {
+            encryptionservice = context.lookup(UrlEncryption.class);
         }
-		dateTimeFormat = new SerializableDateTimeFormat();
+        dateTimeFormat = new SerializableDateTimeFormat();
         locale = raplaLocale.getLocale();
         currentTimeInGMT = raplaLocale.toRaplaTime(raplaLocale.getImportExportTimeZone(), new Date());
         eventTypes = getDynamicTypesForKey(config, facade, TerminalConstants.EVENT_TYPES_KEY);
@@ -82,21 +82,21 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         final List<DynamicType> result = new ArrayList<DynamicType>();
         String configValues = config.getChild(configKey).getValue(null);
         if (configValues == null) {
-            throw new RaplaException("Configuration in Terminal Plugin incorrect. Please check setting for "+configKey);
+            throw new RaplaException("Configuration in Terminal Plugin incorrect. Please check setting for " + configKey);
         }
         try {
-            final String [] dynamicTypeKeys = configValues.split(",");
+            final String[] dynamicTypeKeys = configValues.split(",");
             for (String dynamicTypeKey : dynamicTypeKeys) {
                 if (dynamicTypeKey.trim().isEmpty())
                     continue;
                 DynamicType dynamicType = facade.getDynamicType(dynamicTypeKey);
                 if (dynamicType == null) {
-                    throw new RaplaException("Configuration in Terminal Plugin incorrect. Dynamic Type '"+dynamicTypeKey+"' does not exist. Please check setting for "+configKey);
+                    throw new RaplaException("Configuration in Terminal Plugin incorrect. Dynamic Type '" + dynamicTypeKey + "' does not exist. Please check setting for " + configKey);
                 }
                 result.add(dynamicType);
             }
         } catch (RaplaException e) {
-            throw new RaplaException("Configuration in Terminal Plugin incorrect. Please check setting for "+configKey, e);
+            throw new RaplaException("Configuration in Terminal Plugin incorrect. Please check setting for " + configKey, e);
         }
         // sort to use arrays binary search afterwards
         Collections.sort(result, new Comparator<DynamicType>() {
@@ -222,7 +222,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         DynamicType dynamicType = classification.getType();
         // only export resource if it matches external persons
         // because they have lecture today
-        if (allocatable.isPerson() && Arrays.binarySearch(externalPersonTypes, dynamicType) >= 0  && blocks.size() == 0)
+        if (allocatable.isPerson() && Arrays.binarySearch(externalPersonTypes, dynamicType) >= 0 && blocks.size() == 0)
             return;
         String elementName = allocatable.isPerson() ? "person" : dynamicType.getElementKey();
 
@@ -233,11 +233,11 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
             String name;
             String searchTerm = null;
             final String label;
-            if (Arrays.binarySearch(roomType, dynamicType)>=0){ //elementName.equals(ROOM_KEY)) {
+            if (Arrays.binarySearch(roomType, dynamicType) >= 0) { //elementName.equals(ROOM_KEY)) {
                 name = getRoomName(classification, true, false);
                 label = "Raum";
                 searchTerm = name;
-            } else if (Arrays.binarySearch(courseType, dynamicType)>=0){ //elementName.equals(KURS_KEY)) {
+            } else if (Arrays.binarySearch(courseType, dynamicType) >= 0) { //elementName.equals(KURS_KEY)) {
                 StringBuffer buf = new StringBuffer();
                 Object titel = classification.getValue("name");
                 if (titel != null) {
@@ -255,7 +255,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
                 }
                 Object vorname = classification.getValue("firstname");
                 if (vorname != null && vorname.toString().length() > 0) {
-                    buf.append(vorname.toString().substring(0,1) + ". ");
+                    buf.append(vorname.toString().substring(0, 1) + ". ");
                     searchTerm = vorname.toString();
                 }
                 Object surname = classification.getValue("surname");
@@ -302,8 +302,8 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
                 SimpleIdentifier localname = (org.rapla.entities.storage.internal.SimpleIdentifier) id;
                 String key = /*allocatable.getRaplaType().getLocalName() + "_" + */ "" + localname.getKey();
                 String pageParameters = "page=calendar&user=" + terminalUser + "&file=" + elementName + "&allocatable_id=" + key;
-                String encryptedParamters = encryptionservice != null ?  encryptionservice.encrypt(pageParameters) : pageParameters;
-				String url = linkPrefix + "/rapla?" + UrlEncryption.ENCRYPTED_PARAMETER_NAME+"="+encryptedParamters;
+                String encryptedParamters = encryptionservice != null ? encryptionservice.encrypt(pageParameters) : pageParameters;
+                String url = linkPrefix + "/rapla?" + UrlEncryption.ENCRYPTED_PARAMETER_NAME + "=" + encryptedParamters;
                 //todo: activate encryption
                 try {
                     printOnLine(attributeName, "Link", new URI(url));
@@ -382,14 +382,16 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         Category superCategory = facade.getSuperCategory();
         StringBuffer buf = new StringBuffer();
         if (classification.getAttribute("raum") != null) {
-            Category category = (Category) classification.getValue("raum");
-            if (category != null) {
+            Object raum = classification.getValue("raum");
+            if (raum instanceof Category) {
+                Category category = (Category) raum;
                 Category parent = category.getParent();
                 if (!fluegel || parent.getParent().equals(superCategory))
                     parent = null;
-                buf.append(
-                        (parent != null ? parent.getName(locale) : "") +
-                                category.getName(locale));
+                buf.append(parent != null ? parent.getName(locale) : "").append(category.getKey().replace((parent != null ? parent.getName(locale) : ""), ""));
+            } else {
+                if (raum != null)
+                    buf.append(raum.toString());
             }
         }
         String result = buf.toString();

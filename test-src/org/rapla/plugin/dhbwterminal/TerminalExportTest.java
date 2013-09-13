@@ -36,7 +36,7 @@ public class TerminalExportTest extends RaplaTestCase
         config.addChild(new DefaultConfiguration(TerminalConstants.ROOM_KEY, "raum"));
         config.addChild(new DefaultConfiguration(TerminalConstants.USER_KEY, "stele"));
         config.addChild(new DefaultConfiguration(TerminalConstants.EVENT_TYPES_KEY, "reservation2,reservation4"));
-        config.addChild(new DefaultConfiguration(TerminalConstants.RESOURCE_TYPES_KEY, "professor,mitarbeiter,raum,kurs"));
+        config.addChild(new DefaultConfiguration(TerminalConstants.RESOURCE_TYPES_KEY, "professor,mitarbeiter,raum,kurs,sonstiges"));
         config.addChild(new DefaultConfiguration(TerminalConstants.EXTERNAL_PERSON_TYPES_KEY, "mitarbeiter"));
          RaplaContext context = raplaContainer.getContext();
 		AllocatableExporter exporter = new AllocatableExporter(context,config, facade);
