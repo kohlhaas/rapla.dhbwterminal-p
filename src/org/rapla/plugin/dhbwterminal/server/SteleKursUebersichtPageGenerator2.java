@@ -45,7 +45,7 @@ public class SteleKursUebersichtPageGenerator2 extends RaplaComponent implements
 			out.println("<head>");
 			out.println("  <title>" + title + "</title>");
 	
-			out.println("  <link REL=\"stylesheet\" href=\"rapla?page=resource&name=kursuebersicht2.css\" type=\"text/css\">");
+			out.println("  <link REL=\"stylesheet\" href=\"kursuebersicht2.css\" type=\"text/css\">");
 			if ( cssurl != null && cssurl.trim().length() > 0)
 			{
 				out.println("  <link REL=\"stylesheet\" href=\""+ cssurl + "\" type=\"text/css\">");

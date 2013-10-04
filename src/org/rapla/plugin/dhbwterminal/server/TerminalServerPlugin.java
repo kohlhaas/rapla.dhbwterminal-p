@@ -11,19 +11,11 @@
  | Definition as published by the Open Source Initiative (OSI).             |
  *--------------------------------------------------------------------------*/
 package org.rapla.plugin.dhbwterminal.server;
-import java.net.URL;
-
-import org.rapla.client.RaplaClientExtensionPoints;
 import org.rapla.framework.Configuration;
-import org.rapla.framework.Container;
 import org.rapla.framework.PluginDescriptor;
 import org.rapla.framework.RaplaContextException;
 import org.rapla.framework.logger.Logger;
-import org.rapla.plugin.dhbwterminal.server.SteleExportPageGenerator;
-import org.rapla.plugin.dhbwterminal.server.SteleKursUebersichtPageGenerator;
-import org.rapla.server.ServerService;
 import org.rapla.server.ServerServiceContainer;
-import org.rapla.servletpages.RaplaResourcePageGenerator;
 
 /**
    This is a demonstration of a rapla-plugin. It adds a sample usecase and option
@@ -54,23 +46,23 @@ public class TerminalServerPlugin implements PluginDescriptor<ServerServiceConta
     	container.addWebpage("terminal-kurse", SteleKursUebersichtPageGenerator.class, config );
     	container.addWebpage("terminal-kurse2", SteleKursUebersichtPageGenerator2.class, config );
     	container.addWebpage("terminal-kurse3", SteleKursUebersichtPageGenerator3.class, config );
-        try {
-            RaplaResourcePageGenerator resourcePageGenerator = container.getContext().lookup(RaplaResourcePageGenerator.class);
-            // registers the standard calendar files
-            
-            URL resource = this.getClass().getResource("/org/rapla/plugin/dhbwterminal/kursuebersicht.css");
-			resourcePageGenerator.registerResource( "kursuebersicht.css", "text/css", resource);
-
-            resource = this.getClass().getResource("/org/rapla/plugin/dhbwterminal/kursuebersicht2.css");
-            resourcePageGenerator.registerResource( "kursuebersicht2.css", "text/css", resource);
-
-            resource = this.getClass().getResource("/org/rapla/plugin/dhbwterminal/kursuebersicht3.css");
-            resourcePageGenerator.registerResource( "kursuebersicht3.css", "text/css", resource);
-
-
-        } catch ( Exception ex) {
-        	getLogger().error("Could not initialize terminal plugin on server" , ex);
-        }
+//        try {
+//            RaplaResourcePageGenerator resourcePageGenerator = container.getContext().lookup(RaplaResourcePageGenerator.class);
+//            // registers the standard calendar files
+//            
+//            URL resource = this.getClass().getResource("/org/rapla/plugin/dhbwterminal/kursuebersicht.css");
+//			resourcePageGenerator.registerResource( "kursuebersicht.css", "text/css", resource);
+//
+//            resource = this.getClass().getResource("/org/rapla/plugin/dhbwterminal/kursuebersicht2.css");
+//            resourcePageGenerator.registerResource( "kursuebersicht2.css", "text/css", resource);
+//
+//            resource = this.getClass().getResource("/org/rapla/plugin/dhbwterminal/kursuebersicht3.css");
+//            resourcePageGenerator.registerResource( "kursuebersicht3.css", "text/css", resource);
+//
+//
+//        } catch ( Exception ex) {
+//        	getLogger().error("Could not initialize terminal plugin on server" , ex);
+//        }
     }
 
 }
