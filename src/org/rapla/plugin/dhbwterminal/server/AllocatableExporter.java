@@ -302,8 +302,8 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
                 SimpleIdentifier localname = (org.rapla.entities.storage.internal.SimpleIdentifier) id;
                 String key = /*allocatable.getRaplaType().getLocalName() + "_" + */ "" + localname.getKey();
                 String pageParameters = "page=calendar&user=" + terminalUser + "&file=" + elementName + "&allocatable_id=" + key;
-                String encryptedParamters = encryptionservice != null ? encryptionservice.encrypt(pageParameters) : pageParameters;
-                String url = linkPrefix + "/rapla?" + UrlEncryption.ENCRYPTED_PARAMETER_NAME + "=" + encryptedParamters;
+                String encryptedParamters = encryptionservice != null ?  UrlEncryption.ENCRYPTED_PARAMETER_NAME + "=" + encryptionservice.encrypt(pageParameters) : pageParameters;
+                String url = linkPrefix + "/rapla?" + encryptedParamters;
                 //todo: activate encryption
                 try {
                     printOnLine(attributeName, "Link", new URI(url));
