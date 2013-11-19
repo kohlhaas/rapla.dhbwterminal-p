@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test-src"/>
-	<classpathentry exported="true" kind="src" path="/Rapla">
+	<classpathentry exported="true" kind="src" path="/rapla">
 		<accessrules>
 			<accessrule kind="accessible" pattern="javax/servlet/**"/>
 			<accessrule kind="accessible" pattern="junit/**"/>
@@ -26,6 +26,6 @@
 		</accessrules>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/urlencryption_plugin"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/rapla.urlencryption-p"/>
 	<classpathentry kind="output" path="eclipse-build"/>
 </classpath>
