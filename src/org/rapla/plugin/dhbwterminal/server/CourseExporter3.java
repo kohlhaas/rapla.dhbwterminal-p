@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Locale;
 
 import org.rapla.components.util.DateTools;
-import org.rapla.components.util.xml.XMLWriter;
 import org.rapla.entities.Category;
 import org.rapla.entities.NamedComparator;
 import org.rapla.entities.User;
