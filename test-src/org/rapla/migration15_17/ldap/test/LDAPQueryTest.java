@@ -1,23 +1,16 @@
 package org.rapla.migration15_17.ldap.test;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import org.rapla.RaplaTestCase;
-import org.rapla.ServletTestBase;
-import org.rapla.entities.Category;
-import org.rapla.entities.User;
-import org.rapla.facade.ClientFacade;
-import org.rapla.framework.Container;
-import org.rapla.framework.RaplaContextException;
-import org.rapla.framework.RaplaException;
-import org.rapla.plugin.jndi.internal.JNDITest;
-import org.rapla.server.ServerService;
-import org.rapla.server.ServerServiceContainer;
-
-import javax.swing.*;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Scanner;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+import org.rapla.ServletTestBase;
+import org.rapla.facade.ClientFacade;
+import org.rapla.framework.Container;
+import org.rapla.server.ServerService;
+import org.rapla.server.ServerServiceContainer;
 
 
 public class LDAPQueryTest extends ServletTestBase {

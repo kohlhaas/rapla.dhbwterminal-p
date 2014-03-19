@@ -1,9 +1,11 @@
 package org.rapla.migration15_17.migration.test;
 
-import org.rapla.RaplaMainContainer;
-import org.rapla.RaplaStartupEnvironment;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
+
 import org.rapla.RaplaTestCase;
-import org.rapla.ServletTestBase;
 import org.rapla.components.util.IOUtil;
 import org.rapla.entities.Category;
 import org.rapla.entities.domain.Allocatable;
@@ -12,22 +14,11 @@ import org.rapla.entities.dynamictype.AttributeType;
 import org.rapla.entities.dynamictype.ClassificationFilter;
 import org.rapla.entities.dynamictype.DynamicType;
 import org.rapla.facade.ClientFacade;
-import org.rapla.framework.Container;
 import org.rapla.framework.logger.ConsoleLogger;
 import org.rapla.framework.logger.Logger;
 import org.rapla.migration15_17.MigrationTestCase;
 import org.rapla.migration15_17.ldap.test.LDAPQuery;
 import org.rapla.migration15_17.ldap.test.LDAPQueryImpl;
-import org.rapla.server.ServerService;
-import org.rapla.server.ServerServiceContainer;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Scanner;
 
 public class LdapMitarbeiterTest extends MigrationTestCase {
     //ServerService raplaServer;

@@ -1,15 +1,18 @@
 package org.rapla.migration15_17.migration.test;
 
-import org.rapla.entities.Category;
-import org.rapla.entities.Entity;
-import org.rapla.entities.MultiLanguageName;
-import org.rapla.entities.domain.Allocatable;
-import org.rapla.entities.dynamictype.*;
-import org.rapla.facade.ClientFacade;
-import org.rapla.migration15_17.MigrationTestCase;
-
 import java.util.ArrayList;
 import java.util.Collection;
+
+import org.rapla.entities.Category;
+import org.rapla.entities.Entity;
+import org.rapla.entities.domain.Allocatable;
+import org.rapla.entities.dynamictype.Attribute;
+import org.rapla.entities.dynamictype.AttributeType;
+import org.rapla.entities.dynamictype.ClassificationFilter;
+import org.rapla.entities.dynamictype.ConstraintIds;
+import org.rapla.entities.dynamictype.DynamicType;
+import org.rapla.facade.ClientFacade;
+import org.rapla.migration15_17.MigrationTestCase;
 
 public class MigrationKurseTest extends MigrationTestCase {
 	ClientFacade facade;

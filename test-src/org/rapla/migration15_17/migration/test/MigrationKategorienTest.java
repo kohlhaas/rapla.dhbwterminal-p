@@ -1,14 +1,12 @@
 package org.rapla.migration15_17.migration.test;
 
+import java.util.Arrays;
+import java.util.Locale;
+
 import org.rapla.entities.Category;
 import org.rapla.entities.NamedComparator;
 import org.rapla.facade.ClientFacade;
 import org.rapla.migration15_17.MigrationTestCase;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
 
 public class MigrationKategorienTest extends MigrationTestCase {
 ClientFacade facade;

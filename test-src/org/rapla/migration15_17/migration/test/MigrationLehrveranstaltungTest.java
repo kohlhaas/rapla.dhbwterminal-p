@@ -1,5 +1,8 @@
 package org.rapla.migration15_17.migration.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.rapla.entities.Category;
 import org.rapla.entities.Entity;
 import org.rapla.entities.domain.Reservation;
@@ -9,9 +12,6 @@ import org.rapla.entities.dynamictype.ConstraintIds;
 import org.rapla.entities.dynamictype.DynamicType;
 import org.rapla.facade.ClientFacade;
 import org.rapla.migration15_17.MigrationTestCase;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MigrationLehrveranstaltungTest extends MigrationTestCase {
     ClientFacade facade;

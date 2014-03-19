@@ -1,11 +1,15 @@
 package org.rapla.plugin.dhbwterminal;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+
 import org.rapla.RaplaTestCase;
 import org.rapla.facade.ClientFacade;
 import org.rapla.framework.DefaultConfiguration;
 import org.rapla.plugin.dhbwterminal.server.AllocatableExporter;
-
-import java.io.*;
 
 public class TerminalExportTestErroneousConfig1 extends RaplaTestCase
 {
