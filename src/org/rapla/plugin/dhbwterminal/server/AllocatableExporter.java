@@ -16,6 +16,7 @@ import java.util.Set;
 
 import org.rapla.components.util.DateTools;
 import org.rapla.components.util.SerializableDateTimeFormat;
+import org.rapla.components.util.TimeInterval;
 import org.rapla.components.util.xml.XMLWriter;
 import org.rapla.entities.Category;
 import org.rapla.entities.NamedComparator;
@@ -157,6 +158,12 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
             }
         }
 
+        addFreeAllocatables(stele);
+
+        buf.append("</RaplaImport>");
+    }
+
+    private void addFreeAllocatables(User stele) throws RaplaException, IOException {
         int maxFreeAllocatables = 99;
         //testbetrieb
         /* {
@@ -184,15 +191,27 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
                     continue;
                 }
 
+                TimeInterval interval = new TimeInterval(null,null);
+                Date requestedStart = interval.getStart();
+                Date requestedEnd = interval.getEnd();
+                if (requestedStart == null)
+                {
+                    // current time
+                    requestedStart = raplaLocale.toRaplaTime(raplaLocale.getImportExportTimeZone(), new Date());
+                }
+                Date endInterval =  requestedEnd != null ? requestedEnd:DateTools.fillDate(requestedStart); 
                 Date ende = null;
                 //Date start = null;
                 boolean isUsed = false;
-                for (AppointmentBlock block : getReservationBlocksToday(allocatable)) {
+                for (AppointmentBlock block : getReservationBlocksToday(allocatable, true)) {
                     Date blockStart = new Date(block.getStart());
                     Date blockEnd = new Date(block.getEnd());
-                    if (blockEnd.after(currentTimeInGMT)) {
-                        if (!blockStart.before(currentTimeInGMT)) {
-                            ende = blockStart;
+                    if (blockEnd.after(requestedStart)) {
+                        if (!blockStart.before( requestedEnd != null ? requestedEnd : requestedStart )) {
+                            if ( ende == null || blockStart.before( ende))
+                            {
+                                ende = blockStart;
+                            }
                         } else {
                             isUsed = true;
                             break;
@@ -206,8 +225,6 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
                 }
             }
         }
-
-        buf.append("</RaplaImport>");
     }
 
     private void printAllocatable(Allocatable allocatable, String linkPrefix, boolean exportReservations) throws IOException, RaplaException {
@@ -216,8 +233,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
 
         if (classification == null)
             return;
-        List<AppointmentBlock> blocks = getReservationBlocksToday(allocatable);
-
+        List<AppointmentBlock> blocks = getReservationBlocksToday(allocatable, false);
 
         DynamicType dynamicType = classification.getType();
         // only export resource if it matches external persons
@@ -433,14 +449,13 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         return resources;
     }
 
-    private List<AppointmentBlock> getReservationBlocksToday(
-            Allocatable allocatable) throws RaplaException {
+    private List<AppointmentBlock> getReservationBlocksToday(Allocatable allocatable, boolean includeUnfilterdEvents) throws RaplaException {
         Date start = facade.today();
         Date end = DateTools.addDay(start);
         List<AppointmentBlock> array = new ArrayList<AppointmentBlock>();
         Reservation[] reservations = facade.getReservations(new Allocatable[]{allocatable}, start, end);
         for (Reservation res : reservations) {
-            if (Arrays.binarySearch(eventTypes, res.getClassification().getType()) >= 0)
+            if (includeUnfilterdEvents || Arrays.binarySearch(eventTypes, res.getClassification().getType()) >= 0)
                 for (Appointment app : res.getAppointmentsFor(allocatable)) {
                     app.createBlocks(start, end, array);
                 }
