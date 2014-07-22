@@ -101,7 +101,7 @@ public class MigrationHonorarkraftTest extends MigrationTestCase {
         if (!abteilungExists) {
             editHKraft.getAttribute("a4").setKey("abteilung");
             editHKraft.getAttribute("abteilung").getName().setName("de", "Abteilung");
-            editHKraft.getAttribute("abteilung").setAnnotation(AttributeAnnotations.KEY_MULTI_SELECT, "true");
+            editHKraft.getAttribute("abteilung").setConstraint(ConstraintIds.KEY_MULTI_SELECT, true);
             editHKraft.getAttribute("abteilung").setConstraint(ConstraintIds.KEY_ROOT_CATEGORY, facade.getSuperCategory().getCategory("c2"));
         }
         facade.store(editHKraft);
