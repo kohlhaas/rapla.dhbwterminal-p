@@ -55,9 +55,10 @@ public class TerminalOption extends DefaultPluginOption {
     JComboBox kursTyp;
     JComboBox raumTyp;
     JComboBox steleUser;
-
-    public TerminalOption(RaplaContext sm) throws RaplaException {
+    UrlEncryption urlEncryption;
+    public TerminalOption(RaplaContext sm, UrlEncryption urlEncryption) throws RaplaException {
         super(sm);
+        this.urlEncryption = urlEncryption;
     }
 
     @Override
@@ -167,16 +168,15 @@ public class TerminalOption extends DefaultPluginOption {
             String pageParameters = "page=" + "terminal-export";
             final String urlExtension;
 
-            if( getContext().has( UrlEncryption.class))
+    //        if( getContext().has( UrlEncryption.class))
             {
-            	UrlEncryption webservice = getService(UrlEncryption.class);
+            	UrlEncryption webservice = urlEncryption;//getService(UrlEncryption.class);
 				String encryptedParamters = webservice.encrypt(pageParameters);
 				urlExtension = UrlEncryption.ENCRYPTED_PARAMETER_NAME+"="+encryptedParamters;
             }
-            else
-            {
-                urlExtension = pageParameters;
-            }
+//            {
+                //urlExtension = pageParameters;
+  //          }
             return new URL( codeBase,"rapla?" + urlExtension).toExternalForm();
         } 
         catch (RaplaException ex)

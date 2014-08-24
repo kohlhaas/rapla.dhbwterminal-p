@@ -133,7 +133,6 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         {
             List<Allocatable> allocatables = new ArrayList<Allocatable>();
 
-
             for (DynamicType dynamicType : resourceTypes) {
                 String typeKey = dynamicType.getElementKey();
                 ClassificationFilter filter = null;
@@ -148,7 +147,6 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
                 allocatables.addAll(sortedAllocatables);
             }
             for (Allocatable alloc : allocatables) {
-                alloc.getLastChangeTime();
                 if (alloc.canReadOnlyInformation(stele)) {
                     boolean exportReservations = alloc.canRead(stele);
                     printAllocatable(alloc, linkPrefix, exportReservations);
@@ -217,7 +215,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
                     }
                 }
                 if (!isUsed) {
-                    String name = getRoomName(allocatable.getClassification(), true, false);
+                    String name = getRoomName(allocatable.getClassification(), false);
                     printFreeAllocatable(name, ende);
                     c++;
                 }
@@ -248,7 +246,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
             String searchTerm = null;
             final String label;
             if (Arrays.binarySearch(roomType, dynamicType) >= 0) { //elementName.equals(ROOM_KEY)) {
-                name = getRoomName(classification, true, false);
+                name = getRoomName(classification, false);
                 label = "Raum";
                 searchTerm = name;
             } else if (Arrays.binarySearch(courseType, dynamicType) >= 0) { //elementName.equals(KURS_KEY)) {
@@ -304,7 +302,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
             printAttributeIfThereWithElementAsLabel(classification, "zeile" + i, "zeile" + i);
 
         addSearchIfThere(classification, search, "raumart");
-        String roomName = getRoomName(classification, true, true);
+        String roomName = getRoomName(classification, true);
         printOnLine("raumnr", "Raum", roomName);
 
 
@@ -390,7 +388,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
 
     }
 
-    public String getRoomName(Classification classification, boolean fluegel, boolean validFilename) {
+    public String getRoomName(Classification classification, boolean validFilename) {
         Category superCategory = facade.getSuperCategory();
         StringBuffer buf = new StringBuffer();
         if (classification.getAttribute("raum") != null) {
@@ -398,10 +396,32 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
             if (raum instanceof Category) {
                 Category category = (Category) raum;
                 Category parent = category.getParent();
-                if (!fluegel || parent.getParent().equals(superCategory))
-                    parent = null;
                 buf.append(parent != null ? parent.getName(locale) : "").append(category.getKey().replace((parent != null ? parent.getName(locale) : ""), ""));
-            } else {
+            } else if (raum instanceof Allocatable){
+                Classification classificationRoom = ((Allocatable) raum).getClassification();
+                Object value = classificationRoom.getValue("raum");
+                if (value != null )
+                {
+                    if (value instanceof Category)
+                    {
+                        Category category = (Category) value;
+                        Category parent = category.getParent();
+                        buf.append(parent != null ? parent.getName(locale) : "").append(category.getKey().replace((parent != null ? parent.getName(locale) : ""), ""));
+                    }
+                    else
+                    {
+                       
+                        String string = value.toString();
+                        buf.append(string);
+                    }
+                }
+                else
+                {
+                    buf.append(raum.toString());
+                }
+            }
+            else
+            {
                 if (raum != null)
                     buf.append(raum.toString());
             }
