@@ -18,11 +18,12 @@ import org.rapla.facade.ClientFacade;
 import org.rapla.framework.Configuration;
 import org.rapla.framework.RaplaException;
 import org.rapla.framework.RaplaLocale;
+import org.rapla.server.TimeZoneConverter;
 
 
 public class CourseExporter2 extends CourseExporter {
-    public CourseExporter2(Configuration config, RaplaLocale raplaLocale, ClientFacade facade) throws RaplaException {
-        super(config, raplaLocale, facade);
+    public CourseExporter2(Configuration config,RaplaLocale raplaLocale,TimeZoneConverter converter, ClientFacade facade) throws RaplaException {
+        super(config, raplaLocale, converter,facade);
     }
 
 

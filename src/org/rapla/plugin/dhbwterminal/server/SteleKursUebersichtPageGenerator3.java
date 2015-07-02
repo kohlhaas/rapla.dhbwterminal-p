@@ -15,6 +15,7 @@ import org.rapla.framework.RaplaContext;
 import org.rapla.framework.RaplaException;
 import org.rapla.framework.RaplaLocale;
 import org.rapla.plugin.dhbwterminal.TerminalConstants;
+import org.rapla.server.TimeZoneConverter;
 import org.rapla.servletpages.RaplaPageGenerator;
 
 public class SteleKursUebersichtPageGenerator3 extends RaplaComponent implements RaplaPageGenerator, TerminalConstants {
@@ -85,7 +86,8 @@ public class SteleKursUebersichtPageGenerator3 extends RaplaComponent implements
                             +"<div class=\"resource-column\"><img class=\"empty\" src=\"./images/empty.gif\">Raum</div>"
                         +"</div>");
 			CourseExporter3 allocatableExporter;
-			allocatableExporter = new CourseExporter3(config, raplaLocale, getClientFacade());
+			  TimeZoneConverter timezoneConverter = getContext().lookup(TimeZoneConverter.class);
+			allocatableExporter = new CourseExporter3(config, raplaLocale, timezoneConverter,getClientFacade());
 			out.println("<div id=\"content\">");
 			BufferedWriter buf = new BufferedWriter(out);
 		

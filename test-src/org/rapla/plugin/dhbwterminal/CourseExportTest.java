@@ -10,6 +10,7 @@ import org.rapla.RaplaTestCase;
 import org.rapla.facade.ClientFacade;
 import org.rapla.framework.DefaultConfiguration;
 import org.rapla.plugin.dhbwterminal.server.CourseExporter;
+import org.rapla.server.TimeZoneConverter;
 
 public class CourseExportTest extends RaplaTestCase
 {
@@ -36,8 +37,9 @@ public class CourseExportTest extends RaplaTestCase
         config.addChild(new DefaultConfiguration(TerminalConstants.USER_KEY, "stele"));
         config.addChild(new DefaultConfiguration(TerminalConstants.EVENT_TYPES_KEY, "reservation2,reservation4"));
         config.addChild(new DefaultConfiguration(TerminalConstants.RESOURCE_TYPES_KEY, "professor,mitarbeiter,raum,kurs"));
-
-        CourseExporter exporter = new CourseExporter(config, getRaplaLocale(), facade);
+        TimeZoneConverter timezoneConverter = getContext().lookup(TimeZoneConverter.class);
+        
+        CourseExporter exporter = new CourseExporter(config, getRaplaLocale(), timezoneConverter,facade);
 		exporter.printKurseAmTag( buf, "https://dhbw-karlsruhe.de/");
 		buf.close();
 		writer.close();

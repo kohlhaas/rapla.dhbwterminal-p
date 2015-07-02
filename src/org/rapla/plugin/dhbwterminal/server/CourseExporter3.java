@@ -16,7 +16,6 @@ import org.rapla.entities.User;
 import org.rapla.entities.domain.Allocatable;
 import org.rapla.entities.domain.Appointment;
 import org.rapla.entities.domain.AppointmentBlock;
-import org.rapla.entities.domain.AppointmentBlockStartComparator;
 import org.rapla.entities.domain.Reservation;
 import org.rapla.entities.dynamictype.Classification;
 import org.rapla.entities.dynamictype.ClassificationFilter;
@@ -26,6 +25,7 @@ import org.rapla.framework.Configuration;
 import org.rapla.framework.RaplaException;
 import org.rapla.framework.RaplaLocale;
 import org.rapla.plugin.dhbwterminal.TerminalConstants;
+import org.rapla.server.TimeZoneConverter;
 
 
 public class CourseExporter3 extends CourseExporter {
@@ -39,12 +39,12 @@ public class CourseExporter3 extends CourseExporter {
     protected  DynamicType[] resourceTypes;
     protected  DynamicType[] eventTypes;
 
-    public CourseExporter3(Configuration config, RaplaLocale raplaLocale, ClientFacade facade) throws RaplaException {
-    	super(config, raplaLocale, facade);
+    public CourseExporter3(Configuration config, RaplaLocale raplaLocale, TimeZoneConverter converter,ClientFacade facade) throws RaplaException {
+    	super(config, raplaLocale,converter, facade);
     	this.raplaLocale = raplaLocale;
         this.facade = facade;
         locale = raplaLocale.getLocale();
-        currentTime = raplaLocale.toRaplaTime(raplaLocale.getSystemTimeZone(), new Date());
+        currentTime = converter.toRaplaTime(converter.getImportExportTimeZone(), new Date());
 
         eventTypes = AllocatableExporter.getDynamicTypesForKey(config, facade, TerminalConstants.EVENT_TYPES_KEY);
         resourceTypes = AllocatableExporter.getDynamicTypesForKey(config, facade, TerminalConstants.RESOURCE_TYPES_KEY);
@@ -230,7 +230,7 @@ public class CourseExporter3 extends CourseExporter {
                 }
             }
         }
-        Collections.sort(array, new AppointmentBlockStartComparator());
+        Collections.sort(array);
         return array;
     }
 

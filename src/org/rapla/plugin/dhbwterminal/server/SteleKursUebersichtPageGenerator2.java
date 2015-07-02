@@ -7,12 +7,14 @@ import org.rapla.framework.RaplaContext;
 import org.rapla.framework.RaplaException;
 import org.rapla.framework.RaplaLocale;
 import org.rapla.plugin.dhbwterminal.TerminalConstants;
+import org.rapla.server.TimeZoneConverter;
 import org.rapla.servletpages.RaplaPageGenerator;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 
@@ -65,7 +67,8 @@ public class SteleKursUebersichtPageGenerator2 extends RaplaComponent implements
                         +"</div>");
 
 			CourseExporter allocatableExporter;
-			allocatableExporter = new CourseExporter2(config, raplaLocale, getClientFacade());
+			  TimeZoneConverter timezoneConverter = getContext().lookup(TimeZoneConverter.class);
+			allocatableExporter = new CourseExporter2(config, raplaLocale, timezoneConverter,getClientFacade());
 			BufferedWriter buf = new BufferedWriter(out);
 		
 			allocatableExporter.printKurseAmTag( buf, no_courses);

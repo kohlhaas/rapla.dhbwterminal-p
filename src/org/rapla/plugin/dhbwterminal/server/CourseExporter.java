@@ -17,7 +17,6 @@ import org.rapla.entities.User;
 import org.rapla.entities.domain.Allocatable;
 import org.rapla.entities.domain.Appointment;
 import org.rapla.entities.domain.AppointmentBlock;
-import org.rapla.entities.domain.AppointmentBlockStartComparator;
 import org.rapla.entities.domain.Reservation;
 import org.rapla.entities.dynamictype.Classification;
 import org.rapla.entities.dynamictype.ClassificationFilter;
@@ -27,6 +26,7 @@ import org.rapla.framework.Configuration;
 import org.rapla.framework.RaplaException;
 import org.rapla.framework.RaplaLocale;
 import org.rapla.plugin.dhbwterminal.TerminalConstants;
+import org.rapla.server.TimeZoneConverter;
 
 
 public class CourseExporter extends XMLWriter {
@@ -40,11 +40,11 @@ public class CourseExporter extends XMLWriter {
     protected  DynamicType[] resourceTypes;
     protected  DynamicType[] eventTypes;
 
-    public CourseExporter(Configuration config, RaplaLocale raplaLocale, ClientFacade facade) throws RaplaException {
+    public CourseExporter(Configuration config, RaplaLocale raplaLocale,TimeZoneConverter converter, ClientFacade facade) throws RaplaException {
         this.raplaLocale = raplaLocale;
         this.facade = facade;
         locale = raplaLocale.getLocale();
-        currentTime = raplaLocale.toRaplaTime(raplaLocale.getImportExportTimeZone(), new Date());
+        currentTime = converter.toRaplaTime(converter.getImportExportTimeZone(), new Date());
 
         eventTypes = AllocatableExporter.getDynamicTypesForKey(config, facade, TerminalConstants.EVENT_TYPES_KEY);
         resourceTypes = AllocatableExporter.getDynamicTypesForKey(config, facade, TerminalConstants.RESOURCE_TYPES_KEY);
@@ -229,7 +229,7 @@ public class CourseExporter extends XMLWriter {
                 }
             }
         }
-        Collections.sort(array, new AppointmentBlockStartComparator());
+        Collections.sort(array);
         return array;
     }
 

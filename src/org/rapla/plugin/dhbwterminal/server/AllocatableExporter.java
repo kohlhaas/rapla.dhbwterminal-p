@@ -24,7 +24,6 @@ import org.rapla.entities.User;
 import org.rapla.entities.domain.Allocatable;
 import org.rapla.entities.domain.Appointment;
 import org.rapla.entities.domain.AppointmentBlock;
-import org.rapla.entities.domain.AppointmentBlockStartComparator;
 import org.rapla.entities.domain.Reservation;
 import org.rapla.entities.dynamictype.Attribute;
 import org.rapla.entities.dynamictype.Classification;
@@ -37,6 +36,7 @@ import org.rapla.framework.RaplaException;
 import org.rapla.framework.RaplaLocale;
 import org.rapla.plugin.dhbwterminal.TerminalConstants;
 import org.rapla.plugin.urlencryption.UrlEncryption;
+import org.rapla.server.TimeZoneConverter;
 
 public class AllocatableExporter extends XMLWriter implements TerminalConstants {
 
@@ -52,6 +52,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
     private DynamicType[] eventTypes;
     private DynamicType[] externalPersonTypes;
     private UrlEncryption encryptionservice;
+    TimeZoneConverter converter;
 
     public AllocatableExporter(RaplaContext context, Configuration config) throws RaplaException {
         this(context, config, context.lookup(ClientFacade.class));
@@ -65,7 +66,8 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         }
         dateTimeFormat = new SerializableDateTimeFormat();
         locale = raplaLocale.getLocale();
-        currentTimeInGMT = raplaLocale.toRaplaTime(raplaLocale.getImportExportTimeZone(), new Date());
+        converter = context.lookup( TimeZoneConverter.class);
+        currentTimeInGMT = converter.toRaplaTime(converter.getImportExportTimeZone(), new Date());
         eventTypes = getDynamicTypesForKey(config, facade, TerminalConstants.EVENT_TYPES_KEY);
         resourceTypes = getDynamicTypesForKey(config, facade, TerminalConstants.RESOURCE_TYPES_KEY);
         roomType = getDynamicTypesForKey(config, facade, TerminalConstants.ROOM_KEY);
@@ -193,7 +195,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
                 if (requestedStart == null)
                 {
                     // current time
-                    requestedStart = raplaLocale.toRaplaTime(raplaLocale.getImportExportTimeZone(), new Date());
+                    requestedStart = converter.toRaplaTime(converter.getImportExportTimeZone(), new Date());
                 }
                 Date endInterval =  requestedEnd != null ? requestedEnd:DateTools.fillDate(requestedStart); 
                 Date ende = null;
@@ -476,7 +478,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
                     app.createBlocks(start, end, array);
                 }
         }
-        Collections.sort(array, new AppointmentBlockStartComparator());
+        Collections.sort(array);
         return array;
     }
 
