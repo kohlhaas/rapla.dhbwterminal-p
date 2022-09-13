@@ -248,7 +248,7 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
             String searchTerm = null;
             final String label;
             if (Arrays.binarySearch(roomType, dynamicType) >= 0) { //elementName.equals(ROOM_KEY)) {
-                name = getRoomName(classification, false);
+                name = classification.getValue("SekundaereRaumnummer");
                 label = "Raum";
                 searchTerm = name;
             } else if (Arrays.binarySearch(courseType, dynamicType) >= 0) { //elementName.equals(KURS_KEY)) {
@@ -299,11 +299,11 @@ public class AllocatableExporter extends XMLWriter implements TerminalConstants 
         printAttributeIfThere(classification, "E-Mail", "email");
         printAttributeIfThere(classification, "Bild", "bild");
         printAttributeIfThere(classification, "Telefon", "telefon");
-        printAttributeIfThere(classification, "Raumart", "raumart");
+        printAttributeIfThere(classification, "Raumart", "Raumname","raumart");
         for (int i = 0; i < 10; i++)
             printAttributeIfThereWithElementAsLabel(classification, "zeile" + i, "zeile" + i);
 
-        addSearchIfThere(classification, search, "raumart");
+        addSearchIfThere(classification, search, "Raumname");
         String roomName = getRoomName(classification, true);
         printOnLine("raumnr", "Raum", roomName);
 
